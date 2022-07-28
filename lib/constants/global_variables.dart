@@ -1,0 +1,1 @@
+// all global variables for colors with be here
