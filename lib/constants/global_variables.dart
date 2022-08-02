@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-class ColorScheme {
+class AppColors {
   // COLORS
   static const mainColor = Color.fromRGBO(35, 127, 213, 1);
   static const backgroundColor = Colors.white;
@@ -20,6 +20,6 @@ class ColorScheme {
 
 class StaticImages {
   // STATIC IMAGES
-  static const appBarCurve = 'assets/image/appbar_curve.svg';
-  static const circularCurve = 'assets/image/appbar_curve.svg';
+  static const appBarCurve = 'assets/images/appbar_curve.png';
+  static const circularCurve = 'assets/images/circular_curve.png';
 }
