@@ -2,231 +2,86 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/widgets/curve_widgets.dart';
 import 'package:instituto/common/widgets/custom_button.dart';
+import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/auth/screens/signup_screens/step_1.dart';
 import 'package:instituto/features/auth/screens/signup_screens/step_2.dart';
 import 'package:instituto/features/auth/screens/signup_screens/step_3/step_3_owner.dart';
 import 'package:instituto/features/auth/screens/signup_screens/step_3/step_3_student.dart';
+import 'package:instituto/features/auth/screens/signup_screens/step_3/step_3_teacher.dart';
+import 'package:instituto/features/auth/screens/signup_screens/step_4/step_4_owner.dart';
 import 'package:instituto/features/auth/screens/signup_screens/step_4/step_4_student.dart';
+import 'package:instituto/features/auth/screens/signup_screens/step_4/step_4_teacher.dart';
 import '/constants/global_variables.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen extends GetView<AuthController> {
   static const String routeName = '/signup';
+  final authController = Get.put((AuthController()));
 
-  const SignupScreen({Key? key}) : super(key: key);
-
-  @override
-  State<SignupScreen> createState() => _SignupScreenState();
-}
-
-class _SignupScreenState extends State<SignupScreen> {
-  int currentStep = 0;
-  List<String> class_dropdown_items = [
-    'Class 6th',
-    'Class 7th',
-    'Class 8th',
-    'Class 9th',
-    'Class 10th',
-    'Class 11th',
-    'Class 12th',
-  ];
-  List<String> subject_dropdown_items = [
-    'English',
-    'Maths',
-    'Physics',
-    'Chemistry',
-    'Economics',
-    'Biology',
-    'Buisness',
-  ];
-  // step 1
-  String userRole = 'student';
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  // step 3 -- owner
-  String numberOfStudents = '500';
-  TextEditingController instituteNameController = TextEditingController();
-  TextEditingController aboutInstituteController = TextEditingController();
-  // step 3 -- student
-  String classDropdownValue = 'Class 6th';
-  Rx<List<String>> selectedSubjectList = Rx<List<String>>([]);
-  TextEditingController instituteCodeController = TextEditingController();
-  // step 4 -- student
-  TextEditingController fathersNameController = TextEditingController();
-  TextEditingController mothersNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-
-  void onStudentPress() {
-    setState(() {
-      userRole = 'student';
-    });
-  }
-
-  void onTeacherPress() {
-    setState(() {
-      userRole = 'teacher';
-    });
-  }
-
-  void onOwnerPress() {
-    setState(() {
-      userRole = 'owner';
-    });
-  }
-
-  void on500StudentPress() {
-    setState(() {
-      numberOfStudents = '500';
-    });
-  }
-
-  void on1000StudentPress() {
-    setState(() {
-      numberOfStudents = '1000';
-    });
-  }
-
-  void on2000StudentPress() {
-    setState(() {
-      numberOfStudents = '2000';
-    });
-  }
-
-  void onClassDropdownValueChange(String? newVal) {
-    setState(() {
-      classDropdownValue = newVal!;
-    });
-  }
-
-  void onSubjectSelectionItemChange(List<String> selectedItems) {
-    setState(() {
-      selectedSubjectList.value = selectedItems;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    List<Step> getSteps() => [
-          Step(
-              isActive: currentStep >= 0,
-              title: const Text(''),
-              content: SignupStep1(
-                firstNameController,
-                lastNameController,
-                mobileController,
-                onStudentPress: onStudentPress,
-                onTeacherPress: onTeacherPress,
-                onOwnerPress: onOwnerPress,
-                userRole: userRole,
-              )),
-          Step(
-              isActive: currentStep >= 1,
-              title: const Text(''),
-              content: SignupStep2PhoneVerify(
-                mobileNumber: mobileController.text,
-              )),
-          Step(
-            isActive: currentStep >= 2,
-            title: const Text(''),
-            content: (userRole == 'owner'
-                ? SignupStep3Owner(
-                    numberOfStudents: numberOfStudents,
-                    instituteNameController: instituteNameController,
-                    aboutinstituteNameController: aboutInstituteController,
-                    on500StudentPress: on500StudentPress,
-                    on1000StudentPress: on1000StudentPress,
-                    on2000StudentPress: on2000StudentPress,
-                  )
-                : SignupStep3Student(
-                    instituteCodeController: instituteCodeController,
-                    classDropdownValue: classDropdownValue,
-                    onClassDropdownItemChange: onClassDropdownValueChange,
-                    onSubjectSlectionItemChange: onSubjectSelectionItemChange,
-                    selectedSubjectList: selectedSubjectList,
-                    classDropdowItems: class_dropdown_items,
-                    subjectDropdownItems: subject_dropdown_items,
-                  )),
-          ),
-          Step(
-              isActive: currentStep >= 3,
-              title: const Text(''),
-              content: SignupStep4Student(
-                  fathersNameController: fathersNameController,
-                  mothersNameController: mothersNameController,
-                  emailController: emailController)),
-        ];
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // curve
-            const CircualCurve(),
-
-            // Header
-            Padding(
-              padding: const EdgeInsets.only(left: 25, right: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Create Account',
-                    style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.mainColor,
-                    ),
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // curve
+          const CircualCurve(),
+          // Header
+          Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Create Account',
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.mainColor,
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    (() {
-                      if (currentStep == 0) {
-                        return "Hey there! 👋🏻";
-                      } else if (currentStep == 1) {
-                        return "Privacy is Priority 🤞";
-                      } else if (currentStep == 2) {
-                        return "Just one step ahead 😋";
-                      } else {
-                        return "Lets have it done 😉";
-                      }
-                    })(),
-                    style: const TextStyle(
-                        color: AppColors.titleColorExtraLight,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500
-                        // )
-                        ),
-                  )
-                ],
-              ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  (() {
+                    if (controller.currentStep.value == 0) {
+                      return "Hey there! 👋🏻";
+                    } else if (controller.currentStep.value == 1) {
+                      return "Privacy is Priority 🤞";
+                    } else if (controller.currentStep.value == 2) {
+                      return "Just one step ahead 😋";
+                    } else {
+                      return "Lets have it done 😉";
+                    }
+                  })(),
+                  style: const TextStyle(
+                      color: AppColors.titleColorExtraLight,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500
+                      // )
+                      ),
+                )
+              ],
             ),
+          ),
 
-            // Steps Timeline
-            Expanded(
-              child: Stepper(
+          // Steps Timeline
+          Expanded(
+            child: Obx(
+              () => Stepper(
                 elevation: 0,
                 type: StepperType.horizontal,
                 steps: getSteps(),
-                currentStep: currentStep,
-                onStepContinue: () {
-                  final lastStep = currentStep == getSteps().length - 1;
-
-                  if (lastStep) {
-                    print('finished');
-                  }
-                  setState(() => currentStep += 1);
-                },
-                onStepCancel: () {
-                  setState(() => currentStep -= 1);
+                currentStep: controller.currentStep.value,
+                onStepContinue: controller.onNextStep,
+                onStepCancel: controller.onPrevStep,
+                onStepTapped: (index) {
+                  controller.currentStep.value = index;
                 },
                 controlsBuilder: (context, details) => (Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomButtonBordered(
-                      onPressed: (details.currentStep == 0
-                          ? () {}
-                          : details.onStepCancel),
+                      onPressed: details.onStepCancel,
                       text: 'Back',
                       width: 130,
                       height: 40,
@@ -234,48 +89,117 @@ class _SignupScreenState extends State<SignupScreen> {
                           ? AppColors.descriptionColorLight
                           : AppColors.mainColor),
                     ),
-                    CustomButton(
-                      onPressed: (details.currentStep == 3
-                          ? () {} // function to signup
-                          : details.onStepContinue),
-                      text: (details.currentStep == 1 ? 'Verify' : 'Next'),
-                      width: 130,
-                      height: 40,
-                    )
+                    if (details.currentStep == 1) ...{
+                      CustomButton(
+                        onPressed: details.onStepContinue,
+                        text: 'Verify',
+                        width: 130,
+                        height: 40,
+                      )
+                    } else if (details.currentStep == 3) ...{
+                      CustomButton(
+                        onPressed: details.onStepContinue,
+                        text: 'Finish',
+                        width: 130,
+                        height: 40,
+                      )
+                    } else ...{
+                      CustomButton(
+                        onPressed: details.onStepContinue,
+                        text: 'Next',
+                        width: 130,
+                        height: 40,
+                      )
+                    }
                   ],
                 )),
               ),
             ),
+          ),
 
-            // Bottom
-            Padding(
-              padding: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Already have an account? ",
+          // Bottom
+          Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Already have an account? ",
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.descriptionColorLight),
+                ),
+                GestureDetector(
+                  onTap: () =>
+                      Navigator.pushNamed(context, LoginScreen.routeName),
+                  child: const Text(
+                    "Login",
                     style: TextStyle(
+                        color: AppColors.mainColor,
+                        decoration: TextDecoration.underline,
                         fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.descriptionColorLight),
+                        fontWeight: FontWeight.w400),
                   ),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.pushNamed(context, LoginScreen.routeName),
-                    child: const Text(
-                      "Login",
-                      style: TextStyle(
-                          color: AppColors.mainColor,
-                          decoration: TextDecoration.underline,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ));
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  List<Step> getSteps() {
+    return [
+      Step(
+          isActive: controller.currentStep.value >= 0,
+          state: controller.currentStep.value > 0
+              ? StepState.complete
+              : StepState.indexed,
+          title: const Text(''),
+          content: SignupStep1()),
+      Step(
+          isActive: controller.currentStep.value >= 1,
+          state: controller.currentStep.value > 1
+              ? StepState.complete
+              : StepState.indexed,
+          title: const Text(''),
+          content: SignupStep2PhoneVerify()),
+      Step(
+          isActive: controller.currentStep.value >= 2,
+          state: controller.currentStep.value > 2
+              ? StepState.complete
+              : StepState.indexed,
+          title: const Text(''),
+          content: Column(
+            children: [
+              if (controller.userRole.value == 'owner') ...{
+                SignupStep3Owner(),
+              } else if (controller.userRole.value == 'teacher') ...{
+                SignupStep3Teacher()
+              } else if (controller.userRole.value == 'student') ...{
+                SignupStep3Student()
+              }
+            ],
+          )),
+      Step(
+          isActive: controller.currentStep.value >= 3,
+          state: controller.currentStep.value > 3
+              ? StepState.complete
+              : StepState.indexed,
+          title: const Text(''),
+          content: Column(
+            children: [
+              if (controller.userRole.value == 'owner') ...{
+                SignupStep4Owner()
+              } else if (controller.userRole.value == 'student') ...{
+                SignupStep4Student()
+              } else if (controller.userRole.value == 'teacher') ...{
+                SignupStep4Teacher()
+              }
+            ],
+          )),
+    ];
   }
 }

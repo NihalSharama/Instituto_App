@@ -1,37 +1,44 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/foundation/key.dart';
-import 'package:get/get.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:instituto/common/widgets/custom_button.dart';
-import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/controller/auth_controllers.dart';
 
-class SignupStep1 extends GetView<AuthController> {
+class TripleSelectionButtons extends StatefulWidget {
+  final String title;
+  final String field;
+  final String firstButtonText;
+  final String secondButtonText;
+  final String thirdButtonText;
+  final VoidCallback? onFirstButtonPress;
+  final VoidCallback? onSecondButtonPress;
+  final VoidCallback? onThirdButtonPress;
+  const TripleSelectionButtons({
+    Key? key,
+    required this.field,
+    required this.firstButtonText,
+    required this.secondButtonText,
+    required this.thirdButtonText,
+    required this.title,
+    this.onFirstButtonPress,
+    this.onSecondButtonPress,
+    this.onThirdButtonPress,
+  }) : super(key: key);
+
+  @override
+  State<TripleSelectionButtons> createState() => _TripleSelectionButtonsState();
+}
+
+class _TripleSelectionButtonsState extends State<TripleSelectionButtons> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Form(
-            child: Column(
-          children: [
-            CustomTextField(
-              controller: controller.firstNameController,
-              hintText: 'First Name',
-            ),
-            CustomTextField(
-                controller: controller.lastNameController,
-                hintText: 'Last Name'),
-            CustomTextField(
-                controller: controller.mobileController, hintText: 'Mobile No'),
-          ],
-        )),
-        const SizedBox(height: 20),
-        const Text(
-          'Select Who You Are',
-          style: TextStyle(
+        Text(
+          widget.title,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.titleColorExtraLight,
@@ -48,47 +55,46 @@ class SignupStep1 extends GetView<AuthController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomButton(
-              onPressed: controller.onStudentPress,
-              text: 'Student',
+              onPressed: widget.onFirstButtonPress,
+              text: widget.firstButtonText,
               width: 100,
               height: 40,
               elevation: 0,
-              color: (controller.userRole.value == 'student'
+              color: (widget.field == widget.firstButtonText.toLowerCase()
                   ? AppColors.mainColor
                   : AppColors.backgroundGrayMoreLight),
-              textcolor: (controller.userRole.value == 'student'
+              textcolor: (widget.field == widget.firstButtonText.toLowerCase()
                   ? Colors.white
                   : AppColors.descriptionColorExtraLight),
             ),
             CustomButton(
-              onPressed: controller.onTeacherPress,
-              text: 'Teacher',
+              onPressed: widget.onSecondButtonPress,
+              text: widget.secondButtonText,
               width: 100,
               height: 40,
               elevation: 0,
-              color: (controller.userRole.value == 'teacher'
+              color: (widget.field == widget.secondButtonText.toLowerCase()
                   ? AppColors.mainColor
                   : AppColors.backgroundGrayMoreLight),
-              textcolor: (controller.userRole.value == 'teacher'
+              textcolor: (widget.field == widget.secondButtonText.toLowerCase()
                   ? Colors.white
                   : AppColors.descriptionColorExtraLight),
             ),
             CustomButton(
-              onPressed: controller.onOwnerPress,
-              text: 'Owner',
+              onPressed: widget.onThirdButtonPress,
+              text: widget.thirdButtonText,
               width: 100,
               height: 40,
               elevation: 0,
-              color: (controller.userRole.value == 'owner'
+              color: (widget.field == widget.thirdButtonText.toLowerCase()
                   ? AppColors.mainColor
                   : AppColors.backgroundGrayMoreLight),
-              textcolor: (controller.userRole.value == 'owner'
+              textcolor: (widget.field == widget.thirdButtonText.toLowerCase()
                   ? Colors.white
                   : AppColors.descriptionColorExtraLight),
             )
           ],
         ),
-        const SizedBox(height: 50),
       ],
     );
   }

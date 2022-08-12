@@ -1,22 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:instituto/constants/global_variables.dart';
+import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/auth/widgets/otp_field_widget.dart';
 
-class SignupStep2PhoneVerify extends StatefulWidget {
-  final String mobileNumber;
-
-  const SignupStep2PhoneVerify({
-    Key? key,
-    required this.mobileNumber,
-  }) : super(key: key);
-
-  @override
-  State<SignupStep2PhoneVerify> createState() => SignupStep2PhoneVerifyState();
-}
-
-class SignupStep2PhoneVerifyState extends State<SignupStep2PhoneVerify> {
+class SignupStep2PhoneVerify extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,7 +31,7 @@ class SignupStep2PhoneVerifyState extends State<SignupStep2PhoneVerify> {
                   fontWeight: FontWeight.w600),
             ),
             Text(
-              widget.mobileNumber,
+              controller.mobileController.value.text,
               style: const TextStyle(
                   color: AppColors.mainColor,
                   fontSize: 16,

@@ -5,24 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/foundation/key.dart';
+import 'package:get/get.dart';
 import 'package:instituto/common/widgets/curve_widgets.dart';
 import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
+import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';
 import 'package:instituto/main.dart';
 import '/constants/global_variables.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends GetView<AuthController> {
   static const String routeName = '/login';
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   final _signInFormKey = GlobalKey<FormState>();
-  final TextEditingController _mobileController = TextEditingController();
+  final authController = Get.put((AuthController()));
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Padding(
                         padding: const EdgeInsets.only(top: 40, bottom: 15),
                         child: TextFormField(
-                            controller: _mobileController,
+                            controller: controller.mobileController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor:

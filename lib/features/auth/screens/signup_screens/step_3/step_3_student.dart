@@ -1,44 +1,25 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/widgets/custom_dropdown.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
+import 'package:instituto/constants/global_variables.dart';
+import 'package:instituto/controller/auth_controllers.dart';
 import 'package:multiselect/multiselect.dart';
 
-class SignupStep3Student extends StatefulWidget {
-  final TextEditingController instituteCodeController;
-  final String classDropdownValue;
-  final Rx<List<String>> selectedSubjectList;
-  final Function(String?)? onClassDropdownItemChange;
-  final Function(List<String>) onSubjectSlectionItemChange;
-  final List<String> classDropdowItems;
-  final List<String> subjectDropdownItems;
-
-  const SignupStep3Student({
-    Key? key,
-    required this.instituteCodeController,
-    required this.classDropdownValue,
-    required this.onClassDropdownItemChange,
-    required this.onSubjectSlectionItemChange,
-    required this.selectedSubjectList,
-    required this.classDropdowItems,
-    required this.subjectDropdownItems,
-  }) : super(key: key);
-
-  @override
-  State<SignupStep3Student> createState() => _SignupStep3StudentState();
-}
-
-class _SignupStep3StudentState extends State<SignupStep3Student> {
+class SignupStep3Student extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomTextField(
-            controller: widget.instituteCodeController,
+            controller: controller.instituteCodeController,
             hintText: 'Institute Code'),
         const SizedBox(
           height: 10,
@@ -47,18 +28,28 @@ class _SignupStep3StudentState extends State<SignupStep3Student> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomDropdown(
-              items: widget.classDropdowItems,
-              dropDownValue: widget.classDropdownValue,
-              onDropdownSelection: widget.onClassDropdownItemChange,
+              items: controller.class_dropdown_items,
+              dropDownValue: controller.classDropdownValue.value,
+              onDropdownSelection: controller.onClassDropdownValueChange,
             ),
-            // DropDownMultiSelect(
-            //   whenEmpty: 'Subjects',
-            //   options: subject_dropdown_items,
-            //   selectedValues: widget.selectedSubjectList.value,
-            //   onChanged: widget.onSubjectSlectionItemChange,
-            // )
+            CustomSelectionDropdown(
+              width: 150,
+              hintText: 'Subjects',
+              selectionOptions: controller.subject_dropdown_items,
+              selectedValues: controller.selectedBatchesList,
+              onChanged: controller.onSubjectSelectionItemChange,
+            ),
           ],
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 50),
+          child: CustomSelectionDropdown(
+            hintText: 'Select Batches',
+            selectionOptions: controller.batches_dropdown_items,
+            selectedValues: controller.selectedBatchesList,
+            onChanged: controller.onBatchesSelectionItemChange,
+          ),
+        ),
       ],
     );
   }
