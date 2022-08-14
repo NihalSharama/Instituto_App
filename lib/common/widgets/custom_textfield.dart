@@ -21,37 +21,33 @@ class CustomTextField extends StatelessWidget {
     this.textColor = AppColors.descriptionColorExtraLight,
     this.paddingTop = 8,
   }) : super(key: key);
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Form(
-        key: _formkey,
-        child: TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: fillColor,
-            hintText: hintText,
-            hintStyle: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.w500,
-            ),
-            contentPadding:
-                EdgeInsets.only(left: 20.0, bottom: 8.0, top: paddingTop),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.circular(5),
-            ),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: fillColor,
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.w500,
           ),
-          validator: validator,
+          contentPadding:
+              EdgeInsets.only(left: 20.0, bottom: 8.0, top: paddingTop),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(5),
+          ),
         ),
+        validator: validator,
       ),
     );
   }

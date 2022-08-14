@@ -4,9 +4,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  var class_dropdown_items = <String>[].obs;
-  var subject_dropdown_items = <String>[].obs;
-  var batches_dropdown_items = <String>[].obs;
+  final List<GlobalKey<FormState>> singupFormKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>()
+  ];
 
   var currentStep = 0.obs;
   Rx<String> userRole = 'student'.obs;
@@ -27,6 +30,18 @@ class AuthController extends GetxController {
   var emailController = TextEditingController();
   var aboutYourselfController = TextEditingController();
   var instituteAddressController = TextEditingController();
+
+  var class_dropdown_items = <String>[].obs;
+  var subject_dropdown_items = <String>[].obs;
+  var batches_dropdown_items = <String>[].obs;
+
+  // auth api functions
+  void onLogin(formkey) {
+    final isValid = formkey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+  }
 
   featchDropdownItem() {
     // inko api se mngvana ha singup ke vkt
@@ -60,8 +75,14 @@ class AuthController extends GetxController {
     ];
   }
 
+  // basic auth functions
   void onNextStep() {
-    currentStep.value == 3 ? null : currentStep.value++;
+    if (!singupFormKeys[currentStep.value].currentState!.validate()) {
+      return;
+    }
+    if (currentStep.value < 3) {
+      currentStep.value++;
+    }
   }
 
   void onPrevStep() {

@@ -18,7 +18,6 @@ class SignupScreen extends GetView<AuthController> {
   SignupScreen({Key? key}) : super(key: key);
   static const String routeName = '/signup';
   final authController = Get.put((AuthController()));
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +74,15 @@ class SignupScreen extends GetView<AuthController> {
                 type: StepperType.horizontal,
                 steps: getSteps(),
                 currentStep: controller.currentStep.value,
-                onStepContinue: controller.onNextStep,
+                onStepContinue: () {
+                  if (!controller.singupFormKeys[controller.currentStep.value]
+                      .currentState!
+                      .validate()) {
+                    return;
+                  }
+
+                  controller.currentStep++;
+                },
                 onStepCancel: controller.onPrevStep,
                 onStepTapped: (index) {
                   controller.currentStep.value = index;
@@ -108,11 +115,7 @@ class SignupScreen extends GetView<AuthController> {
                       )
                     } else ...{
                       CustomButton(
-                        // details.onStepContinue,
-                        onPressed: () {
-                          details.onStepContinue;
-                          print('Clicked');
-                        },
+                        onPressed: details.onStepContinue,
                         text: 'Next',
                         width: 130,
                         height: 40,
@@ -160,12 +163,13 @@ class SignupScreen extends GetView<AuthController> {
   List<Step> getSteps() {
     return [
       Step(
-          isActive: controller.currentStep.value >= 0,
-          state: controller.currentStep.value > 0
-              ? StepState.complete
-              : StepState.indexed,
-          title: const Text(''),
-          content: SignupStep1()),
+        isActive: controller.currentStep.value >= 0,
+        state: controller.currentStep.value > 0
+            ? StepState.complete
+            : StepState.indexed,
+        title: const Text(''),
+        content: SignupStep1(),
+      ),
       Step(
           isActive: controller.currentStep.value >= 1,
           state: controller.currentStep.value > 1
