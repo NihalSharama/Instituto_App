@@ -7,6 +7,8 @@ import 'package:instituto/common/widgets/triple_selection_buttons.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
 class SignupStep4Owner extends GetView<AuthController> {
+  const SignupStep4Owner({Key? key}) : super(key: key);
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () => Column(
@@ -15,12 +17,30 @@ class SignupStep4Owner extends GetView<AuthController> {
               child: Column(
             children: [
               CustomTextField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter Institute Address';
+                    }
+                    return null;
+                  },
                   controller: controller.instituteNameController,
                   hintText: 'Institute Address'),
               CustomTextField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter Email';
+                    }
+                    return null;
+                  },
                   controller: controller.emailController,
                   hintText: 'Your Email'),
               CustomTextField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'About Yourself';
+                  }
+                  return null;
+                },
                 controller: controller.aboutYourselfController,
                 hintText: 'About Yourself',
                 maxLines: 5,
@@ -38,7 +58,7 @@ class SignupStep4Owner extends GetView<AuthController> {
             onSecondButtonPress: controller.onFemalePress,
             onThirdButtonPress: controller.onOtherPress,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           )
         ],

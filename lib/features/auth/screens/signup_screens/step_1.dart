@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
@@ -10,6 +6,10 @@ import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
 class SignupStep1 extends GetView<AuthController> {
+  SignupStep1({Key? key}) : super(key: key);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,14 +18,33 @@ class SignupStep1 extends GetView<AuthController> {
             child: Column(
           children: [
             CustomTextField(
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Enter your First Name';
+                }
+                return null;
+              },
               controller: controller.firstNameController,
               hintText: 'First Name',
             ),
             CustomTextField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Enter Your Last Name';
+                  }
+                  return null;
+                },
                 controller: controller.lastNameController,
                 hintText: 'Last Name'),
             CustomTextField(
-                controller: controller.mobileController, hintText: 'Mobile No'),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Enter Your Moblie Name';
+                  }
+                  return null;
+                },
+                controller: controller.mobileController,
+                hintText: 'Mobile No'),
           ],
         )),
         const SizedBox(height: 20),

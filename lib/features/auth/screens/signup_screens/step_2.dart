@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instituto/constants/global_variables.dart';
@@ -7,6 +5,8 @@ import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/auth/widgets/otp_field_widget.dart';
 
 class SignupStep2PhoneVerify extends GetView<AuthController> {
+  const SignupStep2PhoneVerify({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,8 +40,8 @@ class SignupStep2PhoneVerify extends GetView<AuthController> {
           ],
         ),
         const SizedBox(height: 20),
-        OtpFieldWidget(),
-        SizedBox(height: 40),
+        const OtpFieldWidget(),
+        const SizedBox(height: 40),
         const Text(
           '01:59',
           style: TextStyle(
@@ -49,7 +49,7 @@ class SignupStep2PhoneVerify extends GetView<AuthController> {
               fontSize: 20,
               fontWeight: FontWeight.w500),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
@@ -69,7 +69,7 @@ class SignupStep2PhoneVerify extends GetView<AuthController> {
             )
           ],
         ),
-        SizedBox(height: 40),
+        const SizedBox(height: 40),
       ],
     );
   }

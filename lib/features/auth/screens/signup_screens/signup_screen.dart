@@ -15,9 +15,12 @@ import 'package:instituto/features/auth/screens/signup_screens/step_4/step_4_tea
 import '/constants/global_variables.dart';
 
 class SignupScreen extends GetView<AuthController> {
+  SignupScreen({Key? key}) : super(key: key);
   static const String routeName = '/signup';
   final authController = Get.put((AuthController()));
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -40,7 +43,7 @@ class SignupScreen extends GetView<AuthController> {
                     color: AppColors.mainColor,
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   (() {
                     if (controller.currentStep.value == 0) {
@@ -105,7 +108,11 @@ class SignupScreen extends GetView<AuthController> {
                       )
                     } else ...{
                       CustomButton(
-                        onPressed: details.onStepContinue,
+                        // details.onStepContinue,
+                        onPressed: () {
+                          details.onStepContinue;
+                          print('Clicked');
+                        },
                         text: 'Next',
                         width: 130,
                         height: 40,
@@ -165,7 +172,7 @@ class SignupScreen extends GetView<AuthController> {
               ? StepState.complete
               : StepState.indexed,
           title: const Text(''),
-          content: SignupStep2PhoneVerify()),
+          content: const SignupStep2PhoneVerify()),
       Step(
           isActive: controller.currentStep.value >= 2,
           state: controller.currentStep.value > 2
@@ -175,7 +182,7 @@ class SignupScreen extends GetView<AuthController> {
           content: Column(
             children: [
               if (controller.userRole.value == 'owner') ...{
-                SignupStep3Owner(),
+                const SignupStep3Owner(),
               } else if (controller.userRole.value == 'teacher') ...{
                 SignupStep3Teacher()
               } else if (controller.userRole.value == 'student') ...{
