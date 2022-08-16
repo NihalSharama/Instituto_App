@@ -14,42 +14,54 @@ class SignupStep3Owner extends GetView<AuthController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Form(
+              key: controller.singupFormKeys[2],
               child: Column(
-            children: [
-              CustomTextField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter Your Institue Code';
-                  }
-                  return null;
-                },
-                controller: controller.instituteCodeController,
-                hintText: 'Create Institute Code',
-              ),
-              CustomTextField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please Enter Institute Name';
-                  }
-                  return null;
-                },
-                controller: controller.instituteNameController,
-                hintText: 'Institute Name',
-              ),
-              CustomTextField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "enter your about";
-                  }
-                  return null;
-                },
-                controller: controller.aboutInstituteController,
-                hintText: 'About Your Institute',
-                maxLines: 5,
-                paddingTop: 15,
-              ),
-            ],
-          )),
+                children: [
+                  CustomTextField(
+                    keyboardType: TextInputType.text,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Enter Your Institue Code';
+                      }
+                      return null;
+                    },
+                    controller: controller.instituteCodeController,
+                    hintText: 'Create Institute Code',
+                  ),
+                  CustomTextField(
+                    keyboardType: TextInputType.name,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please Enter Institute Name';
+                      } else if (value.length <= 2) {
+                        return 'Name should contain atleast 3 letter';
+                      } else if (value.length > 20) {
+                        return 'Name Too long';
+                      }
+                      return null;
+                    },
+                    controller: controller.instituteNameController,
+                    hintText: 'Institute Name',
+                  ),
+                  CustomTextField(
+                    keyboardType: TextInputType.text,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Enter About Your Institute";
+                      } else if (value.length <= 2) {
+                        return 'Description Should Atleast Contain 3 Letters';
+                      } else if (value.length > 40) {
+                        return 'Description should be less then 40 letters';
+                      }
+                      return null;
+                    },
+                    controller: controller.aboutInstituteController,
+                    hintText: 'About Your Institute',
+                    maxLines: 5,
+                    paddingTop: 15,
+                  ),
+                ],
+              )),
           const SizedBox(height: 10),
           const Text(
             'Number Of Students',

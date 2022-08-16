@@ -13,53 +13,72 @@ class SignupStep4Student extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomTextField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Enter Father Name';
-              }
-              return null;
-            },
-            controller: controller.fathersNameController,
-            hintText: "Father's Name",
-          ),
-          CustomTextField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Enter Mother Name';
-              }
-              return null;
-            },
-            controller: controller.mothersNameController,
-            hintText: "Mother's Name",
-          ),
-          CustomTextField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Enter Your Email';
-              }
-              return null;
-            },
-            controller: controller.emailController,
-            hintText: "Your Email",
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 50),
-            child: TripleSelectionButtons(
-              field: controller.gender.value,
-              firstButtonText: 'Male',
-              secondButtonText: 'Female',
-              thirdButtonText: 'Other',
-              title: 'Gender',
-              onFirstButtonPress: controller.onMalePress,
-              onSecondButtonPress: controller.onFemalePress,
-              onThirdButtonPress: controller.onOtherPress,
+      () => Form(
+        key: controller.singupFormKeys[3],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomTextField(
+              keyboardType: TextInputType.name,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Enter Father Name';
+                } else if (value.length <= 2) {
+                  return 'Name should contain atleast 3 letter';
+                } else if (value.length > 20) {
+                  return 'Name Too long';
+                }
+                return null;
+              },
+              controller: controller.fathersNameController,
+              hintText: "Father's Name",
             ),
-          ),
-        ],
+            CustomTextField(
+              keyboardType: TextInputType.name,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Enter Mother Name';
+                } else if (value.length <= 2) {
+                  return 'Name should contain atleast 3 letter';
+                } else if (value.length > 20) {
+                  return 'Name Too long';
+                }
+                return null;
+              },
+              controller: controller.mothersNameController,
+              hintText: "Mother's Name",
+            ),
+            CustomTextField(
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Enter Your Email';
+                } else if (!RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    .hasMatch(value)) {
+                  return 'Entered Email Is Wrong';
+                }
+
+                return null;
+              },
+              controller: controller.emailController,
+              hintText: "Your Email",
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 50),
+              child: TripleSelectionButtons(
+                field: controller.gender.value,
+                firstButtonText: 'Male',
+                secondButtonText: 'Female',
+                thirdButtonText: 'Other',
+                title: 'Gender',
+                onFirstButtonPress: controller.onMalePress,
+                onSecondButtonPress: controller.onFemalePress,
+                onThirdButtonPress: controller.onOtherPress,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

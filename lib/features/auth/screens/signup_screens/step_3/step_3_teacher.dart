@@ -10,7 +10,9 @@ class SignupStep3Teacher extends GetView<AuthController> {
     return Column(
       children: [
         Form(
+          key: controller.singupFormKeys[2],
           child: CustomTextField(
+              keyboardType: TextInputType.text,
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Enter Institute Code ';

@@ -13,15 +13,19 @@ class SignupStep3Student extends GetView<AuthController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomTextField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Enter Institute Code ';
-              }
-              return null;
-            },
-            controller: controller.instituteCodeController,
-            hintText: 'Institute Code'),
+        Form(
+          key: controller.singupFormKeys[2],
+          child: CustomTextField(
+              keyboardType: TextInputType.text,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Enter Institute Code ';
+                }
+                return null;
+              },
+              controller: controller.instituteCodeController,
+              hintText: 'Institute Code'),
+        ),
         const SizedBox(
           height: 10,
         ),

@@ -42,7 +42,6 @@ class SignupScreen extends GetView<AuthController> {
                     color: AppColors.mainColor,
                   ),
                 ),
-                const SizedBox(height: 5),
                 Text(
                   (() {
                     if (controller.currentStep.value == 0) {
@@ -74,15 +73,7 @@ class SignupScreen extends GetView<AuthController> {
                 type: StepperType.horizontal,
                 steps: getSteps(),
                 currentStep: controller.currentStep.value,
-                onStepContinue: () {
-                  if (!controller.singupFormKeys[controller.currentStep.value]
-                      .currentState!
-                      .validate()) {
-                    return;
-                  }
-
-                  controller.currentStep++;
-                },
+                onStepContinue: authController.onNextStep,
                 onStepCancel: controller.onPrevStep,
                 onStepTapped: (index) {
                   controller.currentStep.value = index;

@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
   final Color fillColor;
   final Color textColor;
   final double paddingTop;
+  final TextInputType keyboardType;
 
   CustomTextField({
     Key? key,
@@ -20,13 +21,15 @@ class CustomTextField extends StatelessWidget {
     this.fillColor = AppColors.backgroundGrayExtraLight,
     this.textColor = AppColors.descriptionColorExtraLight,
     this.paddingTop = 8,
+    required this.keyboardType,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: TextFormField(
+        keyboardType: keyboardType,
         controller: controller,
         decoration: InputDecoration(
           filled: true,

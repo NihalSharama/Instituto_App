@@ -27,6 +27,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
               SizedBox(
                 width: 70,
                 child: TextFormField(
+                  keyboardType: TextInputType.phone,
                   onChanged: (val) {
                     if (val.length == 1) {
                       FocusScope.of(context).nextFocus();
@@ -64,6 +65,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
               SizedBox(
                 width: 70,
                 child: TextFormField(
+                  keyboardType: TextInputType.phone,
                   onChanged: (val) {
                     if (val.length == 1) {
                       FocusScope.of(context).nextFocus();
@@ -101,6 +103,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
               SizedBox(
                 width: 70,
                 child: TextFormField(
+                  keyboardType: TextInputType.phone,
                   onChanged: (val) {
                     if (val.length == 1) {
                       FocusScope.of(context).nextFocus();
@@ -138,6 +141,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
               SizedBox(
                 width: 70,
                 child: TextFormField(
+                  keyboardType: TextInputType.phone,
                   onChanged: (val) {
                     if (val.length == 1) {
                       FocusScope.of(context).nextFocus();

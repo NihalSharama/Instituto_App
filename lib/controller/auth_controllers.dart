@@ -80,6 +80,7 @@ class AuthController extends GetxController {
     if (!singupFormKeys[currentStep.value].currentState!.validate()) {
       return;
     }
+
     if (currentStep.value < 3) {
       currentStep.value++;
     }

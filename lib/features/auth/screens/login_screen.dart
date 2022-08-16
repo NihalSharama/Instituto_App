@@ -63,9 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.w800,
                               letterSpacing: 1.4)),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
                     const Text("Please sign in to continue",
                         style: TextStyle(
                             color: AppColors.descriptionColorLight,
@@ -77,8 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 40, bottom: 15),
+                            padding: const EdgeInsets.only(top: 30, bottom: 8),
                             child: CustomTextField(
+                                keyboardType: TextInputType.phone,
                                 controller: authController.mobileController,
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
@@ -100,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 35),
+                            padding: const EdgeInsets.only(top: 40),
                             child: CustomButton(
                               text: "Login",
                               onPressed: () =>

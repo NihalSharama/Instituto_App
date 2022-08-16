@@ -27,10 +27,15 @@ class _SignupStep1State extends State<SignupStep1> {
               child: Column(
                 children: [
                   CustomTextField(
+                    keyboardType: TextInputType.name,
                     validator: (value) {
                       print('value $value');
                       if (value == null || value.isEmpty) {
                         return 'Enter your First Name';
+                      } else if (value.length <= 2) {
+                        return 'Name should contain atleast 3 letter';
+                      } else if (value.length <= 2) {
+                        return 'Name Too long';
                       }
                       return null;
                     },
@@ -38,9 +43,14 @@ class _SignupStep1State extends State<SignupStep1> {
                     hintText: 'First Name',
                   ),
                   CustomTextField(
+                    keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter Your Last Name';
+                      } else if (value.length <= 2) {
+                        return 'Name should contain atleast 3 letter';
+                      } else if (value.length > 20) {
+                        return 'Name Too long';
                       }
                       return null;
                     },
@@ -48,9 +58,12 @@ class _SignupStep1State extends State<SignupStep1> {
                     hintText: 'Last Name',
                   ),
                   CustomTextField(
+                    keyboardType: TextInputType.phone,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter Your Moblie No.';
+                      } else if (value.length > 10 || value.length < 10) {
+                        return 'Length should have 10 digits';
                       }
                       return null;
                     },
