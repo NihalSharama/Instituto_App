@@ -101,6 +101,7 @@ class CustomSelectionDropdown extends StatelessWidget {
           ),
         ),
         decoration: InputDecoration(
+          hintText: hintText,
           filled: true,
           fillColor: fillColor,
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),

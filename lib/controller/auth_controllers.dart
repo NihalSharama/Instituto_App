@@ -4,12 +4,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  final List<GlobalKey<FormState>> singupFormKeys = [
-    GlobalKey<FormState>(),
-    GlobalKey<FormState>(),
-    GlobalKey<FormState>(),
-    GlobalKey<FormState>()
-  ];
+  // final List<GlobalKey<FormState>> singupFormKeys = [
+  //   GlobalKey<FormState>(),
+  //   GlobalKey<FormState>(),
+  //   GlobalKey<FormState>(),
+  //   GlobalKey<FormState>()
+  // ];
 
   var currentStep = 0.obs;
   Rx<String> userRole = 'student'.obs;
@@ -76,8 +76,8 @@ class AuthController extends GetxController {
   }
 
   // basic auth functions
-  void onNextStep() {
-    if (!singupFormKeys[currentStep.value].currentState!.validate()) {
+  void onNextStep(formKeys) {
+    if (!formKeys[currentStep.value].currentState!.validate()) {
       return;
     }
 

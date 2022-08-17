@@ -6,8 +6,17 @@ import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/common/widgets/triple_selection_buttons.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
-class SignupStep4Teacher extends GetView<AuthController> {
-  const SignupStep4Teacher({Key? key}) : super(key: key);
+class SignupStep4Teacher extends StatefulWidget {
+  const SignupStep4Teacher({Key? key, required this.signupFormKeys})
+      : super(key: key);
+  final List<GlobalKey<FormState>> signupFormKeys;
+
+  @override
+  State<SignupStep4Teacher> createState() => _SignupStep4TeacherState();
+}
+
+class _SignupStep4TeacherState extends State<SignupStep4Teacher> {
+  final authController = Get.put((AuthController()));
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +24,7 @@ class SignupStep4Teacher extends GetView<AuthController> {
       () => Column(
         children: [
           Form(
-              key: controller.singupFormKeys[3],
+              key: widget.signupFormKeys[3],
               child: Column(
                 children: [
                   CustomTextField(
@@ -31,7 +40,7 @@ class SignupStep4Teacher extends GetView<AuthController> {
 
                         return null;
                       },
-                      controller: controller.emailController,
+                      controller: authController.emailController,
                       hintText: 'Your Email'),
                   CustomTextField(
                     keyboardType: TextInputType.text,
@@ -45,7 +54,7 @@ class SignupStep4Teacher extends GetView<AuthController> {
                       }
                       return null;
                     },
-                    controller: controller.aboutYourselfController,
+                    controller: authController.aboutYourselfController,
                     hintText: 'About Yourself',
                     maxLines: 5,
                     paddingTop: 15,
@@ -54,14 +63,14 @@ class SignupStep4Teacher extends GetView<AuthController> {
               )),
           const SizedBox(height: 0),
           TripleSelectionButtons(
-            field: controller.gender.value,
+            field: authController.gender.value,
             firstButtonText: 'Male',
             secondButtonText: 'Female',
             thirdButtonText: 'Other',
             title: 'Gender',
-            onFirstButtonPress: controller.onMalePress,
-            onSecondButtonPress: controller.onFemalePress,
-            onThirdButtonPress: controller.onOtherPress,
+            onFirstButtonPress: authController.onMalePress,
+            onSecondButtonPress: authController.onFemalePress,
+            onThirdButtonPress: authController.onOtherPress,
           ),
           const SizedBox(height: 50)
         ],

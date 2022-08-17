@@ -14,10 +14,22 @@ import 'package:instituto/features/auth/screens/signup_screens/step_4/step_4_stu
 import 'package:instituto/features/auth/screens/signup_screens/step_4/step_4_teacher.dart';
 import '/constants/global_variables.dart';
 
-class SignupScreen extends GetView<AuthController> {
-  SignupScreen({Key? key}) : super(key: key);
+class SignupScreen extends StatefulWidget {
   static const String routeName = '/signup';
+  const SignupScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final authController = Get.put((AuthController()));
+  final List<GlobalKey<FormState>> singupFormKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +56,11 @@ class SignupScreen extends GetView<AuthController> {
                 ),
                 Text(
                   (() {
-                    if (controller.currentStep.value == 0) {
+                    if (authController.currentStep.value == 0) {
                       return "Hey there! 👋🏻";
-                    } else if (controller.currentStep.value == 1) {
+                    } else if (authController.currentStep.value == 1) {
                       return "Privacy is Priority 🤞";
-                    } else if (controller.currentStep.value == 2) {
+                    } else if (authController.currentStep.value == 2) {
                       return "Just one step ahead 😋";
                     } else {
                       return "Lets have it done 😉";
@@ -72,11 +84,11 @@ class SignupScreen extends GetView<AuthController> {
                 elevation: 0,
                 type: StepperType.horizontal,
                 steps: getSteps(),
-                currentStep: controller.currentStep.value,
-                onStepContinue: authController.onNextStep,
-                onStepCancel: controller.onPrevStep,
+                currentStep: authController.currentStep.value,
+                onStepContinue: () => authController.onNextStep(singupFormKeys),
+                onStepCancel: authController.onPrevStep,
                 onStepTapped: (index) {
-                  controller.currentStep.value = index;
+                  authController.currentStep.value = index;
                 },
                 controlsBuilder: (context, details) => (Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,51 +166,65 @@ class SignupScreen extends GetView<AuthController> {
   List<Step> getSteps() {
     return [
       Step(
-        isActive: controller.currentStep.value >= 0,
-        state: controller.currentStep.value > 0
+        isActive: authController.currentStep.value >= 0,
+        state: authController.currentStep.value > 0
             ? StepState.complete
             : StepState.indexed,
         title: const Text(''),
-        content: SignupStep1(),
+        content: SignupStep1(signupFormKeys: singupFormKeys),
       ),
       Step(
-          isActive: controller.currentStep.value >= 1,
-          state: controller.currentStep.value > 1
+          isActive: authController.currentStep.value >= 1,
+          state: authController.currentStep.value > 1
               ? StepState.complete
               : StepState.indexed,
           title: const Text(''),
-          content: const SignupStep2PhoneVerify()),
+          content: SignupStep2PhoneVerify(
+            signupFormKeys: singupFormKeys,
+          )),
       Step(
-          isActive: controller.currentStep.value >= 2,
-          state: controller.currentStep.value > 2
+          isActive: authController.currentStep.value >= 2,
+          state: authController.currentStep.value > 2
               ? StepState.complete
               : StepState.indexed,
           title: const Text(''),
           content: Column(
             children: [
-              if (controller.userRole.value == 'owner') ...{
-                const SignupStep3Owner(),
-              } else if (controller.userRole.value == 'teacher') ...{
-                SignupStep3Teacher()
-              } else if (controller.userRole.value == 'student') ...{
-                SignupStep3Student()
+              if (authController.userRole.value == 'owner') ...{
+                SignupStep3Owner(
+                  signupFormKeys: singupFormKeys,
+                ),
+              } else if (authController.userRole.value == 'teacher') ...{
+                SignupStep3Teacher(
+                  signupFormKeys: singupFormKeys,
+                )
+              } else if (authController.userRole.value == 'student') ...{
+                SignupStep3Student(
+                  signupFormKeys: singupFormKeys,
+                )
               }
             ],
           )),
       Step(
-          isActive: controller.currentStep.value >= 3,
-          state: controller.currentStep.value > 3
+          isActive: authController.currentStep.value >= 3,
+          state: authController.currentStep.value > 3
               ? StepState.complete
               : StepState.indexed,
           title: const Text(''),
           content: Column(
             children: [
-              if (controller.userRole.value == 'owner') ...{
-                SignupStep4Owner()
-              } else if (controller.userRole.value == 'student') ...{
-                SignupStep4Student()
-              } else if (controller.userRole.value == 'teacher') ...{
-                SignupStep4Teacher()
+              if (authController.userRole.value == 'owner') ...{
+                SignupStep4Owner(
+                  signupFormKeys: singupFormKeys,
+                )
+              } else if (authController.userRole.value == 'student') ...{
+                SignupStep4Student(
+                  signupFormKeys: singupFormKeys,
+                )
+              } else if (authController.userRole.value == 'teacher') ...{
+                SignupStep4Teacher(
+                  signupFormKeys: singupFormKeys,
+                )
               }
             ],
           )),

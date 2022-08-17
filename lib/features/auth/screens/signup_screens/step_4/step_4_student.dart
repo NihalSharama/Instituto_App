@@ -7,14 +7,23 @@ import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/common/widgets/triple_selection_buttons.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
-class SignupStep4Student extends GetView<AuthController> {
-  const SignupStep4Student({Key? key}) : super(key: key);
+class SignupStep4Student extends StatefulWidget {
+  const SignupStep4Student({Key? key, required this.signupFormKeys})
+      : super(key: key);
+  final List<GlobalKey<FormState>> signupFormKeys;
+
+  @override
+  State<SignupStep4Student> createState() => _SignupStep4StudentState();
+}
+
+class _SignupStep4StudentState extends State<SignupStep4Student> {
+  final authController = Get.put((AuthController()));
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Form(
-        key: controller.singupFormKeys[3],
+        key: widget.signupFormKeys[3],
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,7 +39,7 @@ class SignupStep4Student extends GetView<AuthController> {
                 }
                 return null;
               },
-              controller: controller.fathersNameController,
+              controller: authController.fathersNameController,
               hintText: "Father's Name",
             ),
             CustomTextField(
@@ -45,7 +54,7 @@ class SignupStep4Student extends GetView<AuthController> {
                 }
                 return null;
               },
-              controller: controller.mothersNameController,
+              controller: authController.mothersNameController,
               hintText: "Mother's Name",
             ),
             CustomTextField(
@@ -61,20 +70,20 @@ class SignupStep4Student extends GetView<AuthController> {
 
                 return null;
               },
-              controller: controller.emailController,
+              controller: authController.emailController,
               hintText: "Your Email",
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 50),
               child: TripleSelectionButtons(
-                field: controller.gender.value,
+                field: authController.gender.value,
                 firstButtonText: 'Male',
                 secondButtonText: 'Female',
                 thirdButtonText: 'Other',
                 title: 'Gender',
-                onFirstButtonPress: controller.onMalePress,
-                onSecondButtonPress: controller.onFemalePress,
-                onThirdButtonPress: controller.onOtherPress,
+                onFirstButtonPress: authController.onMalePress,
+                onSecondButtonPress: authController.onFemalePress,
+                onThirdButtonPress: authController.onOtherPress,
               ),
             ),
           ],

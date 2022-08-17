@@ -7,7 +7,8 @@ import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
 class SignupStep1 extends StatefulWidget {
-  const SignupStep1({Key? key}) : super(key: key);
+  const SignupStep1({Key? key, required this.signupFormKeys}) : super(key: key);
+  final List<GlobalKey<FormState>> signupFormKeys;
 
   @override
   State<SignupStep1> createState() => _SignupStep1State();
@@ -23,7 +24,7 @@ class _SignupStep1State extends State<SignupStep1> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Form(
-              key: authController.singupFormKeys[0],
+              key: widget.signupFormKeys[0],
               child: Column(
                 children: [
                   CustomTextField(

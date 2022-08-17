@@ -5,8 +5,17 @@ import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
-class SignupStep3Owner extends GetView<AuthController> {
-  const SignupStep3Owner({Key? key}) : super(key: key);
+class SignupStep3Owner extends StatefulWidget {
+  const SignupStep3Owner({Key? key, required this.signupFormKeys})
+      : super(key: key);
+  final List<GlobalKey<FormState>> signupFormKeys;
+  @override
+  State<SignupStep3Owner> createState() => _SignupStep3OwnerState();
+}
+
+class _SignupStep3OwnerState extends State<SignupStep3Owner> {
+  final authController = Get.put((AuthController()));
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -14,7 +23,7 @@ class SignupStep3Owner extends GetView<AuthController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Form(
-              key: controller.singupFormKeys[2],
+              key: widget.signupFormKeys[2],
               child: Column(
                 children: [
                   CustomTextField(
@@ -25,7 +34,7 @@ class SignupStep3Owner extends GetView<AuthController> {
                       }
                       return null;
                     },
-                    controller: controller.instituteCodeController,
+                    controller: authController.instituteCodeController,
                     hintText: 'Create Institute Code',
                   ),
                   CustomTextField(
@@ -40,7 +49,7 @@ class SignupStep3Owner extends GetView<AuthController> {
                       }
                       return null;
                     },
-                    controller: controller.instituteNameController,
+                    controller: authController.instituteNameController,
                     hintText: 'Institute Name',
                   ),
                   CustomTextField(
@@ -55,7 +64,7 @@ class SignupStep3Owner extends GetView<AuthController> {
                       }
                       return null;
                     },
-                    controller: controller.aboutInstituteController,
+                    controller: authController.aboutInstituteController,
                     hintText: 'About Your Institute',
                     maxLines: 5,
                     paddingTop: 15,
@@ -82,41 +91,41 @@ class SignupStep3Owner extends GetView<AuthController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomButton(
-                onPressed: controller.on500StudentPress,
+                onPressed: authController.on500StudentPress,
                 text: '0-500',
                 width: 100,
                 height: 40,
                 elevation: 0,
-                color: (controller.numberOfStudents.value == '500'
+                color: (authController.numberOfStudents.value == '500'
                     ? AppColors.mainColor
                     : AppColors.backgroundGrayMoreLight),
-                textcolor: (controller.numberOfStudents.value == '500'
+                textcolor: (authController.numberOfStudents.value == '500'
                     ? Colors.white
                     : AppColors.descriptionColorExtraLight),
               ),
               CustomButton(
-                onPressed: controller.on1000StudentPress,
+                onPressed: authController.on1000StudentPress,
                 text: '500-1000',
                 width: 100,
                 height: 40,
                 elevation: 0,
-                color: (controller.numberOfStudents.value == '1000'
+                color: (authController.numberOfStudents.value == '1000'
                     ? AppColors.mainColor
                     : AppColors.backgroundGrayMoreLight),
-                textcolor: (controller.numberOfStudents.value == '1000'
+                textcolor: (authController.numberOfStudents.value == '1000'
                     ? Colors.white
                     : AppColors.descriptionColorExtraLight),
               ),
               CustomButton(
-                onPressed: controller.on2000StudentPress,
+                onPressed: authController.on2000StudentPress,
                 text: '1000-2000',
                 width: 100,
                 height: 40,
                 elevation: 0,
-                color: (controller.numberOfStudents.value == '2000'
+                color: (authController.numberOfStudents.value == '2000'
                     ? AppColors.mainColor
                     : AppColors.backgroundGrayMoreLight),
-                textcolor: (controller.numberOfStudents.value == '2000'
+                textcolor: (authController.numberOfStudents.value == '2000'
                     ? Colors.white
                     : AppColors.descriptionColorExtraLight),
               )

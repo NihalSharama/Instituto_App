@@ -4,8 +4,17 @@ import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/auth/widgets/otp_field_widget.dart';
 
-class SignupStep2PhoneVerify extends GetView<AuthController> {
-  const SignupStep2PhoneVerify({Key? key}) : super(key: key);
+class SignupStep2PhoneVerify extends StatefulWidget {
+  const SignupStep2PhoneVerify({Key? key, required this.signupFormKeys})
+      : super(key: key);
+  final List<GlobalKey<FormState>> signupFormKeys;
+
+  @override
+  State<SignupStep2PhoneVerify> createState() => _SignupStep2PhoneVerifyState();
+}
+
+class _SignupStep2PhoneVerifyState extends State<SignupStep2PhoneVerify> {
+  final authController = Get.put((AuthController()));
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +40,7 @@ class SignupStep2PhoneVerify extends GetView<AuthController> {
                   fontWeight: FontWeight.w600),
             ),
             Text(
-              controller.mobileController.value.text,
+              authController.mobileController.value.text,
               style: const TextStyle(
                   color: AppColors.mainColor,
                   fontSize: 16,
@@ -40,7 +49,9 @@ class SignupStep2PhoneVerify extends GetView<AuthController> {
           ],
         ),
         const SizedBox(height: 20),
-        const OtpFieldWidget(),
+        OtpFieldWidget(
+          signupFormKeys: widget.signupFormKeys,
+        ),
         const SizedBox(height: 40),
         const Text(
           '01:59',

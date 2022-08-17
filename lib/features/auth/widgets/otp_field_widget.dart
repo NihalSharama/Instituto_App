@@ -6,9 +6,12 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:get/get.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
+import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';
 
 class OtpFieldWidget extends StatefulWidget {
-  const OtpFieldWidget({Key? key}) : super(key: key);
+  const OtpFieldWidget({Key? key, required this.signupFormKeys})
+      : super(key: key);
+  final List<GlobalKey<FormState>> signupFormKeys;
 
   @override
   State<OtpFieldWidget> createState() => _OtpFieldWidgetState();
@@ -16,10 +19,11 @@ class OtpFieldWidget extends StatefulWidget {
 
 class _OtpFieldWidgetState extends State<OtpFieldWidget> {
   final authController = Get.put((AuthController()));
+
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: authController.singupFormKeys[1],
+        key: widget.signupFormKeys[1],
         child: IntrinsicHeight(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

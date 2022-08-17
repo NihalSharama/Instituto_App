@@ -5,8 +5,17 @@ import 'package:instituto/common/widgets/custom_dropdown.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
-class SignupStep3Student extends GetView<AuthController> {
-  const SignupStep3Student({Key? key}) : super(key: key);
+class SignupStep3Student extends StatefulWidget {
+  const SignupStep3Student({Key? key, required this.signupFormKeys})
+      : super(key: key);
+  final List<GlobalKey<FormState>> signupFormKeys;
+
+  @override
+  State<SignupStep3Student> createState() => SignupStep3StudentState();
+}
+
+class SignupStep3StudentState extends State<SignupStep3Student> {
+  final authController = Get.put((AuthController()));
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +23,7 @@ class SignupStep3Student extends GetView<AuthController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Form(
-          key: controller.singupFormKeys[2],
+          key: widget.signupFormKeys[2],
           child: CustomTextField(
               keyboardType: TextInputType.text,
               validator: (value) {
@@ -23,7 +32,7 @@ class SignupStep3Student extends GetView<AuthController> {
                 }
                 return null;
               },
-              controller: controller.instituteCodeController,
+              controller: authController.instituteCodeController,
               hintText: 'Institute Code'),
         ),
         const SizedBox(
@@ -33,16 +42,16 @@ class SignupStep3Student extends GetView<AuthController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomDropdown(
-              items: controller.class_dropdown_items,
-              dropDownValue: controller.classDropdownValue.value,
-              onDropdownSelection: controller.onClassDropdownValueChange,
+              items: authController.class_dropdown_items,
+              dropDownValue: authController.classDropdownValue.value,
+              onDropdownSelection: authController.onClassDropdownValueChange,
             ),
             CustomSelectionDropdown(
               width: 150,
               hintText: 'Subjects',
-              selectionOptions: controller.subject_dropdown_items,
-              selectedValues: controller.selectedBatchesList,
-              onChanged: controller.onSubjectSelectionItemChange,
+              selectionOptions: authController.subject_dropdown_items,
+              selectedValues: authController.selectedBatchesList,
+              onChanged: authController.onSubjectSelectionItemChange,
             ),
           ],
         ),
@@ -50,9 +59,9 @@ class SignupStep3Student extends GetView<AuthController> {
           padding: const EdgeInsets.only(top: 20, bottom: 50),
           child: CustomSelectionDropdown(
             hintText: 'Select Batches',
-            selectionOptions: controller.batches_dropdown_items,
-            selectedValues: controller.selectedBatchesList,
-            onChanged: controller.onBatchesSelectionItemChange,
+            selectionOptions: authController.batches_dropdown_items,
+            selectedValues: authController.selectedBatchesList,
+            onChanged: authController.onBatchesSelectionItemChange,
           ),
         ),
       ],

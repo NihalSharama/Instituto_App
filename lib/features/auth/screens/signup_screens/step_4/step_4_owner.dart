@@ -6,15 +6,25 @@ import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/common/widgets/triple_selection_buttons.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
-class SignupStep4Owner extends GetView<AuthController> {
-  const SignupStep4Owner({Key? key}) : super(key: key);
+class SignupStep4Owner extends StatefulWidget {
+  const SignupStep4Owner({Key? key, required this.signupFormKeys})
+      : super(key: key);
+  final List<GlobalKey<FormState>> signupFormKeys;
+
+  @override
+  State<SignupStep4Owner> createState() => _SignupStep4OwnerState();
+}
+
+class _SignupStep4OwnerState extends State<SignupStep4Owner> {
+  final authController = Get.put((AuthController()));
+
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Column(
         children: [
           Form(
-              key: controller.singupFormKeys[3],
+              key: widget.signupFormKeys[3],
               child: Column(
                 children: [
                   CustomTextField(
@@ -25,7 +35,7 @@ class SignupStep4Owner extends GetView<AuthController> {
                         }
                         return null;
                       },
-                      controller: controller.instituteNameController,
+                      controller: authController.instituteNameController,
                       hintText: 'Institute Address'),
                   CustomTextField(
                       keyboardType: TextInputType.emailAddress,
@@ -40,7 +50,7 @@ class SignupStep4Owner extends GetView<AuthController> {
 
                         return null;
                       },
-                      controller: controller.emailController,
+                      controller: authController.emailController,
                       hintText: 'Your Email'),
                   CustomTextField(
                     keyboardType: TextInputType.text,
@@ -55,7 +65,7 @@ class SignupStep4Owner extends GetView<AuthController> {
 
                       return null;
                     },
-                    controller: controller.aboutYourselfController,
+                    controller: authController.aboutYourselfController,
                     hintText: 'About Yourself',
                     maxLines: 5,
                     paddingTop: 15,
@@ -63,14 +73,14 @@ class SignupStep4Owner extends GetView<AuthController> {
                 ],
               )),
           TripleSelectionButtons(
-            field: controller.gender.value,
+            field: authController.gender.value,
             firstButtonText: 'Male',
             secondButtonText: 'Female',
             thirdButtonText: 'Other',
             title: 'Gender',
-            onFirstButtonPress: controller.onMalePress,
-            onSecondButtonPress: controller.onFemalePress,
-            onThirdButtonPress: controller.onOtherPress,
+            onFirstButtonPress: authController.onMalePress,
+            onSecondButtonPress: authController.onFemalePress,
+            onThirdButtonPress: authController.onOtherPress,
           ),
           const SizedBox(
             height: 30,
