@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';
 import 'package:instituto/router.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: '.env');
+  await GetStorage.init();
   runApp(const MyApp());
 }
 

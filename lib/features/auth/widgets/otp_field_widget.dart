@@ -9,9 +9,9 @@ import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';
 
 class OtpFieldWidget extends StatefulWidget {
-  const OtpFieldWidget({Key? key, required this.signupFormKeys})
+  const OtpFieldWidget({Key? key, required this.otp_form_key})
       : super(key: key);
-  final List<GlobalKey<FormState>> signupFormKeys;
+  final GlobalKey<FormState> otp_form_key;
 
   @override
   State<OtpFieldWidget> createState() => _OtpFieldWidgetState();
@@ -23,7 +23,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: widget.signupFormKeys[1],
+        key: widget.otp_form_key,
         child: IntrinsicHeight(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,6 +36,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
                     if (val.length == 1) {
                       FocusScope.of(context).nextFocus();
                     }
+                    authController.enteredOtp.value += val;
                   },
                   style: TextStyle(height: 1.5, fontSize: 20),
                   decoration: InputDecoration(
@@ -74,6 +75,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
                     if (val.length == 1) {
                       FocusScope.of(context).nextFocus();
                     }
+                    authController.enteredOtp.value += val;
                   },
                   style: TextStyle(height: 1.5, fontSize: 20),
                   decoration: InputDecoration(
@@ -112,6 +114,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
                     if (val.length == 1) {
                       FocusScope.of(context).nextFocus();
                     }
+                    authController.enteredOtp.value += val;
                   },
                   style: TextStyle(height: 1.5, fontSize: 20),
                   decoration: InputDecoration(
@@ -150,6 +153,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
                     if (val.length == 1) {
                       FocusScope.of(context).nextFocus();
                     }
+                    authController.enteredOtp.value += val;
                   },
                   style: const TextStyle(height: 1.5, fontSize: 20),
                   decoration: InputDecoration(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
+import 'package:instituto/features/auth/services/auth_service.dart';
 import 'package:instituto/features/auth/widgets/otp_field_widget.dart';
 
 class SignupStep2PhoneVerify extends StatefulWidget {
@@ -36,21 +37,25 @@ class _SignupStep2PhoneVerifyState extends State<SignupStep2PhoneVerify> {
               'Enter The OTP Sent To - ',
               style: TextStyle(
                   color: AppColors.titleColorExtraLight,
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.w600),
             ),
-            Text(
-              authController.mobileController.value.text,
-              style: const TextStyle(
-                  color: AppColors.mainColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600),
+            GestureDetector(
+              onTap: () => authController.currentStep.value--,
+              child: Text(
+                authController.mobileController.value.text,
+                style: const TextStyle(
+                    color: AppColors.mainColor,
+                    decoration: TextDecoration.underline,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400),
+              ),
             ),
           ],
         ),
         const SizedBox(height: 20),
         OtpFieldWidget(
-          signupFormKeys: widget.signupFormKeys,
+          otp_form_key: widget.signupFormKeys[1],
         ),
         const SizedBox(height: 40),
         const Text(
@@ -63,20 +68,29 @@ class _SignupStep2PhoneVerifyState extends State<SignupStep2PhoneVerify> {
         const SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
+          children: [
+            const Text(
               "Haven't Recieved Code ? ",
               style: TextStyle(
                   color: AppColors.titleColorExtraLight,
                   fontSize: 16,
                   fontWeight: FontWeight.w500),
             ),
-            Text(
-              "Re-Send",
-              style: TextStyle(
-                  color: AppColors.mainColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500),
+            GestureDetector(
+              onTap: () {
+                RemoteServices.request_signup_otp(
+                    int.parse(authController.mobileController.text),
+                    authController.firstNameController.text,
+                    authController.lastNameController.text);
+              },
+              child: const Text(
+                "Re-Send",
+                style: TextStyle(
+                    color: AppColors.mainColor,
+                    decoration: TextDecoration.underline,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
+              ),
             )
           ],
         ),
