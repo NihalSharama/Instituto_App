@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
   final Color textColor;
   final double paddingTop;
   final TextInputType keyboardType;
+  final Function(String)? onChanged;
 
   CustomTextField({
     Key? key,
@@ -22,6 +23,7 @@ class CustomTextField extends StatelessWidget {
     this.textColor = AppColors.descriptionColorExtraLight,
     this.paddingTop = 8,
     required this.keyboardType,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,7 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: TextFormField(
+        onChanged: onChanged,
         keyboardType: keyboardType,
         controller: controller,
         decoration: InputDecoration(

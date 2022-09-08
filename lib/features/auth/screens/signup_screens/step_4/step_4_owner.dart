@@ -35,7 +35,7 @@ class _SignupStep4OwnerState extends State<SignupStep4Owner> {
                         }
                         return null;
                       },
-                      controller: authController.instituteNameController,
+                      controller: authController.instituteAddressController,
                       hintText: 'Institute Address'),
                   CustomTextField(
                       keyboardType: TextInputType.emailAddress,

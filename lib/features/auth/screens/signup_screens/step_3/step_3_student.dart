@@ -26,6 +26,7 @@ class SignupStep3StudentState extends State<SignupStep3Student> {
           key: widget.signupFormKeys[2],
           child: CustomTextField(
               keyboardType: TextInputType.text,
+              onChanged: (val) => {authController.featchDropdownItems(val)},
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Enter Institute Code ';

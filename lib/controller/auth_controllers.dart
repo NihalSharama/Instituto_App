@@ -33,29 +33,36 @@ class AuthController extends GetxController {
   var batches_dropdown_items = <String>[].obs;
 
   // auth api functions
-  void onRequestLoginOtp(formkey) {
+  void onRequestLoginOtp(formkey) async {
     final isValid = formkey.currentState!.validate();
     if (!isValid) {
       return;
     }
 
-    RemoteServices.request_login_otp(int.parse(mobileController.text));
-    loginStep.value++;
+    bool isError = await RemoteServices.request_login_otp(
+        int.parse(mobileController.text));
+
+    if (isError) loginStep.value++;
   }
 
-  void onVerifyAndLogin(formkey) {
+  void onVerifyAndLogin(formkey) async {
     final isValid = formkey.currentState!.validate();
     if (!isValid) {
       return;
     }
 
-    RemoteServices.verify_login_otp(
+    await RemoteServices.verify_login_otp(
         int.parse(mobileController.text), int.parse(enteredOtp.value));
   }
 
-  featchDropdownItem() {
-    // inko api se mngvana ha singup ke vkt
+  featchDropdownItems(String institute_code) async {
+    print('fetching');
+    List<String> subjects =
+        await RemoteServices.fetch_subjects_list(institute_code);
+    subject_dropdown_items.value = subjects;
+
     class_dropdown_items.value = [
+      // classes from api
       'Class 6th',
       'Class 7th',
       'Class 8th',
@@ -64,45 +71,77 @@ class AuthController extends GetxController {
       'Class 11th',
       'Class 12th',
     ];
+    classDropdownValue.value = class_dropdown_items.first;
 
-    subject_dropdown_items.value = [
-      'English',
-      'Maths',
-      'Physics',
-      'Chemistry',
-      'Economics',
-      'Biology',
-      'Buisness',
-    ];
+    List<String> batches = await RemoteServices.fetch_batches_list(
+        institute_code, subjects, classDropdownValue.value);
+    batches_dropdown_items.value =
+        batches; // filter batches according to selected subjects
+  }
 
-    batches_dropdown_items.value = [
-      'Arjuna 11th maths',
-      'Arjuna 11th physics',
-      'Arjuna 11th chemistry',
-      'Lakshya 12th maths',
-      'Lakshya 12th physics',
-      'Lakshya 12th chemistry',
+  featchDeafaultClasses() async {
+    class_dropdown_items.value = [
+      // default classes
+      'Class 6th',
+      'Class 7th',
+      'Class 8th',
+      'Class 9th',
+      'Class 10th',
+      'Class 11th',
+      'Class 12th',
     ];
   }
 
   // basic auth functions
-  void onNextStep(formKeys) {
+  void onNextStep(formKeys) async {
     if (!formKeys[currentStep.value].currentState!.validate()) {
       return;
     }
-    if (currentStep.value < 3) {
-      currentStep.value++;
-    }
     // sending otp
     print(currentStep.value);
-    if (currentStep.value == 1) {
-      RemoteServices.request_signup_otp(int.parse(mobileController.text),
-          firstNameController.text, lastNameController.text);
-      // currentStep.value++;
+    if (currentStep.value == 0) {
+      bool isError = await RemoteServices.request_signup_otp(
+          int.parse(mobileController.text),
+          firstNameController.text,
+          lastNameController.text);
+      if (isError) currentStep.value++;
+    } else if (currentStep.value == 1) {
+      bool isError = await RemoteServices.verify_signup_otp(
+          int.parse(mobileController.text),
+          int.parse(enteredOtp.value),
+          userRole.value);
+
+      if (isError) currentStep.value++;
     } else if (currentStep.value == 2) {
-      RemoteServices.verify_signup_otp(int.parse(mobileController.text),
-          int.parse(enteredOtp.value), userRole.value);
-      // currentStep.value++;
+      currentStep.value++;
+    } else if (currentStep.value == 3) {
+      bool isNoError;
+      if (userRole.value == 'student') {
+        isNoError = await RemoteServices.student_step3_4_endpoint(
+            instituteCodeController.text,
+            selectedBatchesList,
+            fathersNameController.text,
+            mothersNameController.text,
+            gender.value);
+      } else if (userRole.value == 'teacher') {
+        isNoError = await RemoteServices.teacher_step3_4_endpoint(
+            instituteCodeController.text,
+            aboutYourselfController.text,
+            emailController.text,
+            gender.value);
+      } else if (userRole.value == 'owner') {
+        isNoError = await RemoteServices.owner_step3_4_endpoint(
+            instituteCodeController.text,
+            instituteNameController.text,
+            aboutInstituteController.text,
+            numberOfStudents.value,
+            emailController.text,
+            aboutYourselfController.text,
+            gender.value,
+            instituteAddressController.text);
+      }
+
+      // if no error then nav to home
     }
   }
 
@@ -160,7 +199,7 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    featchDropdownItem(); // we have to fetch it on 3rd step after user giving institute code
+    featchDeafaultClasses();
     super.onInit();
   }
 

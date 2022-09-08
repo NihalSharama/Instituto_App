@@ -1,16 +1,16 @@
-import 'package:get_storage/get_storage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-Future<void> saveToken(String? token) async {
-  final box = GetStorage();
-  await box.write('token', token);
+saveToken(String token) async {
+  const storage = FlutterSecureStorage();
+  await storage.write(key: 'token', value: token);
 }
 
-String? getToken() {
-  final box = GetStorage();
-  return box.read('token');
+getToken() async {
+  const storage = FlutterSecureStorage();
+  return await storage.read(key: 'token');
 }
 
 Future<void> removeToken() async {
-  final box = GetStorage();
-  await box.remove('token');
+  const storage = FlutterSecureStorage();
+  await storage.delete(key: 'token');
 }
