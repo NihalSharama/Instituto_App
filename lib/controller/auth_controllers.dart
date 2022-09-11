@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/constants/global_variables.dart';
+import 'package:instituto/features/auth/screens/home/home_screen.dart';
 import 'package:instituto/features/auth/services/auth_service.dart';
 
 class AuthController extends GetxController {
   var currentStep = 0.obs;
+  var isAuthenticated = true;
   Rx<String> userRole = 'student'.obs;
   Rx<String> gender = 'male'.obs;
   Rx<String> numberOfStudents = '500'.obs;
@@ -39,20 +42,25 @@ class AuthController extends GetxController {
       return;
     }
 
-    bool isError = await RemoteServices.request_login_otp(
+    bool isNoError = await RemoteServices.request_login_otp(
         int.parse(mobileController.text));
 
-    if (isError) loginStep.value++;
+    if (isNoError) loginStep.value++;
   }
 
-  void onVerifyAndLogin(formkey) async {
+  void onVerifyAndLogin(formkey, context) async {
     final isValid = formkey.currentState!.validate();
     if (!isValid) {
       return;
     }
 
-    await RemoteServices.verify_login_otp(
+    bool isNoError = await RemoteServices.verify_login_otp(
         int.parse(mobileController.text), int.parse(enteredOtp.value));
+
+    if (isNoError) {
+      isAuthenticated = true;
+      Navigator.pushNamed(context, HomePage.routeName);
+    }
   }
 
   featchDropdownItems(String institute_code) async {
@@ -93,7 +101,7 @@ class AuthController extends GetxController {
   }
 
   // basic auth functions
-  void onNextStep(formKeys) async {
+  void onNextStep(formKeys, context) async {
     if (!formKeys[currentStep.value].currentState!.validate()) {
       return;
     }
@@ -115,7 +123,7 @@ class AuthController extends GetxController {
     } else if (currentStep.value == 2) {
       currentStep.value++;
     } else if (currentStep.value == 3) {
-      bool isNoError;
+      bool isNoError = false;
       if (userRole.value == 'student') {
         isNoError = await RemoteServices.student_step3_4_endpoint(
             instituteCodeController.text,
@@ -141,7 +149,10 @@ class AuthController extends GetxController {
             instituteAddressController.text);
       }
 
-      // if no error then nav to home
+      if (isNoError) {
+        isAuthenticated = true;
+        Navigator.pushNamed(context, HomePage.routeName);
+      }
     }
   }
 

@@ -157,8 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: CustomButton(
                                     text: "Verify & Login",
                                     onPressed: () {
-                                      authController
-                                          .onVerifyAndLogin(otp_form_key);
+                                      authController.onVerifyAndLogin(
+                                          otp_form_key, context);
                                     },
                                   )),
                               const SizedBox(height: 40),

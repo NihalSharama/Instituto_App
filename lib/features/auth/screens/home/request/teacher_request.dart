@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instituto/features/auth/screens/request/student_request_to_teacher.dart';
+import 'package:instituto/features/auth/screens/home/request/student_request_to_teacher.dart';
 
 class TeacherRequest extends StatefulWidget {
+  static const String routeName = '/request';
   const TeacherRequest({Key? key}) : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class _TeacherRequestState extends State<TeacherRequest> {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           onPressed: () {},
-          icon: SvgPicture.asset('assets/icons/back_button_icon.svg '),
+          icon: Icon(Icons.arrow_back_ios, size: 15),
         ),
         title: const Text(
           "Teacher\'s Request",

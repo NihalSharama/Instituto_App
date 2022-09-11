@@ -20,14 +20,7 @@ class Circual_CurveState extends State<CircualCurve> {
   }
 }
 
-class AppbarCurve extends StatefulWidget {
-  const AppbarCurve({Key? key}) : super(key: key);
-
-  @override
-  State<AppbarCurve> createState() => AppbarCurveState();
-}
-
-class AppbarCurveState extends State<AppbarCurve> {
+class AppbarCurve extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(

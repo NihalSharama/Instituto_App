@@ -6,15 +6,20 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:instituto/common/utils/chache_manager.dart';
+import 'package:instituto/common/widgets/curve_widgets.dart';
 import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/common/widgets/custom_clipper.dart';
 
 import 'package:instituto/constants/global_variables.dart';
+import 'package:instituto/features/auth/screens/custom_bottom_navigation.dart';
+import 'package:instituto/features/auth/screens/login_screen.dart';
 
 import '../../../../controller/auth_controllers.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
+  static const String routeName = '/home';
 
   @override
   State<HomePage> createState() => _HomePage();
@@ -26,6 +31,15 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+
+    Future.delayed(Duration.zero, () async {
+      var token = await getToken();
+      if (token == null) {
+        authController.isAuthenticated = false;
+        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+      }
+    });
+
     super.initState();
   }
 
@@ -39,18 +53,16 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: [
-          ClipPath(
-            clipper: BgClipper(),
-            child: Container(
-              width: width * 0.99,
-              color: AppColors.mainColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Container(
+          Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(StaticImages.appBarCurve),
+                    fit: BoxFit.contain,
+                    alignment: Alignment.topCenter)),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
               child: Column(
                 children: [
                   Column(
@@ -73,15 +85,21 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                         height: 20,
                       ),
                       const Text(
-                        'Hi, Aditya Paswan',
+                        'Hi, Nihal Sharma',
                         style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
                       ),
+                      const SizedBox(
+                        height: 3,
+                      ),
                       const Text(
                         "OWNER",
                         style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                      const SizedBox(
+                        height: 3,
                       ),
                       const Text(
                         "@success_point",
@@ -148,6 +166,7 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {}, child: SvgPicture.asset('assets/icons/plus.svg')),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }

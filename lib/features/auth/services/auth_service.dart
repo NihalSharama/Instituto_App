@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -27,9 +25,9 @@ class RemoteServices {
         }),
       );
       Map mapRes = json.decode(response.body);
-      print(mapRes);
-      bool isServerError = await error_handler(mapRes);
-      return isServerError;
+      print('otp: ${mapRes['data']['otp']}');
+      bool isNoServerError = await error_handler(mapRes);
+      return isNoServerError;
     } catch (_) {
       Fluttertoast.showToast(
         msg: 'Something went wrong',
@@ -54,19 +52,20 @@ class RemoteServices {
         }),
       );
       Map mapRes = json.decode(response.body);
-      await saveToken(mapRes['data']['token']);
-      bool isServerError = await error_handler(mapRes);
-      return isServerError;
-      // navigate to home
-
+      bool isNoServerError = await error_handler(mapRes);
+      if (isNoServerError) {
+        await saveToken(mapRes['data']['token']);
+      }
+      return isNoServerError;
     } catch (e) {
-      print(e);
       Fluttertoast.showToast(
         msg: 'Something went wrong',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         backgroundColor: Colors.redAccent,
       );
+
+      return false;
     }
   }
 
@@ -149,8 +148,8 @@ class RemoteServices {
         }),
       );
       Map mapRes = json.decode(response.body);
-      bool isServerError = await error_handler(mapRes);
-      return isServerError;
+      bool isNoServerError = await error_handler(mapRes);
+      return isNoServerError;
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Something went wrong',
@@ -179,8 +178,8 @@ class RemoteServices {
         }),
       );
       Map mapRes = json.decode(response.body);
-      bool isServerError = await error_handler(mapRes);
-      return isServerError;
+      bool isNoServerError = await error_handler(mapRes);
+      return isNoServerError;
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Something went wrong',
@@ -222,8 +221,8 @@ class RemoteServices {
       print('token');
       print(getToken());
       Map mapRes = json.decode(response.body);
-      bool isServerError = await error_handler(mapRes);
-      return isServerError;
+      bool isNoServerError = await error_handler(mapRes);
+      return isNoServerError;
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Something went wrong',

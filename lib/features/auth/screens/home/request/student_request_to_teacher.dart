@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../constants/global_variables.dart';
+import '../../../../../constants/global_variables.dart';
 
 class StudentRequestToTeacher extends StatelessWidget {
   const StudentRequestToTeacher({Key? key}) : super(key: key);

@@ -85,7 +85,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 type: StepperType.horizontal,
                 steps: getSteps(),
                 currentStep: authController.currentStep.value,
-                onStepContinue: () => authController.onNextStep(singupFormKeys),
+                onStepContinue: () =>
+                    authController.onNextStep(singupFormKeys, context),
                 onStepCancel: authController.onPrevStep,
                 onStepTapped: (index) {
                   authController.currentStep.value = index;
