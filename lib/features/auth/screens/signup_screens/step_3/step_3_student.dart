@@ -51,7 +51,7 @@ class SignupStep3StudentState extends State<SignupStep3Student> {
               width: 150,
               hintText: 'Subjects',
               selectionOptions: authController.subject_dropdown_items,
-              selectedValues: authController.selectedBatchesList,
+              selectedValues: authController.selectedSubjectList,
               onChanged: authController.onSubjectSelectionItemChange,
             ),
           ],

@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/features/auth/screens/home/home_screen.dart';
+import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/auth/services/auth_service.dart';
 
 class AuthController extends GetxController {
@@ -42,8 +42,8 @@ class AuthController extends GetxController {
       return;
     }
 
-    bool isNoError = await RemoteServices.request_login_otp(
-        int.parse(mobileController.text));
+    bool isNoError =
+        await AuthServices.request_login_otp(int.parse(mobileController.text));
 
     if (isNoError) loginStep.value++;
   }
@@ -54,19 +54,18 @@ class AuthController extends GetxController {
       return;
     }
 
-    bool isNoError = await RemoteServices.verify_login_otp(
+    bool isNoError = await AuthServices.verify_login_otp(
         int.parse(mobileController.text), int.parse(enteredOtp.value));
 
     if (isNoError) {
       isAuthenticated = true;
-      Navigator.pushNamed(context, HomePage.routeName);
+      Navigator.pushNamed(context, HomePage.routeName); // navigate to dashboard
     }
   }
 
   featchDropdownItems(String institute_code) async {
-    print('fetching');
     List<String> subjects =
-        await RemoteServices.fetch_subjects_list(institute_code);
+        await AuthServices.fetch_subjects_list(institute_code);
     subject_dropdown_items.value = subjects;
 
     class_dropdown_items.value = [
@@ -81,7 +80,7 @@ class AuthController extends GetxController {
     ];
     classDropdownValue.value = class_dropdown_items.first;
 
-    List<String> batches = await RemoteServices.fetch_batches_list(
+    List<String> batches = await AuthServices.fetch_batches_list(
         institute_code, subjects, classDropdownValue.value);
     batches_dropdown_items.value =
         batches; // filter batches according to selected subjects
@@ -108,13 +107,13 @@ class AuthController extends GetxController {
     // sending otp
     print(currentStep.value);
     if (currentStep.value == 0) {
-      bool isError = await RemoteServices.request_signup_otp(
+      bool isError = await AuthServices.request_signup_otp(
           int.parse(mobileController.text),
           firstNameController.text,
           lastNameController.text);
       if (isError) currentStep.value++;
     } else if (currentStep.value == 1) {
-      bool isError = await RemoteServices.verify_signup_otp(
+      bool isError = await AuthServices.verify_signup_otp(
           int.parse(mobileController.text),
           int.parse(enteredOtp.value),
           userRole.value);
@@ -125,20 +124,20 @@ class AuthController extends GetxController {
     } else if (currentStep.value == 3) {
       bool isNoError = false;
       if (userRole.value == 'student') {
-        isNoError = await RemoteServices.student_step3_4_endpoint(
+        isNoError = await AuthServices.student_step3_4_endpoint(
             instituteCodeController.text,
             selectedBatchesList,
             fathersNameController.text,
             mothersNameController.text,
             gender.value);
       } else if (userRole.value == 'teacher') {
-        isNoError = await RemoteServices.teacher_step3_4_endpoint(
+        isNoError = await AuthServices.teacher_step3_4_endpoint(
             instituteCodeController.text,
             aboutYourselfController.text,
             emailController.text,
             gender.value);
       } else if (userRole.value == 'owner') {
-        isNoError = await RemoteServices.owner_step3_4_endpoint(
+        isNoError = await AuthServices.owner_step3_4_endpoint(
             instituteCodeController.text,
             instituteNameController.text,
             aboutInstituteController.text,

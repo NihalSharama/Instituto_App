@@ -1,12 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:instituto/controller/alerts_controller.dart';
+import 'package:instituto/features/alerts/widgets/assign_class_subject_popup.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../constants/global_variables.dart';
 
-class StudentRequestToTeacher extends StatelessWidget {
-  const StudentRequestToTeacher({Key? key}) : super(key: key);
+class RequestComponent extends StatelessWidget {
+  final String name;
+  final String mobile;
+  final String subject;
+  final altersController = Get.put((AlertsController()));
+  RequestComponent(
+      {Key? key,
+      required this.name,
+      required this.mobile,
+      required this.subject})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +54,14 @@ class StudentRequestToTeacher extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Nihal Sharma",
-                            style: TextStyle(
+                          Text(
+                            name,
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w700),
                           ),
-                          const Text(
-                            "Physics",
-                            style: TextStyle(
+                          Text(
+                            subject,
+                            style: const TextStyle(
                                 fontSize: 12, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 3),
@@ -58,15 +70,15 @@ class StudentRequestToTeacher extends StatelessWidget {
                               GestureDetector(
                                   onTap: () {},
                                   child: Row(
-                                    children: const [
-                                      Icon(
+                                    children: [
+                                      const Icon(
                                         Icons.phone_android_outlined,
                                         color: AppColors.mainColor,
                                         size: 12,
                                       ),
                                       Text(
-                                        "+91 9818756512",
-                                        style: TextStyle(
+                                        mobile,
+                                        style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
                                           decoration: TextDecoration.underline,
@@ -92,7 +104,6 @@ class StudentRequestToTeacher extends StatelessWidget {
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 10),
-                      // CustomButton(onPressed: () {}, text: "login")
                       Row(
                         children: [
                           ConstrainedBox(
@@ -116,7 +127,15 @@ class StudentRequestToTeacher extends StatelessWidget {
                             constraints: const BoxConstraints.tightFor(
                                 height: 27, width: 75),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                altersController.featchSubjects('1234');
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AssignClassSubPopup(
+                                          name: name, mobile: mobile);
+                                    });
+                              },
                               style: ElevatedButton.styleFrom(
                                   textStyle: const TextStyle(
                                       fontSize: 9.5,

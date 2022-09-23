@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/features/auth/screens/home/batches/batches_screen.dart';
-import 'package:instituto/features/auth/screens/home/chats/chats_screen.dart';
-import 'package:instituto/features/auth/screens/home/home_screen.dart';
-import 'package:instituto/features/auth/screens/home/notification/notification_screen.dart';
-import 'package:instituto/features/auth/screens/home/profile_screen.dart';
+import 'package:instituto/features/batches/screens/batches_screen.dart';
+import 'package:instituto/features/chats/chats_screen.dart';
+import 'package:instituto/features/home/screens/home_screen.dart';
+import 'package:instituto/features/alerts/screens/notification_screen.dart';
+import 'package:instituto/features/profile/screens/profile_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -16,18 +16,18 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
-  // static final List<Widget> _widgetOptions = <Widget>[
-  //   HomePage(),
-  //   Text("Messages"),
-  //   Text("Batches"),
-  //   Text("Notifications"),
-  //   Text("Profile"),
-  // ];
+
   void _onItemTapped(int index) {
     if (index == 0) {
-      Navigator.pushNamed(context, HomePage.routeName);
+      Navigator.pushNamed(
+        context,
+        HomePage.routeName,
+      );
     } else if (index == 1) {
-      Navigator.pushNamed(context, RecentChatsScreen.routeName);
+      Navigator.pushNamed(
+        context,
+        RecentChatsScreen.routeName,
+      );
     } else if (index == 2) {
       Navigator.pushNamed(context, BatchesScreen.routeName);
     } else if (index == 3) {

@@ -21,13 +21,13 @@ class CustomDropdown extends StatelessWidget {
     required this.onDropdownSelection,
     this.fillColor = const Color.fromARGB(255, 231, 231, 231),
     this.textColor = AppColors.descriptionColorExtraLight,
-    this.width = double.infinity,
+    this.width = 150,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
+      width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5), color: fillColor),
       child: Center(

@@ -6,10 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/common/utils/error_handler_toaster.dart';
+import 'package:instituto/common/utils/toaster_message.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
-class RemoteServices {
+class AuthServices {
   static var client = http.Client();
 
   // Login
@@ -55,16 +56,11 @@ class RemoteServices {
       bool isNoServerError = await error_handler(mapRes);
       if (isNoServerError) {
         await saveToken(mapRes['data']['token']);
+        await saveRefresh(mapRes['data']['refresh']);
       }
       return isNoServerError;
     } catch (e) {
-      Fluttertoast.showToast(
-        msg: 'Something went wrong',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.redAccent,
-      );
-
+      toasterUnknownFailure();
       return false;
     }
   }
@@ -112,6 +108,7 @@ class RemoteServices {
       );
       Map mapRes = json.decode(response.body);
       await saveToken(mapRes['data']['token']);
+      await saveRefresh(mapRes['data']['refresh']);
 
       bool isServerError = await error_handler(mapRes);
       return isServerError;

@@ -78,7 +78,7 @@ class _SignupStep2PhoneVerifyState extends State<SignupStep2PhoneVerify> {
             ),
             GestureDetector(
               onTap: () {
-                RemoteServices.request_signup_otp(
+                AuthServices.request_signup_otp(
                     int.parse(authController.mobileController.text),
                     authController.firstNameController.text,
                     authController.lastNameController.text);

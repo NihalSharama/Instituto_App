@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instituto/features/auth/screens/home/batches/batches_screen.dart';
-import 'package:instituto/features/auth/screens/home/chats/chats_screen.dart';
-import 'package:instituto/features/auth/screens/home/home_screen.dart';
-import 'package:instituto/features/auth/screens/home/notification/notification_screen.dart';
-import 'package:instituto/features/auth/screens/home/request/teacher_request.dart';
+import 'package:instituto/features/alerts/screens/requests_to_join.dart';
+import 'package:instituto/features/batches/screens/batches_screen.dart';
+import 'package:instituto/features/chats/chats_screen.dart';
+import 'package:instituto/features/home/screens/home_screen.dart';
+import 'package:instituto/features/alerts/screens/notification_screen.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';
 
@@ -13,41 +13,46 @@ Route<dynamic> genarateRoute(RouteSettings routeSettings) {
   //  NOTE : auth routes, home flow ke routes ko alg alg file me bnakr idhr combine krna ha
   switch (routeSettings.name) {
     case LoginScreen.routeName:
-      return MaterialPageRoute(
+      return PageRouteBuilder(
         settings: routeSettings,
-        builder: (_) => const LoginScreen(),
+        pageBuilder: (_, __, ___) => const LoginScreen(),
       );
 
     case SignupScreen.routeName:
-      return MaterialPageRoute(
+      return PageRouteBuilder(
         settings: routeSettings,
-        builder: (_) => const SignupScreen(),
-      );
-    case HomePage.routeName:
-      return MaterialPageRoute(
-        settings: routeSettings,
-        builder: (_) => const HomePage(),
-      );
-    case RecentChatsScreen.routeName:
-      return MaterialPageRoute(
-        settings: routeSettings,
-        builder: (_) => const RecentChatsScreen(),
-      );
-    case BatchesScreen.routeName:
-      return MaterialPageRoute(
-        settings: routeSettings,
-        builder: (_) => const BatchesScreen(),
-      );
-    case NotificationScreen.routeName:
-      return MaterialPageRoute(
-        settings: routeSettings,
-        builder: (_) => const NotificationScreen(),
+        pageBuilder: (_, __, ___) => const SignupScreen(),
       );
 
-    case TeacherRequest.routeName:
+    case HomePage.routeName:
+      return PageRouteBuilder(
+        transitionDuration: Duration.zero,
+        settings: routeSettings,
+        pageBuilder: (_, __, ___) => const HomePage(),
+      );
+    case RecentChatsScreen.routeName:
+      return PageRouteBuilder(
+        transitionDuration: Duration.zero,
+        settings: routeSettings,
+        pageBuilder: (_, __, ___) => const RecentChatsScreen(),
+      );
+    case BatchesScreen.routeName:
+      return PageRouteBuilder(
+        transitionDuration: Duration.zero,
+        settings: routeSettings,
+        pageBuilder: (_, __, ___) => const BatchesScreen(),
+      );
+    case NotificationScreen.routeName:
+      return PageRouteBuilder(
+        transitionDuration: Duration.zero,
+        settings: routeSettings,
+        pageBuilder: (_, __, ___) => const NotificationScreen(),
+      );
+
+    case RequestsToJoin.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const TeacherRequest(),
+        builder: (_) => const RequestsToJoin(),
       );
 
     default:

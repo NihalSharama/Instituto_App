@@ -15,3 +15,18 @@ Future<void> removeToken() async {
   const storage = FlutterSecureStorage();
   await storage.delete(key: 'token');
 }
+
+saveRefresh(String refresh) async {
+  const storage = FlutterSecureStorage();
+  await storage.write(key: 'refresh', value: refresh);
+}
+
+getRefresh() async {
+  const storage = FlutterSecureStorage();
+  return await storage.read(key: 'refresh');
+}
+
+Future<void> removeRefresh() async {
+  const storage = FlutterSecureStorage();
+  await storage.delete(key: 'refresh');
+}

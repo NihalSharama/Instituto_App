@@ -5,12 +5,11 @@ import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
 import 'package:instituto/features/auth/screens/login_screen.dart';
-import 'package:instituto/features/auth/screens/home/request/teacher_request.dart';
 import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';
 import 'package:instituto/router.dart';
 
 import 'features/auth/screens/custom_bottom_navigation.dart';
-import 'features/auth/screens/home/home_screen.dart';
+import 'features/home/screens/home_screen.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
