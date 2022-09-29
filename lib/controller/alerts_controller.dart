@@ -33,9 +33,9 @@ class AlertsController extends GetxController {
     ];
   }
 
-  featchTacherRequest() async {
-    // await AlertsServices.getTeacheresRequest();
-    // teachersRequestToJoin.value = teacherRequests;
+  Future<String> featchTacherRequest() async {
+    final teacherRequests = await AlertsServices.getTeacheresRequest();
+    teachersRequestToJoin.value = teacherRequests;
 
     teachersRequestToJoin.value = [
       {
@@ -63,6 +63,8 @@ class AlertsController extends GetxController {
         'subject': 'Physics'
       },
     ];
+
+    return 'lmao';
   }
 
   onClassSelectionItemChange(List<String> selectedItems) {
@@ -85,7 +87,7 @@ class AlertsController extends GetxController {
 
   @override
   void onInit() {
-    featchTacherRequest();
+    // featchTacherRequest();
     super.onInit();
   }
 

@@ -11,9 +11,12 @@ import 'package:instituto/common/utils/toaster_message.dart';
 class AlertsServices {
   static var client = http.Client();
 
-  static getTeacheresRequest() async {
-    var res =
+  static Future<List> getTeacheresRequest() async {
+    Map<dynamic, dynamic> res =
         await RequestMethods.get_method('institute/teacher_requests/', true);
+    var data = res['data']['data'] as List;
+
+    return data;
   }
 
   static assignSubjectsClassesService(

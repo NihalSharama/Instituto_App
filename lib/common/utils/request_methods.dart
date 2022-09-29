@@ -21,26 +21,25 @@ class RequestMethods {
                 'Content-Type': 'application/json; charset=UTF-8',
               }));
 
+    Map mapRes = json.decode(response.body);
+
     // make an util for token validation
-    if (json
-        .decode(response.body)['messages'][0]['message']
-        .contains('expired')) {
-      // check for refresh token expire, if not expired then featch new token
-      var refresh = await getRefresh();
-      Map<String, dynamic> refreshDecoded = JwtDecoder.decode(refresh);
-      bool isRefreshExp = JwtDecoder.isExpired(refresh);
+    // if (mapRes['messages'][0]['message'].contains('expired')) {
+    //   // check for refresh token expire, if not expired then featch new token
+    //   var refresh = await getRefresh();
+    //   Map<String, dynamic> refreshDecoded = JwtDecoder.decode(refresh);
+    //   bool isRefreshExp = JwtDecoder.isExpired(refresh);
 
-      print(refreshDecoded);
-      if (isRefreshExp) {
-        // logout
-      }
+    //   print(refreshDecoded);
+    //   if (isRefreshExp) {
+    //     // logout
+    //   }
 
-      // get new token
-      // then, again request for data
-    }
+    //   // get new token
+    //   // then, again request for data
+    // }
 
-    print(json.decode(response.body)['messages'][0]['message']);
-    return json.decode(response.body);
+    return mapRes;
   }
 
   static Future<Map> post_method(String path, Object data) async {
