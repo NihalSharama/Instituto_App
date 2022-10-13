@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instituto/features/alerts/screens/requests_to_join.dart';
-import 'package:instituto/features/batches/screens/batches_screen.dart';
+import 'package:instituto/features/batch/screens/batch_screen.dart';
+import 'package:instituto/features/batch/screens/batches_screen.dart';
 import 'package:instituto/features/chats/chats_screen.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/alerts/screens/notification_screen.dart';
@@ -11,6 +12,15 @@ import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dar
 
 Route<dynamic> genarateRoute(RouteSettings routeSettings) {
   //  NOTE : auth routes, home flow ke routes ko alg alg file me bnakr idhr combine krna ha
+  final List<String> path = routeSettings.name!.split('/');
+
+  if (routeSettings.name!.contains(BatchScreen.routeName)) {
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_) => BatchScreen(id: path[2]),
+    );
+  }
+
   switch (routeSettings.name) {
     case LoginScreen.routeName:
       return PageRouteBuilder(

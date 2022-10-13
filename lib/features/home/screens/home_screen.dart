@@ -160,7 +160,7 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
             child: Container(
               child: TabBarView(controller: _tabController, children: const [
                 Center(child: TeachersSlide()),
-                Center(child: BatchesSlide())
+                BatchesSlide()
               ]),
             ),
           ),

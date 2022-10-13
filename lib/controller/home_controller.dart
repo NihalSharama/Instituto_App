@@ -53,49 +53,28 @@ class HomeController extends GetxController {
     // bdme api ready hone ke bd hata dena h
     batches.value = [
       {
-        'id': 1,
+        'id': '1',
         'batch_name': 'physics XIth',
         'teacher_name': 'Nihal Sharma',
         'timing': '2:30PM - 4:00PM',
         'subject': 'Physics'
       },
       {
-        'id': 2,
+        'id': '2',
         'batch_name': 'chemistry XIth',
         'teacher_name': 'Nihal Sharma',
         'timing': '2:30PM - 4:00PM',
         'subject': 'Physics'
       },
       {
-        'id': 3,
+        'id': '3',
         'batch_name': 'maths XIth',
         'teacher_name': 'Nihal Sharma',
         'timing': '2:30PM - 4:00PM',
         'subject': 'Physics'
       },
       {
-        'id': 4,
-        'batch_name': 'politics XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': 2,
-        'batch_name': 'chemistry XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': 3,
-        'batch_name': 'maths XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': 4,
+        'id': '4',
         'batch_name': 'politics XIth',
         'teacher_name': 'Nihal Sharma',
         'timing': '2:30PM - 4:00PM',

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instituto/controller/home_controller.dart';
+import 'package:instituto/features/batch/screens/batch_screen.dart';
 import 'package:instituto/features/home/widgets/batch.dart';
 
 class BatchesSlide extends StatelessWidget {
@@ -28,7 +29,10 @@ class BatchesSlide extends StatelessWidget {
                               homeController.batches.value
                                   .map((dynamic request) {
                           return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushReplacementNamed(context,
+                                    BatchScreen.routeName + request['id']);
+                              },
                               child: BatchComponent(
                                   batch_name: request['batch_name'],
                                   teacher_name: request['teacher_name'],
