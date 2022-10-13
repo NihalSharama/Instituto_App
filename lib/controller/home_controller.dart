@@ -10,6 +10,8 @@ class HomeController extends GetxController {
   Rx<String> classDropdownValue = 'Class 6th'.obs;
   Rx<String> subjectDropdownValue = 'English'.obs;
 
+  var batches = [].obs;
+
   var class_dropdown_items = [
     // classes from api
     'Class 6th',
@@ -41,13 +43,67 @@ class HomeController extends GetxController {
 
     final token = await getToken();
     print(token);
+  }
 
-    // HomeServices.createBatchService(
-    //     batchNameController.text,
-    //     subjectDropdownValue.value,
-    //     '1234',
-    //     classDropdownValue.value,
-    //     'somethin');
+  Future<String> featchBatches() async {
+    // featch from api
+    // final teacherRequests = await HomeServices.getBatches();
+    // batches.value = teacherRequests;
+
+    // bdme api ready hone ke bd hata dena h
+    batches.value = [
+      {
+        'id': 1,
+        'batch_name': 'physics XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': 2,
+        'batch_name': 'chemistry XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': 3,
+        'batch_name': 'maths XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': 4,
+        'batch_name': 'politics XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': 2,
+        'batch_name': 'chemistry XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': 3,
+        'batch_name': 'maths XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': 4,
+        'batch_name': 'politics XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+    ];
+
+    return '';
   }
 
   void onClassDropdownValueChange(String? newVal) {

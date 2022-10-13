@@ -25,4 +25,12 @@ class HomeServices {
       toasterUnknownFailure();
     }
   }
+
+  static Future<List> getBatches() async {
+    Map<dynamic, dynamic> res = await RequestMethods.get_method(
+        'batch/', true); // route to fetch batches
+    var data = res['data']['data'] as List;
+
+    return data;
+  }
 }

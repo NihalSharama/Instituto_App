@@ -123,9 +123,11 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                       )
                     ],
                   ),
-                  SizedBox(
-                    width: double.maxFinite,
-                    height: 150,
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  PreferredSize(
+                    // ignore: sort_child_properties_last
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: TabBar(
@@ -138,16 +140,15 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                           labelStyle: TextStyle(fontWeight: FontWeight.w600),
                           tabs: const [
                             Tab(
-                              text: "TEACHERS",
+                              text: "TEACHES",
                             ),
                             Tab(
                               text: "BATCHES",
                             )
                           ]),
                     ),
-                  ),
-
-                  // yahha pelna hai
+                    preferredSize: const Size.fromHeight(kToolbarHeight),
+                  )
                 ],
               ),
             ),
@@ -173,7 +174,8 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
               child: const Icon(
                 Icons.notification_add_sharp,
                 size: 28,
-              ))
+              ),
+            )
           : FloatingActionButton(
               onPressed: () {
                 showDialog(

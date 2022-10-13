@@ -9,6 +9,28 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 class RequestMethods {
   static var client = http.Client();
 
+  static Future<bool> featchTokenIfExpired(Map mapRes) async {
+    try {
+      if (mapRes['messages'][0]['message'].contains('expired')) {
+        // check for refresh token expire, if not expired then featch new token
+        var refresh = await getRefresh();
+        Map<String, dynamic> refreshDecoded = JwtDecoder.decode(refresh);
+        bool isRefreshExp = JwtDecoder.isExpired(refresh);
+
+        print(refreshDecoded);
+        if (isRefreshExp) {
+          // logout
+        }
+
+        // get new token and refresh and save it
+        return true;
+      }
+      return false;
+    } catch (_) {
+      return false;
+    }
+  }
+
   static Future<Map> get_method(String path, bool isAuth) async {
     final token = await getToken();
     var response = await client.get(Uri.parse('${dotenv.env['SERVER']}$path'),
@@ -22,22 +44,11 @@ class RequestMethods {
               }));
 
     Map mapRes = json.decode(response.body);
+    bool wasExpired = await featchTokenIfExpired(mapRes);
 
-    // make an util for token validation
-    // if (mapRes['messages'][0]['message'].contains('expired')) {
-    //   // check for refresh token expire, if not expired then featch new token
-    //   var refresh = await getRefresh();
-    //   Map<String, dynamic> refreshDecoded = JwtDecoder.decode(refresh);
-    //   bool isRefreshExp = JwtDecoder.isExpired(refresh);
-
-    //   print(refreshDecoded);
-    //   if (isRefreshExp) {
-    //     // logout
-    //   }
-
-    //   // get new token
-    //   // then, again request for data
-    // }
+    if (wasExpired) {
+      // re featch from api
+    }
 
     return mapRes;
   }

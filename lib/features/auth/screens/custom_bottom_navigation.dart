@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/features/batches/screens/batches_screen.dart';
 import 'package:instituto/features/chats/chats_screen.dart';
+import 'package:instituto/features/dashboard/screens/dashboard.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/alerts/screens/notification_screen.dart';
 import 'package:instituto/features/profile/screens/profile_screen.dart';
@@ -15,54 +17,48 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      Navigator.pushNamed(
-        context,
-        HomePage.routeName,
-      );
-    } else if (index == 1) {
-      Navigator.pushNamed(
-        context,
-        RecentChatsScreen.routeName,
-      );
-    } else if (index == 2) {
-      Navigator.pushNamed(context, BatchesScreen.routeName);
-    } else if (index == 3) {
-      Navigator.pushNamed(context, NotificationScreen.routeName);
-    } else if (index == 4) {
-      Navigator.pushNamed(context, ProfileScreen.routeName);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      onTap: _onItemTapped,
-      currentIndex: _selectedIndex,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      selectedItemColor: AppColors.mainColor,
-      unselectedItemColor: AppColors.mainColor,
-      type: BottomNavigationBarType.fixed,
-      items: [
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/home.svg'), label: "Home"),
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/message.svg'),
-            label: "Messages"),
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/batches.svg'),
-            label: "Batches"),
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/notification.svg'),
-            label: "Notification"),
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/profile.svg'),
-            label: "Profile")
+    return BottomAppBar(
+        child: Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                HomePage.routeName,
+              );
+            },
+            icon: SvgPicture.asset(
+              'assets/icons/home.svg',
+            )),
+        IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                RecentChatsScreen.routeName,
+              );
+            },
+            icon: SvgPicture.asset('assets/icons/message.svg')),
+        IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                RecentChatsScreen.routeName,
+              );
+            },
+            icon: SvgPicture.asset('assets/icons/batches.svg')),
+        IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, NotificationScreen.routeName);
+            },
+            icon: SvgPicture.asset('assets/icons/notification.svg')),
+        IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset('assets/icons/profile.svg')),
       ],
-    );
+    ));
   }
 }

@@ -37,6 +37,7 @@ class AlertsController extends GetxController {
     final teacherRequests = await AlertsServices.getTeacheresRequest();
     teachersRequestToJoin.value = teacherRequests;
 
+    // api ready ke bd hatadena h
     teachersRequestToJoin.value = [
       {
         'id': 1,
@@ -64,7 +65,7 @@ class AlertsController extends GetxController {
       },
     ];
 
-    return 'lmao';
+    return '';
   }
 
   onClassSelectionItemChange(List<String> selectedItems) {

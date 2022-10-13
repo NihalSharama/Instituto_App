@@ -64,9 +64,11 @@ class _RequestsToJoinState extends State<RequestsToJoin> {
 
               default:
                 if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
+                  return const Center(
+                      child: Text('Oops! something went wrong'));
                 } else {
-                  return Center(child: Text('Error: ${snapshot.error}'));
+                  return const Center(
+                      child: Text('Oops! something went wrong'));
                 }
             }
           },
