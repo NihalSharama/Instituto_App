@@ -5,6 +5,7 @@ import 'package:instituto/controller/alerts_controller.dart';
 import 'package:instituto/features/alerts/services/alerts_services.dart';
 import 'package:instituto/features/alerts/widgets/request.dart';
 import 'package:instituto/features/alerts/widgets/assign_class_subject_popup.dart';
+import 'package:instituto/features/home/screens/home_screen.dart';
 
 class RequestsToJoin extends StatefulWidget {
   static const String routeName = '/request';
@@ -26,7 +27,7 @@ class _RequestsToJoinState extends State<RequestsToJoin> {
           iconTheme: const IconThemeData(color: Colors.black),
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
             },
             icon: const Icon(Icons.arrow_back_ios, size: 15),
           ),

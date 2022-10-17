@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instituto/features/alerts/screens/requests_to_join.dart';
 import 'package:instituto/features/batch/screens/batch_screen.dart';
-import 'package:instituto/features/batch/screens/batches_screen.dart';
 import 'package:instituto/features/chats/chats_screen.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/alerts/screens/notification_screen.dart';
@@ -46,12 +45,7 @@ Route<dynamic> genarateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         pageBuilder: (_, __, ___) => const RecentChatsScreen(),
       );
-    case BatchesScreen.routeName:
-      return PageRouteBuilder(
-        transitionDuration: Duration.zero,
-        settings: routeSettings,
-        pageBuilder: (_, __, ___) => const BatchesScreen(),
-      );
+
     case NotificationScreen.routeName:
       return PageRouteBuilder(
         transitionDuration: Duration.zero,

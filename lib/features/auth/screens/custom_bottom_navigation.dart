@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/features/batch/screens/batches_screen.dart';
 import 'package:instituto/features/chats/chats_screen.dart';
 import 'package:instituto/features/dashboard/screens/dashboard.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
