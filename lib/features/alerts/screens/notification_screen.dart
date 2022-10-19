@@ -2,7 +2,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class NotificationScreen extends StatefulWidget {
-  static const String routeName = '/notification';
+  static const String routeName = '/notifications';
   const NotificationScreen({super.key});
 
   @override

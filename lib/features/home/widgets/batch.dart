@@ -25,7 +25,7 @@ class BatchComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 3),
+        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
         child: Container(
             height: 85,
             width: double.infinity,

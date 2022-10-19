@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,7 +7,7 @@ import 'package:instituto/features/batch/screens/chat_slide.dart';
 import 'package:instituto/features/batch/screens/docbox_slide.dart';
 import 'package:instituto/features/batch/screens/notices_slide.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
-import 'package:instituto/models/chat_models.dart';
+import 'package:instituto/features/landing.dart';
 
 class BatchScreen extends StatefulWidget {
   final String id;
@@ -57,8 +56,8 @@ class _BatchScreenState extends State<BatchScreen>
                     children: [
                       GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacementNamed(
-                                context, HomePage.routeName);
+                            Navigator.pushReplacementNamed(context,
+                                LandingScreen.routeName + HomePage.routeName);
                           },
                           child: const Icon(
                             Icons.keyboard_arrow_left,

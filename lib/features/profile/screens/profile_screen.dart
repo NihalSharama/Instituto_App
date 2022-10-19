@@ -2,7 +2,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class ProfileScreen extends StatefulWidget {
-  static const String routeName = '/profile';
+  static const String routeName = 'profile';
   const ProfileScreen({super.key});
 
   @override
