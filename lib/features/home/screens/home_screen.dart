@@ -1,31 +1,19 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
-import 'package:instituto/common/widgets/curve_widgets.dart';
-import 'package:instituto/common/widgets/custom_button.dart';
-import 'package:instituto/common/widgets/custom_clipper.dart';
-
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/home_controller.dart';
-import 'package:instituto/features/alerts/screens/requests_to_join.dart';
-import 'package:instituto/features/auth/screens/custom_bottom_navigation.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/home/screens/batches_slide.dart';
 import 'package:instituto/features/home/screens/teachers_slide.dart';
-import 'package:instituto/features/home/widgets/create_batch_popup.dart';
 
 import '../../../controller/auth_controllers.dart';
 
 class HomePage extends StatefulWidget {
+  static const String routeName = 'home';
   const HomePage({Key? key}) : super(key: key);
-  static const String routeName = '/home';
 
   @override
   State<HomePage> createState() => _HomePage();
@@ -66,25 +54,24 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(StaticImages.appBarCurve),
-                    fit: BoxFit.contain,
-                    alignment: Alignment.topCenter)),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+    return Column(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(StaticImages.appBarCurve),
+                  fit: BoxFit.contain,
+                  alignment: Alignment.topCenter)),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
@@ -97,95 +84,72 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                                   'assets/icons/NavToogle.svg'))
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
                         'Hi, Nihal Sharma',
                         style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
                       ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      const Text(
-                        "OWNER",
-                        style: TextStyle(fontSize: 12, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      const Text(
-                        "@success_point",
-                        style: TextStyle(fontSize: 15, color: Colors.white),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  PreferredSize(
-                    // ignore: sort_child_properties_last
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: TabBar(
-                          controller: _tabController,
-                          isScrollable: true,
-                          labelColor: AppColors.mainColor,
-                          unselectedLabelColor: Colors.black,
-                          indicatorColor: AppColors.mainColor,
-                          indicatorSize: TabBarIndicatorSize.label,
-                          labelStyle: TextStyle(fontWeight: FontWeight.w600),
-                          tabs: const [
-                            Tab(
-                              text: "TEACHES",
-                            ),
-                            Tab(
-                              text: "BATCHES",
-                            )
-                          ]),
                     ),
-                    preferredSize: const Size.fromHeight(kToolbarHeight),
-                  )
-                ],
-              ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    const Text(
+                      "OWNER",
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    const Text(
+                      "@success_point",
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                PreferredSize(
+                  // ignore: sort_child_properties_last
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: TabBar(
+                        controller: _tabController,
+                        isScrollable: true,
+                        labelColor: AppColors.mainColor,
+                        unselectedLabelColor: Colors.black,
+                        indicatorColor: AppColors.mainColor,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        labelStyle: TextStyle(fontWeight: FontWeight.w600),
+                        tabs: const [
+                          Tab(
+                            text: "TEACHES",
+                          ),
+                          Tab(
+                            text: "BATCHES",
+                          )
+                        ]),
+                  ),
+                  preferredSize: const Size.fromHeight(kToolbarHeight),
+                )
+              ],
             ),
           ),
+        ),
 
-          //yaha pe dena hai
+        //yaha pe dena hai
 
-          Expanded(
-            child: Container(
-              child: TabBarView(controller: _tabController, children: const [
-                Center(child: TeachersSlide()),
-                BatchesSlide()
-              ]),
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: (_selectedIndex == 0
-          ? FloatingActionButton(
-              onPressed: () {
-                Navigator.pushNamed(context, RequestsToJoin.routeName);
-              },
-              child: const Icon(
-                Icons.notification_add_sharp,
-                size: 28,
-              ),
-            )
-          : FloatingActionButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const CreateBatchePopup();
-                    });
-              },
-              child: SvgPicture.asset('assets/icons/plus.svg'))),
-      bottomNavigationBar: const BottomNavigation(),
+        Expanded(
+          child: TabBarView(
+              controller: _tabController,
+              children: const [Center(child: TeachersSlide()), BatchesSlide()]),
+        ),
+      ],
     );
   }
 }

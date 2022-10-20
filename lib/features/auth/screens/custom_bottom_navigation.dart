@@ -6,7 +6,7 @@ import 'package:instituto/features/chats/chats_screen.dart';
 import 'package:instituto/features/dashboard/screens/dashboard.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/alerts/screens/notification_screen.dart';
-import 'package:instituto/features/profile/screens/profile_screen.dart';
+import 'package:instituto/features/profile/screens/gitprofile_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);

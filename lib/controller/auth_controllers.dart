@@ -6,6 +6,7 @@ import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/auth/services/auth_service.dart';
+import 'package:instituto/features/landing.dart';
 
 class AuthController extends GetxController {
   var currentStep = 0.obs;
@@ -59,7 +60,10 @@ class AuthController extends GetxController {
 
     if (isNoError) {
       isAuthenticated = true;
-      Navigator.pushNamed(context, HomePage.routeName); // navigate to dashboard
+      Navigator.pushNamed(
+          context,
+          LandingScreen.routeName +
+              HomePage.routeName); // navigate to dashboard
     }
   }
 
@@ -150,7 +154,8 @@ class AuthController extends GetxController {
 
       if (isNoError) {
         isAuthenticated = true;
-        Navigator.pushNamed(context, HomePage.routeName);
+        Navigator.pushNamed(
+            context, LandingScreen.routeName + HomePage.routeName);
       }
     }
   }

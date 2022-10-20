@@ -1,8 +1,8 @@
-import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class ProfileScreen extends StatefulWidget {
-  static const String routeName = '/profile';
+  static const String routeName = 'profile';
   const ProfileScreen({super.key});
 
   @override
@@ -12,6 +12,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Center(child: Text('Profile Screen'));
   }
 }

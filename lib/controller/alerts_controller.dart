@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:instituto/features/alerts/services/alerts_services.dart';
-import 'package:instituto/features/auth/services/auth_service.dart';
+import 'package:instituto/features/notifications/services/alerts_services.dart';
+import 'package:instituto/models/alerts_models.dart';
 
 class AlertsController extends GetxController {
   final assingClassSubPopupKey = GlobalKey<FormState>();
-  var teachersRequestToJoin = [].obs;
+  var requestToJoin = [].obs;
+  var notifications = Rxn<List<NotificationModel>>();
+
   var selectedClassesList = <String>[].obs;
   var selectedSubjectList = <String>[].obs;
   var subjects_dropdown_items = <String>[].obs;
+
   final class_dropdown_items = [
     // classes from api
     'Class 6th',
@@ -34,11 +37,11 @@ class AlertsController extends GetxController {
   }
 
   Future<String> featchTacherRequest() async {
-    final teacherRequests = await AlertsServices.getTeacheresRequest();
-    teachersRequestToJoin.value = teacherRequests;
+    // final teacherRequests = await AlertsServices.getTeacheresRequest();
+    // teachersRequestToJoin.value = teacherRequests;
 
     // api ready ke bd hatadena h
-    teachersRequestToJoin.value = [
+    requestToJoin.value = [
       {
         'id': 1,
         'name': 'Nihal Sharma',
@@ -66,6 +69,34 @@ class AlertsController extends GetxController {
     ];
 
     return '';
+  }
+
+  featchNotifications() async {
+    // final List<NotificationModel> notficationList =
+    //     await AlertsServices.getNotfications();
+
+    // notifications.value = notficationList;
+
+    notifications.value = [
+      NotificationModel(
+          '1',
+          'Arjuna 11th Timing 10:00AM - 11:00AM To 4:00PM - 5:00PM',
+          'Please Note that timing of your Arjuna batch has been changed from 10:00PM - 11:00AM To 4:00PM - 5:00PM',
+          'Arjuna 11th',
+          DateTime.parse('2012-02-27 13:27:00')),
+      NotificationModel(
+          '2',
+          'Arjuna 11th Timing 10:00AM - 11:00AM To 4:00PM - 5:00PM',
+          'Please Note that timing of your Arjuna batch has been changed from 10:00PM - 11:00AM To 4:00PM - 5:00PM',
+          'Arjuna 11th',
+          DateTime.parse('2012-02-27 13:27:00')),
+      NotificationModel(
+          '3',
+          'Arjuna 11th Timing 10:00AM - 11:00AM To 4:00PM - 5:00PM',
+          'Please Note that timing of your Arjuna batch has been changed from 10:00PM - 11:00AM To 4:00PM - 5:00PM',
+          'Arjuna 11th',
+          DateTime.parse('2012-02-27 13:27:00')),
+    ];
   }
 
   onClassSelectionItemChange(List<String> selectedItems) {
