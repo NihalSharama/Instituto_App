@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instituto/features/alerts/screens/requests_to_join.dart';
+import 'package:instituto/features/notifications/screens/requests_slide.dart';
 import 'package:instituto/features/batch/screens/batch_screen.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';

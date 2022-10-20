@@ -47,8 +47,10 @@ class RequestMethods {
     bool wasExpired = await featchTokenIfExpired(mapRes);
 
     if (wasExpired) {
-      // re featch from api
+      // get new token
+      // then refeatch the data
     }
+    mapRes = json.decode(response.body);
 
     return mapRes;
   }

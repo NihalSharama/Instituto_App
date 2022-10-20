@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instituto/features/alerts/screens/notification_screen.dart';
 import 'package:instituto/features/chats/chats_screen.dart';
 import 'package:instituto/features/dashboard/screens/dashboard.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
+import 'package:instituto/features/notifications/screens/notification_screen.dart';
 import 'package:instituto/features/profile/screens/profile_screen.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -45,7 +45,7 @@ class _LandingScreenState extends State<LandingScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 175, 175, 175),
+        color: Color.fromARGB(255, 200, 200, 200),
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisSize: MainAxisSize.max,

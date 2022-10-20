@@ -61,7 +61,9 @@ class AuthController extends GetxController {
     if (isNoError) {
       isAuthenticated = true;
       Navigator.pushNamed(
-          context, LandingScreen.routeName); // navigate to dashboard
+          context,
+          LandingScreen.routeName +
+              HomePage.routeName); // navigate to dashboard
     }
   }
 
@@ -152,7 +154,8 @@ class AuthController extends GetxController {
 
       if (isNoError) {
         isAuthenticated = true;
-        Navigator.pushNamed(context, LandingScreen.routeName);
+        Navigator.pushNamed(
+            context, LandingScreen.routeName + HomePage.routeName);
       }
     }
   }

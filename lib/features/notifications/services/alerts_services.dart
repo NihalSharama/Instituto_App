@@ -7,6 +7,7 @@ import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/common/utils/error_handler_toaster.dart';
 import 'package:instituto/common/utils/request_methods.dart';
 import 'package:instituto/common/utils/toaster_message.dart';
+import 'package:instituto/models/alerts_models.dart';
 
 class AlertsServices {
   static var client = http.Client();
@@ -15,6 +16,14 @@ class AlertsServices {
     Map<dynamic, dynamic> res =
         await RequestMethods.get_method('institute/teacher_requests/', true);
     var data = res['data']['data'] as List;
+
+    return data;
+  }
+
+  static Future<List<NotificationModel>> getNotfications() async {
+    Map<dynamic, dynamic> res = await RequestMethods.get_method(
+        'institute/notifications/:studentId', true);
+    var data = res['data']['data'] as List<NotificationModel>;
 
     return data;
   }

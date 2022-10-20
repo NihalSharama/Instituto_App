@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:instituto/controller/alerts_controller.dart';
-import 'package:instituto/features/alerts/widgets/assign_class_subject_popup.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../constants/global_variables.dart';
 

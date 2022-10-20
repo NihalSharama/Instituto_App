@@ -17,18 +17,18 @@ class BatchController extends GetxController {
           'Andrew Tate'),
       MessageModel('6', 'seems someone flexing.... 🥱', 'Elon Musk'),
     ], [], []);
-
-    @override
-    void onInit() {
-      super.onInit();
-    }
-
-    @override
-    void onReady() {
-      super.onReady();
-    }
-
-    @override
-    void onClose() {}
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {}
 }

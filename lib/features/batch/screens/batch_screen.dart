@@ -151,7 +151,6 @@ class _BatchScreenState extends State<BatchScreen>
         FutureBuilder(
             future: batchController.featchBatchDetails('1'),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              print(batchController.batchDetails.value);
               return Expanded(
                 child: TabBarView(controller: _tabController, children: [
                   ChatSlide(

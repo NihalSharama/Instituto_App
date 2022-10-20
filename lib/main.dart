@@ -8,8 +8,6 @@ import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';
 import 'package:instituto/features/landing.dart';
 import 'package:instituto/router.dart';
-
-import 'features/auth/screens/custom_bottom_navigation.dart';
 import 'features/home/screens/home_screen.dart';
 
 void main() async {

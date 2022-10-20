@@ -1,12 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
 import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/controller/batch_controller.dart';
-import 'package:instituto/features/batch/widgets/chat_card.dart';
-import 'package:instituto/features/home/widgets/batch.dart';
 import 'package:instituto/models/chat_models.dart';
 
 class ChatSlide extends StatefulWidget {
@@ -68,7 +63,13 @@ class _ChatSlideState extends State<ChatSlide> {
                             elevation: 5,
                             child: Padding(
                               padding: const EdgeInsets.all(12),
-                              child: Text(message.text),
+                              child: Text(
+                                message.text,
+                                style: TextStyle(
+                                    color: (message.from == 'nihal'
+                                        ? Colors.white
+                                        : AppColors.titleColor)),
+                              ),
                             ),
                           ),
                         ])),
