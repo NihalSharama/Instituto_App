@@ -30,12 +30,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
         RecentChatsScreen.routeName,
       );
     } else if (index == 2) {
-      Navigator.pushNamed(context, BatchesScreen.routeName);
-    } else if (index == 3) {
       Navigator.pushNamed(context, NotificationScreen.routeName);
-    } else if (index == 4) {
+    } else if (index == 3) {
       Navigator.pushNamed(context, ProfileScreen.routeName);
-    } else if (index == 5) {
+    } else if (index == 4) {
       Navigator.pushNamed(context, DashboardScreen.routeName);
     }
   }

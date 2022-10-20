@@ -48,13 +48,13 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
       });
     });
 
-    Future.delayed(Duration.zero, () async {
-      var token = await getToken();
-      if (token == null) {
-        authController.isAuthenticated = false;
-        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-      }
-    });
+    // Future.delayed(Duration.zero, () async {
+    //   var token = await getToken();
+    //   if (token == null) {
+    //     authController.isAuthenticated = false;
+    //     Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    //   }
+    // });
 
     super.initState();
   }
