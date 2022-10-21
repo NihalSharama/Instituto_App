@@ -20,3 +20,25 @@ class BatchDetailsModel {
   BatchDetailsModel(this.id, this.batchName, this.teacherName, this.timing,
       this.subject, this.grade, this.messages, this.documents, this.notices);
 }
+
+class NoticeModel {
+  late String id;
+  late String title;
+  late String description;
+  late String from;
+  late DateTime timestamp;
+  late String? file;
+
+  NoticeModel(this.id, this.title, this.description, this.from, this.timestamp,
+      this.file);
+}
+
+class DocumentModel {
+  late String id;
+  late String text;
+  late String file;
+  late String from;
+  late DateTime timestamp;
+
+  DocumentModel(this.id, this.text, this.from, this.timestamp, this.file);
+}

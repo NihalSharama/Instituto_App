@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:instituto/common/utils/chache_manager.dart';
-import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/auth/services/auth_service.dart';
+import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/landing.dart';
 
 class AuthController extends GetxController {
@@ -109,7 +105,6 @@ class AuthController extends GetxController {
       return;
     }
     // sending otp
-    print(currentStep.value);
     if (currentStep.value == 0) {
       bool isError = await AuthServices.request_signup_otp(
           int.parse(mobileController.text),
@@ -216,11 +211,6 @@ class AuthController extends GetxController {
   void onInit() {
     featchDeafaultClasses();
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

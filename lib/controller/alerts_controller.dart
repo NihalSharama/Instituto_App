@@ -94,7 +94,7 @@ class AlertsController extends GetxController {
           '3',
           'Arjuna 11th Timing 10:00AM - 11:00AM To 4:00PM - 5:00PM',
           'Please Note that timing of your Arjuna batch has been changed from 10:00PM - 11:00AM To 4:00PM - 5:00PM',
-          'Arjuna 11th',
+          'System',
           DateTime.parse('2012-02-27 13:27:00')),
     ];
   }

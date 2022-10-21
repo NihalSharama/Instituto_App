@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:instituto/models/chat_models.dart';
+import 'package:instituto/models/batch_models.dart';
 
 class BatchController extends GetxController {
   var batchDetails = Rxn<BatchDetailsModel>();
+  var notices = Rxn<List<NoticeModel>>();
 
   featchBatchDetails(String id) {
     batchDetails.value = BatchDetailsModel(id, 'Physics XITH', 'Nihal Sharma',
@@ -17,6 +18,18 @@ class BatchController extends GetxController {
           'Andrew Tate'),
       MessageModel('6', 'seems someone flexing.... 🥱', 'Elon Musk'),
     ], [], []);
+  }
+
+  featchNotices(String id) {
+    notices.value = [
+      NoticeModel(
+          '1',
+          'Programming contest (only for students)',
+          'Documents are imporant so you have to see  and write the things Documents are imporant so you have to see and write the things, well fuck off',
+          'Nihal Sharma',
+          DateTime.parse('2012-02-27 13:27:00'),
+          'Attachement.txt'),
+    ];
   }
 
   @override

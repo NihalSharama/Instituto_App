@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/models/chat_models.dart';
+import 'package:instituto/models/batch_models.dart';
 
 class ChatSlide extends StatefulWidget {
   final List<MessageModel> messages;

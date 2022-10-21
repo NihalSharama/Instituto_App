@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class RecentChatsScreen extends StatefulWidget {
   static const String routeName = 'chats';
@@ -13,9 +11,8 @@ class RecentChatsScreen extends StatefulWidget {
 class _RecentChatsScreenState extends State<RecentChatsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
+    return const Center(
       child: Text('Recent Chats'),
-    ));
+    );
   }
 }
