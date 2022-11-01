@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:instituto/controller/alerts_controller.dart';
-import 'package:instituto/features/notifications/services/alerts_services.dart';
 import 'package:instituto/features/notifications/widgets/request.dart';
-import 'package:instituto/features/notifications/widgets/assign_class_subject_popup.dart';
-import 'package:instituto/features/home/screens/home_screen.dart';
-import 'package:instituto/features/landing.dart';
 
 class RequestsToJoin extends StatefulWidget {
   static const String routeName = '/request';

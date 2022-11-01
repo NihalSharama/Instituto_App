@@ -19,4 +19,29 @@ class BatchServices {
       toasterUnknownFailure();
     }
   }
+
+  static createBatchService(String batchname, String batch_subject,
+      String institute, String grade, String batchcode) async {
+    try {
+      var res = await RequestMethods.post_method('api/batch/', {
+        "batchname": batchname,
+        "batch_subject": batch_subject,
+        "institute": institute,
+        "grade": grade,
+        "batchcode": batchcode
+      });
+
+      await error_handler(res);
+    } catch (e) {
+      toasterUnknownFailure();
+    }
+  }
+
+  static Future<List> getBatches() async {
+    Map<dynamic, dynamic> res = await RequestMethods.get_method(
+        'batch/', true); // route to fetch batches
+    var data = res['data']['data'] as List;
+
+    return data;
+  }
 }

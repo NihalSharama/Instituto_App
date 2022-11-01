@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:instituto/common/utils/chache_manager.dart';
+import 'package:instituto/features/auth/services/auth_service.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class RequestMethods {
@@ -22,7 +23,6 @@ class RequestMethods {
           // logout
         }
 
-        // get new token and refresh and save it
         return true;
       }
       return false;
@@ -32,7 +32,7 @@ class RequestMethods {
   }
 
   static Future<Map> get_method(String path, bool isAuth) async {
-    final token = await getToken();
+    var token = await getToken();
     var response = await client.get(Uri.parse('${dotenv.env['SERVER']}$path'),
         headers: (isAuth
             ? <String, String>{
@@ -47,8 +47,18 @@ class RequestMethods {
     bool wasExpired = await featchTokenIfExpired(mapRes);
 
     if (wasExpired) {
-      // get new token
-      // then refeatch the data
+      token = await getToken();
+      await AuthServices.featch_token();
+
+      response = await client.get(Uri.parse('${dotenv.env['SERVER']}$path'),
+          headers: (isAuth
+              ? <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                  'Authorization': 'Bearer $token',
+                }
+              : <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                }));
     }
     mapRes = json.decode(response.body);
 
@@ -57,7 +67,7 @@ class RequestMethods {
 
   static Future<Map> post_method(String path, Object data) async {
     var response = await client.post(
-      Uri.parse('${dotenv.env['SERVER']}$path '),
+      Uri.parse('${dotenv.env['SERVER']}$path'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

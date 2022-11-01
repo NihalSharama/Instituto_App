@@ -31,8 +31,7 @@ class AlertsServices {
   static assignSubjectsClassesService(
       String teacherid, List<String> subjects, List<String> grades) async {
     try {
-      var res = await RequestMethods.post_method(
-          'api/institute/assign_subjects/',
+      var res = await RequestMethods.post_method('institute/assign_subjects/',
           {"teacher_id": teacherid, "grades": grades, "subjects": subjects});
 
       print(res);

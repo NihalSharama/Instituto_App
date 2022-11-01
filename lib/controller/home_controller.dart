@@ -3,14 +3,16 @@ import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/features/home/services/home_services.dart';
 
-class HomeController extends GetxController {
-  final createBatchPopupKey = GlobalKey<FormState>();
-  var batchNameController = TextEditingController();
+class SubjectChipModel {
+  late String id;
+  late String name;
 
+  SubjectChipModel(this.id, this.name);
+}
+
+class HomeController extends GetxController {
   Rx<String> classDropdownValue = 'Class 6th'.obs;
   Rx<String> subjectDropdownValue = 'English'.obs;
-
-  var batches = [].obs;
 
   var class_dropdown_items = [
     // classes from api
@@ -35,54 +37,10 @@ class HomeController extends GetxController {
     ];
   }
 
-  onCreateBatch() async {
-    final isValid = createBatchPopupKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
-
-    final token = await getToken();
-    print(token);
-  }
-
-  Future<String> featchBatches() async {
-    // featch from api
-    // final teacherRequests = await HomeServices.getBatches();
-    // batches.value = teacherRequests;
-
-    // bdme api ready hone ke bd hata dena h
-    batches.value = [
-      {
-        'id': '1',
-        'batch_name': 'physics XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': '2',
-        'batch_name': 'chemistry XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': '3',
-        'batch_name': 'maths XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': '4',
-        'batch_name': 'politics XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-    ];
-
-    return '';
+  onCreateSubjects(List<SubjectChipModel> subjects, String user) async {
+    subjects.forEach((SubjectChipModel subject) async {
+      await HomeServices.createSubject(subject.name, user);
+    });
   }
 
   void onClassDropdownValueChange(String? newVal) {

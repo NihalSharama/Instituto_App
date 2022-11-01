@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/common/utils/error_handler_toaster.dart';
+import 'package:instituto/common/utils/request_methods.dart';
 import 'package:instituto/common/utils/toaster_message.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
@@ -55,6 +56,7 @@ class AuthServices {
       Map mapRes = json.decode(response.body);
       bool isNoServerError = await error_handler(mapRes);
       if (isNoServerError) {
+        print(mapRes['data']['token']);
         await saveToken(mapRes['data']['token']);
         await saveRefresh(mapRes['data']['refresh']);
       }
@@ -278,6 +280,19 @@ class AuthServices {
     } catch (e) {
       print('something went wrong');
       return [];
+    }
+  }
+
+  static featch_token() async {
+    try {
+      final refresh = await getRefresh();
+      Map res = await RequestMethods.post_method(
+          'auth/token/refresh/', {'refresh': refresh});
+
+      print(res['access']);
+      return res['access'];
+    } catch (e) {
+      toasterUnknownFailure();
     }
   }
 }

@@ -1,11 +1,17 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/models/batch_models.dart';
 
 class BatchController extends GetxController {
   var batchDetails = Rxn<BatchDetailsModel>();
   var notices = Rxn<List<NoticeModel>>();
+  var batches = [].obs;
+
+  final createBatchPopupKey = GlobalKey<FormState>();
+  var batchNameController = TextEditingController();
 
   featchBatchDetails(String id) {
     batchDetails.value = BatchDetailsModel(id, 'Physics XITH', 'Nihal Sharma',
@@ -18,6 +24,56 @@ class BatchController extends GetxController {
           'Andrew Tate'),
       MessageModel('6', 'seems someone flexing.... 🥱', 'Elon Musk'),
     ], [], []);
+  }
+
+  onCreateBatch() async {
+    final isValid = createBatchPopupKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
+    final token = await getToken();
+    print(token);
+  }
+
+  Future<String> featchBatches() async {
+    // featch from api
+    // final teacherRequests = await HomeServices.getBatches();
+    // batches.value = teacherRequests;
+
+    // bdme api ready hone ke bd hata dena h
+    batches.value = [
+      {
+        'id': '1',
+        'batch_name': 'physics XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': '2',
+        'batch_name': 'chemistry XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': '3',
+        'batch_name': 'maths XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': '4',
+        'batch_name': 'politics XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+    ];
+
+    return '';
   }
 
   featchNotices(String id) {

@@ -8,6 +8,7 @@ import 'package:instituto/controller/home_controller.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/home/screens/batches_slide.dart';
 import 'package:instituto/features/home/screens/teachers_slide.dart';
+import 'package:instituto/features/home/widgets/create_subject_popup.dart';
 
 import '../../../controller/auth_controllers.dart';
 
@@ -20,28 +21,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
-  final authController = Get.put((AuthController()));
   final homeController = Get.put((HomeController()));
   late TabController _tabController;
+  final prevRoute = Get.previousRoute;
   int _selectedIndex = 0;
 
   @override
   void initState() {
     // removeToken();
+
+    Future.delayed(Duration.zero, () async {
+      if (true) {
+        // add this in future prevRoute == '/signup' and user.role = owner
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const CreateSubjectPopup();
+            });
+      }
+    });
     _tabController = TabController(length: 2, vsync: this);
 
     _tabController.addListener(() {
       setState(() {
         _selectedIndex = _tabController.index;
       });
-    });
-
-    Future.delayed(Duration.zero, () async {
-      var token = await getToken();
-      if (token == null) {
-        authController.isAuthenticated = false;
-        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-      }
     });
 
     super.initState();
