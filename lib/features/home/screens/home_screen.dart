@@ -48,6 +48,17 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
       });
     });
 
+<<<<<<< HEAD
+=======
+    // Future.delayed(Duration.zero, () async {
+    //   var token = await getToken();
+    //   if (token == null) {
+    //     authController.isAuthenticated = false;
+    //     Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    //   }
+    // });
+
+>>>>>>> e790ca013ca39720502c3e536c7e3f53c280d8ac
     super.initState();
   }
 
