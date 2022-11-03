@@ -33,7 +33,6 @@ class BatchController extends GetxController {
     }
 
     final token = await getToken();
-    print(token);
   }
 
   Future<String> featchBatches() async {

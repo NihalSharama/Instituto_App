@@ -41,29 +41,28 @@ class AuthServices {
     }
   }
 
+  // ignore: non_constant_identifier_names
   static verify_login_otp(int mobile, int otp) async {
     try {
-      var response = await client.post(
-        Uri.parse('${dotenv.env['SERVER']}auth/login_otp_verify/'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, int>{
-          'mobile': mobile,
-          'otp': otp,
-        }),
-      );
-      Map mapRes = json.decode(response.body);
-      bool isNoServerError = await error_handler(mapRes);
+      var response = await RequestMethods.post_method(
+          'auth/login_otp_verify/',
+          {
+            'mobile': mobile,
+            'otp': otp,
+          },
+          false);
+
+      bool isNoServerError = await error_handler(response);
       if (isNoServerError) {
-        print(mapRes['data']['token']);
-        await saveToken(mapRes['data']['token']);
-        await saveRefresh(mapRes['data']['refresh']);
+        print(response['data']['token']);
+        await saveToken(response['data']['token']);
+        await saveRefresh(response['data']['refresh']);
       }
-      return isNoServerError;
+
+      return response['data']['user'];
     } catch (e) {
       toasterUnknownFailure();
-      return false;
+      return;
     }
   }
 
@@ -125,12 +124,8 @@ class AuthServices {
     }
   }
 
-  static Future<bool> student_step3_4_endpoint(
-      String institute_code,
-      List batches,
-      String father_name,
-      String mother_name,
-      String gender) async {
+  static Future<bool> student_step3_4_endpoint(String instituteCode,
+      List batches, String fatherName, String motherName, String gender) async {
     try {
       var response = await client.post(
         Uri.parse('${dotenv.env['SERVER']}initial/'),
@@ -139,10 +134,10 @@ class AuthServices {
           'Authorization': 'Bearer $getToken()',
         },
         body: jsonEncode(<String, dynamic>{
-          'institute_code': institute_code,
+          'institute_code': instituteCode,
           'batches': batches,
-          'father_name': father_name,
-          'mother_name': mother_name,
+          'father_name': fatherName,
+          'mother_name': motherName,
           'gender': gender
         }),
       );
@@ -160,18 +155,19 @@ class AuthServices {
     }
   }
 
-  static Future<bool> teacher_step3_4_endpoint(String institute_code,
-      String about_me, String email, String gender) async {
+  static Future<bool> teacher_step3_4_endpoint(
+      String instituteCode, String aboutMe, String email, String gender) async {
     try {
+      var token = await getToken();
       var response = await client.post(
         Uri.parse('${dotenv.env['SERVER']}initial/'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $getToken()',
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode(<String, dynamic>{
-          'institute_code': institute_code,
-          'about_me': about_me,
+          'institute_code': instituteCode,
+          'about_me': aboutMe,
           'email': email,
           'gender': gender
         }),
@@ -191,12 +187,12 @@ class AuthServices {
   }
 
   static Future<bool> owner_step3_4_endpoint(
-      String institute_code,
-      String institute_name,
-      String institute_desc,
-      String max_students,
+      String instituteCode,
+      String instituteName,
+      String instituteDesc,
+      String maxStudents,
       String email,
-      String about_me,
+      String aboutMe,
       String gender,
       String location) async {
     try {
@@ -207,12 +203,12 @@ class AuthServices {
           'Authorization': 'Bearer $getToken()',
         },
         body: jsonEncode(<String, dynamic>{
-          'institute_code': institute_code,
-          'institute_name': institute_name,
-          'institute_desc': institute_desc,
-          'max_students': max_students,
+          'institute_code': instituteCode,
+          'institute_name': instituteName,
+          'institute_desc': instituteDesc,
+          'max_students': maxStudents,
           'email': email,
-          'about_me': about_me,
+          'about_me': aboutMe,
           'gender': gender,
           'location': location
         }),
@@ -233,24 +229,19 @@ class AuthServices {
     }
   }
 
-  static Future<List<String>> fetch_subjects_list(String institute_code) async {
+  static Future<List<String>> fetch_subjects_list(String instituteCode) async {
     try {
-      String token = await getToken();
-      print(token);
-      var response = await client.post(
-        Uri.parse('${dotenv.env['SERVER']}common/get_institute_subjects/'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'institute_code': institute_code,
-        }),
-      );
-      Map mapRes = json.decode(response.body);
-      print(mapRes);
+      var response = await RequestMethods.post_method(
+          'common/get_institute_subjects/',
+          {'institute_code': instituteCode},
+          true);
 
-      return mapRes['data']['subjects'];
+      var subjects = <String>[];
+      response['data']['subjects'].forEach((dynamic subject) {
+        subjects.add(subject['subject_name']);
+      });
+
+      return subjects;
     } catch (e) {
       print('something went wrong');
       return [];
@@ -258,7 +249,7 @@ class AuthServices {
   }
 
   static Future<List<String>> fetch_batches_list(
-      String institute_code, List subjects, String grade) async {
+      String instituteCode, List subjects, String grade) async {
     try {
       String token = await getToken();
       var response = await client.post(
@@ -268,7 +259,7 @@ class AuthServices {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode(<String, dynamic>{
-          'institute_code': institute_code,
+          'institute_code': instituteCode,
           'subjects': subjects,
           'grade': grade
         }),
@@ -287,7 +278,7 @@ class AuthServices {
     try {
       final refresh = await getRefresh();
       Map res = await RequestMethods.post_method(
-          'auth/token/refresh/', {'refresh': refresh});
+          'auth/token/refresh/', {'refresh': refresh}, false);
 
       print(res['access']);
       return res['access'];

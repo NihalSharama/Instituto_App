@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/common/widgets/custom_button.dart';
+import 'package:instituto/common/widgets/unauthorized_screen.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/auth/services/auth_service.dart';
@@ -13,6 +14,7 @@ import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/home/widgets/create_subject_popup.dart';
 import 'package:instituto/features/notifications/screens/notification_screen.dart';
 import 'package:instituto/features/profile/screens/profile_screen.dart';
+import 'package:instituto/models/user.dart';
 
 class LandingScreen extends StatefulWidget {
   final String subRoute;
@@ -32,12 +34,14 @@ class _LandingScreenState extends State<LandingScreen> {
 
     Future.delayed(Duration.zero, () async {
       final token = await getToken();
+      final user = await UserStorage().getUser();
 
-      await AuthServices.featch_token();
+      // await AuthServices.featch_token();
 
       if (token == null) {
-        authController.isAuthenticated = false;
         Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+      } else if ((user['institutes'].isEmpty) & (user['role'] != 'Owner')) {
+        Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
       }
     });
 

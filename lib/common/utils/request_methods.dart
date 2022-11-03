@@ -47,14 +47,14 @@ class RequestMethods {
     bool wasExpired = await featchTokenIfExpired(mapRes);
 
     if (wasExpired) {
-      token = await getToken();
-      await AuthServices.featch_token();
+      final newToken = await AuthServices.featch_token();
+      saveToken(newToken);
 
       response = await client.get(Uri.parse('${dotenv.env['SERVER']}$path'),
           headers: (isAuth
               ? <String, String>{
                   'Content-Type': 'application/json; charset=UTF-8',
-                  'Authorization': 'Bearer $token',
+                  'Authorization': 'Bearer $newToken',
                 }
               : <String, String>{
                   'Content-Type': 'application/json; charset=UTF-8',
@@ -65,15 +65,39 @@ class RequestMethods {
     return mapRes;
   }
 
-  static Future<Map> post_method(String path, Object data) async {
+  static Future<Map> post_method(String path, Object data, bool isAuth) async {
+    final token = await getToken();
     var response = await client.post(
       Uri.parse('${dotenv.env['SERVER']}$path'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      headers: (isAuth
+          ? <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Authorization': 'Bearer $token',
+            }
+          : <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            }),
       body: jsonEncode(data),
     );
+    Map mapRes = json.decode(response.body);
+    bool wasExpired = await featchTokenIfExpired(mapRes);
 
-    return json.decode(response.body);
+    if (wasExpired) {
+      final newToken = await AuthServices.featch_token();
+      saveToken(newToken);
+
+      response = await client.post(Uri.parse('${dotenv.env['SERVER']}$path'),
+          headers: (isAuth
+              ? <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                  'Authorization': 'Bearer $newToken',
+                }
+              : <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                }),
+          body: jsonEncode(data));
+    }
+    mapRes = json.decode(response.body);
+    return mapRes;
   }
 }

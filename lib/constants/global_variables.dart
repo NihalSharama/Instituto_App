@@ -27,3 +27,16 @@ class StaticImages {
   static const appBarCurve = 'assets/images/appbar_curve.png';
   static const circularCurve = 'assets/images/circular_curve.png';
 }
+
+class Defaults {
+  final classes = [
+    // classes from api
+    'Class 6th',
+    'Class 7th',
+    'Class 8th',
+    'Class 9th',
+    'Class 10th',
+    'Class 11th',
+    'Class 12th',
+  ];
+}

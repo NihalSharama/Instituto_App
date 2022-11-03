@@ -6,6 +6,7 @@ import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/common/widgets/custom_dropdown.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/constants/global_variables.dart';
+import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/controller/batch_controller.dart';
 import 'package:instituto/controller/home_controller.dart';
 
@@ -19,6 +20,7 @@ class CreateBatchePopup extends StatefulWidget {
 class CreateBatchePopupState extends State<CreateBatchePopup> {
   final homeController = Get.put((HomeController()));
   final batchController = Get.put((BatchController()));
+  final authController = Get.put((AuthController()));
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
                         children: [
                           CustomDropdown(
                               width: 120,
-                              items: homeController.class_dropdown_items,
+                              items: Defaults().classes,
                               dropDownValue:
                                   homeController.classDropdownValue.value,
                               onDropdownSelection:
@@ -75,7 +77,7 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
                           ),
                           CustomDropdown(
                               width: 115,
-                              items: homeController.subject_dropdown_items,
+                              items: authController.subjects,
                               dropDownValue:
                                   homeController.subjectDropdownValue.value,
                               onDropdownSelection:

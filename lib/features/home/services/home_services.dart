@@ -5,11 +5,13 @@ import 'package:instituto/common/utils/toaster_message.dart';
 class HomeServices {
   static var client = http.Client();
 
-  static createSubject(String subject, String user) async {
+  static createSubject(
+    String subject,
+  ) async {
     print(subject);
     try {
       var res = await RequestMethods.post_method(
-          'api/batch/', {"subject": subject, "user": user});
+          'subject/', {"subject": subject}, true);
 
       print('res: ');
       print(res);

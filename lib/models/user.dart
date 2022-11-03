@@ -5,8 +5,8 @@ class UserModel {
   late String id;
   late String firstname;
   late String lastname;
-  late UserInstituteModel selectedInstitute;
-  late List institutes;
+  late String? selectedInstitute;
+  late List? institutes;
   late String role;
 
   UserModel(

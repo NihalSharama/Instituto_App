@@ -32,9 +32,12 @@ class _RequestsToJoinState extends State<RequestsToJoin> {
                               alertsController.requestToJoin.value
                                   .map((dynamic request) {
                         return RequestComponent(
-                            name: request['name'],
-                            mobile: request['mobile'],
-                            subject: request['subject']);
+                            name: request['teacher']['first_name'] +
+                                ' ' +
+                                request['teacher']['last_name'],
+                            mobile: request['teacher']['mobile'].toString(),
+                            subject: 'Physics',
+                            teacherId: request['teacher']['id'].toString());
                       }).toList()),
                     )
                   : const Center(

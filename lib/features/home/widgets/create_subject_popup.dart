@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -7,7 +5,6 @@ import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/home_controller.dart';
-import 'package:instituto/features/home/services/home_services.dart';
 
 class CreateSubjectPopup extends StatefulWidget {
   const CreateSubjectPopup({super.key});
@@ -57,7 +54,13 @@ class CreateSubjectPopupState extends State<CreateSubjectPopup> {
               Expanded(
                 child: CustomTextField(
                   controller: chipTextController,
-                  validator: (_) {
+                  validator: (value) {
+                    print('value $value');
+                    if (value == null || value.isEmpty) {
+                      return 'Enter Subject';
+                    } else if (value.length > 10) {
+                      return 'Subject too long';
+                    }
                     return null;
                   },
                   hintText: 'Enter Subject',
@@ -99,7 +102,11 @@ class CreateSubjectPopupState extends State<CreateSubjectPopup> {
               padding: const EdgeInsets.only(top: 30),
               child: CustomButton(
                 onPressed: () {
-                  homeController.onCreateSubjects(subjectList, 'nihal');
+                  homeController.onCreateSubjects(
+                    subjectList,
+                  );
+
+                  Navigator.pop(context);
                 },
                 text: 'CREATE',
                 width: 100,

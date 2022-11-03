@@ -28,11 +28,11 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    // removeToken();
-
     Future.delayed(Duration.zero, () async {
-      if (true) {
-        // add this in future prevRoute == '/signup' and user.role = owner
+      final user = await UserStorage().getUser();
+
+      if ((user['role'] == 'Owner')) {
+        // & (prevRoute == '/signup')
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -48,17 +48,6 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
       });
     });
 
-<<<<<<< HEAD
-=======
-    // Future.delayed(Duration.zero, () async {
-    //   var token = await getToken();
-    //   if (token == null) {
-    //     authController.isAuthenticated = false;
-    //     Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-    //   }
-    // });
-
->>>>>>> e790ca013ca39720502c3e536c7e3f53c280d8ac
     super.initState();
   }
 
