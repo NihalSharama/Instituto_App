@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/features/notifications/services/alerts_services.dart';
 import 'package:instituto/models/alerts_models.dart';
 
@@ -62,11 +63,15 @@ class AlertsController extends GetxController {
       return;
     }
 
-    print(selectedClassesList);
-    print(selectedSubjectList);
+    var grades = <String>[];
+    for (var grade in selectedClassesList.value) {
+      final index =
+          Defaults().classes.indexWhere((element) => element == grade);
+      grades.add((index + 1).toString());
+    }
 
     await AlertsServices.assignSubjectsClassesService(
-        teacherId, ['11'], selectedClassesList.value);
+        teacherId, selectedSubjectList.value, grades);
   }
 
   @override

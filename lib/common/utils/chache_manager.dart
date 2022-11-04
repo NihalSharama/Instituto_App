@@ -40,9 +40,9 @@ class UserStorage {
     db.collection('user').doc('user').set(user);
   }
 
-  getUser() async {
+  Future<UserModel> getUser() async {
     final user = await db.collection('user').doc('user').get();
-
-    return user;
+    final parsedUser = UserModel.fromJson(user!);
+    return parsedUser;
   }
 }

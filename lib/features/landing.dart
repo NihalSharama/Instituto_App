@@ -3,18 +3,14 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
-import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/common/widgets/unauthorized_screen.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
-import 'package:instituto/features/auth/services/auth_service.dart';
 import 'package:instituto/features/chats/chats_screen.dart';
 import 'package:instituto/features/dashboard/screens/dashboard.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
-import 'package:instituto/features/home/widgets/create_subject_popup.dart';
 import 'package:instituto/features/notifications/screens/notification_screen.dart';
 import 'package:instituto/features/profile/screens/profile_screen.dart';
-import 'package:instituto/models/user.dart';
 
 class LandingScreen extends StatefulWidget {
   final String subRoute;
@@ -40,7 +36,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
       if (token == null) {
         Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-      } else if ((user['institutes'].isEmpty) & (user['role'] != 'Owner')) {
+      } else if ((user.institutes!.isEmpty) & (user.role != 'Owner')) {
         Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
       }
     });

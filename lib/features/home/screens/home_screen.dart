@@ -31,7 +31,7 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
     Future.delayed(Duration.zero, () async {
       final user = await UserStorage().getUser();
 
-      if ((user['role'] == 'Owner')) {
+      if ((user.role == 'Owner')) {
         // & (prevRoute == '/signup')
         showDialog(
             context: context,
