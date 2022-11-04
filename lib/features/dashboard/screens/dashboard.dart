@@ -12,15 +12,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  var currentPage = images.length - 1.0;
   @override
   Widget build(BuildContext context) {
-    PageController controller = PageController(initialPage: images.length - 1);
-    controller.addListener(() {
-      setState(() {
-        currentPage = controller.page;
-      });
-    });
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -65,35 +58,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     )
                   ],
                 ),
-                Stack(
-                  children: [
-                    Positioned.fill(CardScrollWeidget(currentPage),
-                        child: PageView.builder(
-                            itemCount: images.length,
-                            controller: controller,
-                            reverse: true,
-                            itemBuilder: (context, index) {
-                              return Container();
-                            }))
-                  ],
-                ),
               ],
             )
           ],
         ),
       ),
     );
-  }
-}
-
-class CardScrollWeidget extends StatelessWidget {
-  CardScrollWeidget({super.key});
-
-  var currentPage;
-  CardScrollWeidget(this.currentPage);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

@@ -20,6 +20,8 @@ class AppColors {
   static const backgroundGrayLight = Color.fromRGBO(204, 204, 204, 1);
   static const backgroundGrayMoreLight = Color.fromARGB(255, 221, 221, 221);
   static const backgroundGrayDark = Color.fromRGBO(171, 171, 171, 1);
+  static const textColor = Color.fromRGBO(119, 119, 119, 1);
+  static const maintextColor = Color.fromRGBO(78, 78, 78, 1);
 }
 
 class StaticImages {
