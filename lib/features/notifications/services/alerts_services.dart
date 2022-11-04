@@ -15,6 +15,7 @@ class AlertsServices {
   static Future<List> getTeacheresRequest() async {
     Map<dynamic, dynamic> res =
         await RequestMethods.get_method('institute/teacher_requests/', true);
+
     var data = res['data']['data'] as List;
 
     return data;
@@ -32,10 +33,10 @@ class AlertsServices {
       String teacherid, List<String> subjects, List<String> grades) async {
     try {
       var res = await RequestMethods.post_method(
-          'api/institute/assign_subjects/',
-          {"teacher_id": teacherid, "grades": grades, "subjects": subjects});
+          'subject/assign_subjects/',
+          {"teacher_id": teacherid, "grades": grades, "subjects": subjects},
+          true);
 
-      print(res);
       bool isNoserverError = await error_handler(res);
     } catch (e) {
       toasterUnknownFailure();

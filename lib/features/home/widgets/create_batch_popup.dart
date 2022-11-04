@@ -6,6 +6,8 @@ import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/common/widgets/custom_dropdown.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/constants/global_variables.dart';
+import 'package:instituto/controller/auth_controllers.dart';
+import 'package:instituto/controller/batch_controller.dart';
 import 'package:instituto/controller/home_controller.dart';
 
 class CreateBatchePopup extends StatefulWidget {
@@ -17,6 +19,8 @@ class CreateBatchePopup extends StatefulWidget {
 
 class CreateBatchePopupState extends State<CreateBatchePopup> {
   final homeController = Get.put((HomeController()));
+  final batchController = Get.put((BatchController()));
+  final authController = Get.put((AuthController()));
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +28,8 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
       contentPadding: EdgeInsets.all(15),
       content: Stack(
         children: <Widget>[
-          Positioned(
-            right: -40.0,
-            top: -40.0,
-            child: InkResponse(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: const CircleAvatar(
-                child: Icon(Icons.close),
-                backgroundColor: Colors.red,
-              ),
-            ),
-          ),
           Form(
-            key: homeController.createBatchPopupKey,
+            key: batchController.createBatchPopupKey,
             child: IntrinsicHeight(
               child: Expanded(
                 child: Column(
@@ -60,7 +51,7 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
                       ),
                       const SizedBox(height: 15),
                       CustomTextField(
-                          controller: homeController.batchNameController,
+                          controller: batchController.batchNameController,
                           validator: (val) {
                             if (val == null || val.isEmpty) {
                               return 'Enter Batch Name';
@@ -76,17 +67,17 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
                         children: [
                           CustomDropdown(
                               width: 120,
-                              items: homeController.class_dropdown_items,
+                              items: Defaults().classes,
                               dropDownValue:
                                   homeController.classDropdownValue.value,
                               onDropdownSelection:
                                   homeController.onClassDropdownValueChange),
-                          SizedBox(
+                          const SizedBox(
                             width: 30,
                           ),
                           CustomDropdown(
                               width: 115,
-                              items: homeController.subject_dropdown_items,
+                              items: authController.subjects,
                               dropDownValue:
                                   homeController.subjectDropdownValue.value,
                               onDropdownSelection:
@@ -98,7 +89,7 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           CustomButton(
-                            onPressed: homeController.onCreateBatch,
+                            onPressed: batchController.onCreateBatch,
                             text: 'CREATE',
                             width: 100,
                             height: 35,

@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/features/home/screens/home_screen.dart';
+import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/auth/services/auth_service.dart';
+import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/landing.dart';
+import 'package:instituto/models/user.dart';
 
 class AuthController extends GetxController {
   var currentStep = 0.obs;
-  var isAuthenticated = true;
   Rx<String> userRole = 'student'.obs;
   Rx<String> gender = 'male'.obs;
   Rx<String> numberOfStudents = '500'.obs;
@@ -32,9 +31,10 @@ class AuthController extends GetxController {
   var enteredOtp = ''.obs;
   var loginStep = 0.obs;
 
-  var class_dropdown_items = <String>[].obs;
-  var subject_dropdown_items = <String>[].obs;
-  var batches_dropdown_items = <String>[].obs;
+  var subjects = <String>[].obs;
+  var batches = <String>[].obs;
+
+  var user = Rxn<UserModel>();
 
   // auth api functions
   void onRequestLoginOtp(formkey) async {
@@ -55,52 +55,39 @@ class AuthController extends GetxController {
       return;
     }
 
-    bool isNoError = await AuthServices.verify_login_otp(
+    var featchedUser = await AuthServices.verify_login_otp(
         int.parse(mobileController.text), int.parse(enteredOtp.value));
 
-    if (isNoError) {
-      isAuthenticated = true;
+    if (featchedUser != null) {
+      UserStorage().saveUser({
+        'id': featchedUser['id'].toString(),
+        'firstname': featchedUser['first_name'],
+        'lastname': featchedUser['last_name'],
+        'selectedInstitute': (featchedUser['institute_codes'].length == 0
+            ? null
+            : featchedUser['institute_codes'][0]),
+        'institutes': featchedUser['institute_codes'],
+        'role': featchedUser['role'],
+      });
+
       Navigator.pushNamed(
           context,
           LandingScreen.routeName +
               HomePage.routeName); // navigate to dashboard
     }
+    enteredOtp.value = '';
   }
 
-  featchDropdownItems(String institute_code) async {
-    List<String> subjects =
+  featchSubjects(String institute_code) async {
+    List<String> featchedSubjects =
         await AuthServices.fetch_subjects_list(institute_code);
-    subject_dropdown_items.value = subjects;
-
-    class_dropdown_items.value = [
-      // classes from api
-      'Class 6th',
-      'Class 7th',
-      'Class 8th',
-      'Class 9th',
-      'Class 10th',
-      'Class 11th',
-      'Class 12th',
-    ];
-    classDropdownValue.value = class_dropdown_items.first;
-
-    List<String> batches = await AuthServices.fetch_batches_list(
-        institute_code, subjects, classDropdownValue.value);
-    batches_dropdown_items.value =
-        batches; // filter batches according to selected subjects
+    subjects.value = featchedSubjects;
   }
 
-  featchDeafaultClasses() async {
-    class_dropdown_items.value = [
-      // default classes
-      'Class 6th',
-      'Class 7th',
-      'Class 8th',
-      'Class 9th',
-      'Class 10th',
-      'Class 11th',
-      'Class 12th',
-    ];
+  featchBatches(String institute_code) async {
+    List<String> featchedBatches = await AuthServices.fetch_batches_list(
+        institute_code, subjects, classDropdownValue.value);
+    batches.value = featchedBatches;
   }
 
   // basic auth functions
@@ -109,7 +96,6 @@ class AuthController extends GetxController {
       return;
     }
     // sending otp
-    print(currentStep.value);
     if (currentStep.value == 0) {
       bool isError = await AuthServices.request_signup_otp(
           int.parse(mobileController.text),
@@ -153,9 +139,7 @@ class AuthController extends GetxController {
       }
 
       if (isNoError) {
-        isAuthenticated = true;
-        Navigator.pushNamed(
-            context, LandingScreen.routeName + HomePage.routeName);
+        Navigator.pushNamed(context, LoginScreen.routeName);
       }
     }
   }
@@ -214,13 +198,8 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    featchDeafaultClasses();
+    classDropdownValue.value = Defaults().classes.first;
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

@@ -12,12 +12,15 @@ class RequestComponent extends StatelessWidget {
   final String name;
   final String mobile;
   final String subject;
+  final String teacherId;
+
   final altersController = Get.put((AlertsController()));
   RequestComponent(
       {Key? key,
       required this.name,
       required this.mobile,
-      required this.subject})
+      required this.subject,
+      required this.teacherId})
       : super(key: key);
 
   @override
@@ -124,12 +127,14 @@ class RequestComponent extends StatelessWidget {
                             height: 27, width: 75),
                         child: ElevatedButton(
                           onPressed: () {
-                            altersController.featchSubjects('1234');
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AssignClassSubPopup(
-                                      name: name, mobile: mobile);
+                                    name: name,
+                                    mobile: mobile,
+                                    teacherId: teacherId,
+                                  );
                                 });
                           },
                           style: ElevatedButton.styleFrom(

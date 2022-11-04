@@ -10,63 +10,12 @@ class AlertsController extends GetxController {
 
   var selectedClassesList = <String>[].obs;
   var selectedSubjectList = <String>[].obs;
-  var subjects_dropdown_items = <String>[].obs;
-
-  final class_dropdown_items = [
-    // classes from api
-    'Class 6th',
-    'Class 7th',
-    'Class 8th',
-    'Class 9th',
-    'Class 10th',
-    'Class 11th',
-    'Class 12th',
-  ];
-
-  featchSubjects(String institute_code) async {
-    // List<String> subjects =
-    //     await AuthServices.fetch_subjects_list(institute_code);
-    // subjects_dropdown_items.value = subjects;
-    subjects_dropdown_items.value = [
-      'English',
-      'Science',
-      'Maths',
-      'SST',
-      'Buisness'
-    ];
-  }
 
   Future<String> featchTacherRequest() async {
-    // final teacherRequests = await AlertsServices.getTeacheresRequest();
-    // teachersRequestToJoin.value = teacherRequests;
+    final teacherRequests = await AlertsServices.getTeacheresRequest();
+    requestToJoin.value = teacherRequests;
 
-    // api ready ke bd hatadena h
-    requestToJoin.value = [
-      {
-        'id': 1,
-        'name': 'Nihal Sharma',
-        'mobile': '+917053904411',
-        'subject': 'Physics'
-      },
-      {
-        'id': 2,
-        'name': 'Nihal Sharma',
-        'mobile': '+917053904411',
-        'subject': 'Physics'
-      },
-      {
-        'id': 3,
-        'name': 'Nihal Sharma',
-        'mobile': '+917053904411',
-        'subject': 'Physics'
-      },
-      {
-        'id': 4,
-        'name': 'Nihal Sharma',
-        'mobile': '+917053904411',
-        'subject': 'Physics'
-      },
-    ];
+    print(requestToJoin.value);
 
     return '';
   }
@@ -94,7 +43,7 @@ class AlertsController extends GetxController {
           '3',
           'Arjuna 11th Timing 10:00AM - 11:00AM To 4:00PM - 5:00PM',
           'Please Note that timing of your Arjuna batch has been changed from 10:00PM - 11:00AM To 4:00PM - 5:00PM',
-          'Arjuna 11th',
+          'System',
           DateTime.parse('2012-02-27 13:27:00')),
     ];
   }
@@ -113,8 +62,11 @@ class AlertsController extends GetxController {
       return;
     }
 
+    print(selectedClassesList);
+    print(selectedSubjectList);
+
     await AlertsServices.assignSubjectsClassesService(
-        teacherId, selectedSubjectList.value, selectedClassesList.value);
+        teacherId, ['11'], selectedClassesList.value);
   }
 
   @override

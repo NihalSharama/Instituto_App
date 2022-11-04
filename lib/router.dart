@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:instituto/common/widgets/unauthorized_screen.dart';
 import 'package:instituto/features/batch/screens/batch_edit.dart';
+import 'package:instituto/features/home/screens/batches_slide.dart';
 import 'package:instituto/features/notifications/screens/requests_slide.dart';
 import 'package:instituto/features/batch/screens/batch_screen.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
@@ -14,6 +16,11 @@ Route<dynamic> genarateRoute(RouteSettings routeSettings) {
     return MaterialPageRoute(
       settings: routeSettings,
       builder: (_) => LandingScreen(subRoute: path[2]),
+    );
+  } else if (routeSettings.name!.contains(BatchEdit.routeName)) {
+    return PageRouteBuilder(
+      settings: routeSettings,
+      pageBuilder: (_, __, ___) => BatchEdit(id: path[3]),
     );
   } else if (routeSettings.name!.contains(BatchScreen.routeName)) {
     return MaterialPageRoute(
@@ -39,6 +46,11 @@ Route<dynamic> genarateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const RequestsToJoin(),
+      );
+    case UnAuthorizedScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const UnAuthorizedScreen(),
       );
 
     default:

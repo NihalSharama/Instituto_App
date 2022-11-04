@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/widgets/custom_dropdown.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
+import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
 class SignupStep3Student extends StatefulWidget {
@@ -26,7 +27,10 @@ class SignupStep3StudentState extends State<SignupStep3Student> {
           key: widget.signupFormKeys[2],
           child: CustomTextField(
               keyboardType: TextInputType.text,
-              onChanged: (val) => {authController.featchDropdownItems(val)},
+              onChanged: (val) {
+                authController.featchSubjects(val);
+                authController.featchBatches(val);
+              },
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Enter Institute Code ';
@@ -43,14 +47,14 @@ class SignupStep3StudentState extends State<SignupStep3Student> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomDropdown(
-              items: authController.class_dropdown_items,
+              items: Defaults().classes,
               dropDownValue: authController.classDropdownValue.value,
               onDropdownSelection: authController.onClassDropdownValueChange,
             ),
             CustomSelectionDropdown(
               width: 150,
               hintText: 'Subjects',
-              selectionOptions: authController.subject_dropdown_items,
+              selectionOptions: authController.subjects,
               selectedValues: authController.selectedSubjectList,
               onChanged: authController.onSubjectSelectionItemChange,
             ),
@@ -60,7 +64,7 @@ class SignupStep3StudentState extends State<SignupStep3Student> {
           padding: const EdgeInsets.only(top: 20, bottom: 50),
           child: CustomSelectionDropdown(
             hintText: 'Select Batches',
-            selectionOptions: authController.batches_dropdown_items,
+            selectionOptions: authController.batches,
             selectedValues: authController.selectedBatchesList,
             onChanged: authController.onBatchesSelectionItemChange,
           ),

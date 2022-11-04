@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:instituto/common/utils/chache_manager.dart';
+import 'package:instituto/common/widgets/custom_button.dart';
+import 'package:instituto/common/widgets/unauthorized_screen.dart';
+import 'package:instituto/controller/auth_controllers.dart';
+import 'package:instituto/features/auth/screens/login_screen.dart';
+import 'package:instituto/features/auth/services/auth_service.dart';
 import 'package:instituto/features/chats/chats_screen.dart';
 import 'package:instituto/features/dashboard/screens/dashboard.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
+import 'package:instituto/features/home/widgets/create_subject_popup.dart';
 import 'package:instituto/features/notifications/screens/notification_screen.dart';
 import 'package:instituto/features/profile/screens/profile_screen.dart';
+import 'package:instituto/models/user.dart';
 
 class LandingScreen extends StatefulWidget {
   final String subRoute;
@@ -17,12 +26,39 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> {
+  final authController = Get.put((AuthController()));
+  final prevRoute = Get.previousRoute;
+  @override
+  void initState() {
+    // removeToken();
+
+    Future.delayed(Duration.zero, () async {
+      final token = await getToken();
+      final user = await UserStorage().getUser();
+
+      // await AuthServices.featch_token();
+
+      if (token == null) {
+        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+      } else if ((user['institutes'].isEmpty) & (user['role'] != 'Owner')) {
+        Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
         if (widget.subRoute == HomePage.routeName) {
-          return const HomePage();
+          return HomePage();
         } else if (widget.subRoute == RecentChatsScreen.routeName) {
           return const RecentChatsScreen();
         } else if (widget.subRoute == NotificationScreen.routeName) {

@@ -1,28 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:get/get.dart';
+import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/constants/global_variables.dart';
-import 'package:instituto/controller/alerts_controller.dart';
 
-class NotficationComponent extends StatefulWidget {
+class NoticeComponent extends StatefulWidget {
   final String title;
   final String description;
   final String from;
-  final DateTime timeStamp;
-  const NotficationComponent(
+  final DateTime timestamp;
+  final String? file;
+
+  const NoticeComponent(
       {super.key,
       required this.title,
       required this.description,
       required this.from,
-      required this.timeStamp});
+      required this.timestamp,
+      this.file});
 
   @override
-  State<NotficationComponent> createState() => _NotficationComponentState();
+  State<NoticeComponent> createState() => _NoticeComponentState();
 }
 
-class _NotficationComponentState extends State<NotficationComponent> {
+class _NoticeComponentState extends State<NoticeComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,13 +38,11 @@ class _NotficationComponentState extends State<NotficationComponent> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.from.toUpperCase()} \u2022 2:00PM',
-                    style: TextStyle(
+                    '${widget.from} \u2022 2:00PM',
+                    style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: (widget.from.toLowerCase() == 'system'
-                            ? Color.fromARGB(255, 217, 136, 78)
-                            : AppColors.mainColor),
+                        color: AppColors.mainColor,
                         letterSpacing: 1.2),
                   ),
                   const SizedBox(height: 5),
@@ -63,16 +62,26 @@ class _NotficationComponentState extends State<NotficationComponent> {
                         color: AppColors.descriptionColorLight,
                         letterSpacing: 1.2),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.file!,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.descriptionColorLight,
+                            letterSpacing: 1.2),
+                      ),
+                      CustomButton(onPressed: () {}, text: 'View')
+                    ],
+                  )
                 ],
               )),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               border: Border(
-                  left: BorderSide(
-                      color: (widget.from.toLowerCase() == 'system'
-                          ? Color.fromARGB(255, 217, 136, 78)
-                          : AppColors.mainColor),
-                      width: 4)),
-              boxShadow: const [
+                  left: BorderSide(color: AppColors.mainColor, width: 4)),
+              boxShadow: [
                 BoxShadow(
                   color: AppColors.backgroundGrayLight,
                   offset: Offset(
@@ -83,7 +92,7 @@ class _NotficationComponentState extends State<NotficationComponent> {
                   spreadRadius: 1.5,
                 ), //BoxShadow
                 BoxShadow(
-                  color: Colors.white,
+                  color: AppColors.backgroundColor,
                   offset: Offset(0.0, 0.0),
                   blurRadius: 0.0,
                   spreadRadius: 0.0,

@@ -3,11 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/batch_controller.dart';
+import 'package:instituto/features/batch/screens/batch_edit.dart';
 import 'package:instituto/features/batch/screens/chat_slide.dart';
 import 'package:instituto/features/batch/screens/docbox_slide.dart';
 import 'package:instituto/features/batch/screens/notices_slide.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/landing.dart';
+
+enum SampleItem { itemOne, itemTwo, itemThree }
 
 class BatchScreen extends StatefulWidget {
   final String id;
@@ -25,6 +28,7 @@ class _BatchScreenState extends State<BatchScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final batchController = Get.put((BatchController()));
+  var selectedMenu;
 
   @override
   void initState() {
@@ -67,7 +71,10 @@ class _BatchScreenState extends State<BatchScreen>
                       Padding(
                         padding: const EdgeInsets.only(right: 20),
                         child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                  context, BatchEdit.routeName + widget.id);
+                            },
                             child: SvgPicture.asset(
                               'assets/icons/NavToogle.svg',
                               color: AppColors.mainColor,
