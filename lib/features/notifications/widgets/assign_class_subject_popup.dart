@@ -35,115 +35,133 @@ class _AssignClassSubPopupState extends State<AssignClassSubPopup> {
         future: AuthServices.fetch_subjects_list(
             '1234'), // owner ka v institute id lena h
         builder: (BuildContext builder, AsyncSnapshot<List<String>> snapshot) {
-          return AlertDialog(
-            contentPadding: EdgeInsets.all(15),
-            content: Stack(
-              children: <Widget>[
-                Form(
-                  key: alertsController.assingClassSubPopupKey,
-                  child: IntrinsicHeight(
-                    child: Expanded(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Assign Subjects & Classes',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.titleColorExtraLight,
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Container(
-                              width: 130,
-                              height: 2.8,
-                              color: AppColors.mainColor,
-                            ),
-                            const SizedBox(height: 15),
-                            Row(children: [
-                              const Align(
-                                alignment: Alignment.topLeft,
-                                child: CircleAvatar(
-                                  minRadius: 30,
-                                  maxRadius: 30,
-                                  backgroundImage: AssetImage(
-                                      'assets/images/dummy_image.png'),
-                                ),
-                              ),
-                              const SizedBox(width: 15),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.name,
-                                    style: const TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.titleColor),
-                                  ),
-                                  Text(
-                                    widget.mobile,
-                                    style: const TextStyle(
-                                        color: AppColors.mainColor,
-                                        decoration: TextDecoration.underline,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              )
-                            ]),
-                            const SizedBox(height: 25),
-                            Row(
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const Center(
+                child: Text('feacthing subjects...'),
+              );
+            case ConnectionState.done:
+              return AlertDialog(
+                contentPadding: EdgeInsets.all(15),
+                content: Stack(
+                  children: <Widget>[
+                    Form(
+                      key: alertsController.assingClassSubPopupKey,
+                      child: IntrinsicHeight(
+                        child: Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CustomSelectionDropdown(
+                                const Text(
+                                  'Assign Subjects & Classes',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.titleColorExtraLight,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Container(
                                   width: 130,
-                                  hintText: 'Classes',
-                                  selectionOptions: Defaults().classes,
-                                  selectedValues: alertsController
-                                      .selectedClassesList.value,
-                                  onChanged: alertsController
-                                      .onClassSelectionItemChange,
+                                  height: 2.8,
+                                  color: AppColors.mainColor,
                                 ),
-                                const SizedBox(width: 20),
-                                CustomSelectionDropdown(
-                                  width: 130,
-                                  hintText: 'Subjects',
-                                  selectionOptions: ['Maths', 'Physics'],
-                                  selectedValues: alertsController
-                                      .selectedSubjectList.value,
-                                  onChanged: alertsController
-                                      .onSubjectSelectionItemChange,
+                                const SizedBox(height: 15),
+                                Row(children: [
+                                  const Align(
+                                    alignment: Alignment.topLeft,
+                                    child: CircleAvatar(
+                                      minRadius: 30,
+                                      maxRadius: 30,
+                                      backgroundImage: AssetImage(
+                                          'assets/images/dummy_image.png'),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.name,
+                                        style: const TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.titleColor),
+                                      ),
+                                      Text(
+                                        widget.mobile,
+                                        style: const TextStyle(
+                                            color: AppColors.mainColor,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ],
+                                  )
+                                ]),
+                                const SizedBox(height: 25),
+                                Row(
+                                  children: [
+                                    CustomSelectionDropdown(
+                                      width: 130,
+                                      hintText: 'Classes',
+                                      selectionOptions: Defaults().classes,
+                                      selectedValues: alertsController
+                                          .selectedClassesList.value,
+                                      onChanged: alertsController
+                                          .onClassSelectionItemChange,
+                                    ),
+                                    const SizedBox(width: 20),
+                                    CustomSelectionDropdown(
+                                      width: 130,
+                                      hintText: 'Subjects',
+                                      selectionOptions: snapshot.data!,
+                                      selectedValues: alertsController
+                                          .selectedSubjectList.value,
+                                      onChanged: alertsController
+                                          .onSubjectSelectionItemChange,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CustomButtonBordered(
-                                  text: 'CANCEL',
-                                  onPressed: () => Navigator.pop(context),
-                                  width: 100,
-                                  height: 35,
+                                const SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    CustomButtonBordered(
+                                      text: 'CANCEL',
+                                      onPressed: () => Navigator.pop(context),
+                                      width: 100,
+                                      height: 35,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    CustomButton(
+                                      onPressed: () {
+                                        alertsController
+                                            .onAssignSubjects(widget.teacherId);
+                                        Navigator.pop(context);
+                                      },
+                                      text: 'DONE',
+                                      width: 100,
+                                      height: 35,
+                                    )
+                                  ],
                                 ),
-                                const SizedBox(width: 10),
-                                CustomButton(
-                                  onPressed: () =>
-                                      alertsController.onAssignSubjects('16'),
-                                  text: 'DONE',
-                                  width: 100,
-                                  height: 35,
-                                )
-                              ],
-                            ),
-                          ]),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          );
+                              ]),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            default:
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+          }
         });
   }
 }

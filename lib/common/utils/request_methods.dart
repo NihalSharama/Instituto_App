@@ -67,6 +67,7 @@ class RequestMethods {
 
   static Future<Map> post_method(String path, Object data, bool isAuth) async {
     final token = await getToken();
+
     var response = await client.post(
       Uri.parse('${dotenv.env['SERVER']}$path'),
       headers: (isAuth

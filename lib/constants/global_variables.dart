@@ -30,7 +30,11 @@ class StaticImages {
 
 class Defaults {
   final classes = [
-    // classes from api
+    'Class 1st',
+    'Class 2nd',
+    'Class 3rd',
+    'Class 4th',
+    'Class 5th',
     'Class 6th',
     'Class 7th',
     'Class 8th',

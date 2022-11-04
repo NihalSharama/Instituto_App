@@ -17,6 +17,15 @@ class UserModel {
     this.institutes,
     this.role,
   );
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        json["id"],
+        json["firstname"],
+        json["lastname"],
+        json["selectedInstitute"],
+        json["institutes"],
+        json["role"],
+      );
 }
 
 class UserInstituteModel {
