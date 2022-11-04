@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/landing.dart';
 import 'package:instituto/router.dart';
-import 'package:localstore/localstore.dart';
+import 'common/widgets/unauthorized_screen.dart';
+import 'features/home/screens/home_screen.dart';
+import 'features/profile/screens/profile_screen.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -30,8 +32,6 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
         onGenerateRoute: (settings) =>
             genarateRoute(settings), // auto genarating routes
-        home: (const LandingScreen(
-          subRoute: 'home',
-        )));
+        home: (UnAuthorizedScreen()));
   }
 }
