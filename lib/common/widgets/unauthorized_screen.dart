@@ -46,9 +46,11 @@ class _UnAuthorizedScreenState extends State<UnAuthorizedScreen> {
               child: Text(
                 "Your Request has been sent, You will soon join the best managment community 😉",
                 style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.textColor),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.textColor,
+                ),
+                textAlign: TextAlign.center,
               ),
             )
           ],

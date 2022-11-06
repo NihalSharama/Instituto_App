@@ -196,11 +196,12 @@ class AuthServices {
       String gender,
       String location) async {
     try {
+      final token = await getToken();
       var response = await client.post(
         Uri.parse('${dotenv.env['SERVER']}initial/'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $getToken()',
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode(<String, dynamic>{
           'institute_code': instituteCode,

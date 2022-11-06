@@ -30,15 +30,17 @@ class _LandingScreenState extends State<LandingScreen> {
 
     Future.delayed(Duration.zero, () async {
       final token = await getToken();
-      final user = await UserStorage().getUser();
-
-      // await AuthServices.featch_token();
 
       if (token == null) {
         Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-      } else if ((user.institutes!.isEmpty) & (user.role != 'Owner')) {
-        Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
+      } else {
+        final user = await UserStorage().getUser();
+        if ((user.institutes!.isEmpty) & (user.role != 'Owner')) {
+          Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
+        }
       }
+
+      // await AuthServices.featch_token();
     });
 
     super.initState();

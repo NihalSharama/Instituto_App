@@ -29,16 +29,19 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      final user = await UserStorage().getUser();
+      final token = await getToken();
+      // if (token != null) {
+      //   final user = await UserStorage().getUser();
 
-      if ((user.role == 'Owner')) {
-        // & (prevRoute == '/signup')
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return const CreateSubjectPopup();
-            });
-      }
+      //   if ((user.role == 'Owner')) {
+      //     // & (prevRoute == '/signup')
+      //     showDialog(
+      //         context: context,
+      //         builder: (BuildContext context) {
+      //           return const CreateSubjectPopup();
+      //         });
+      //   }
+      // }
     });
     _tabController = TabController(length: 2, vsync: this);
 
