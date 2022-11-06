@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instituto/common/utils/chache_manager.dart';
+import 'package:instituto/common/utils/toaster_message.dart';
 import 'package:instituto/features/home/services/home_services.dart';
 
 class SubjectChipModel {
@@ -15,9 +14,15 @@ class HomeController extends GetxController {
   Rx<String> subjectDropdownValue = 'English'.obs;
 
   onCreateSubjects(List<SubjectChipModel> subjects) async {
-    subjects.forEach((SubjectChipModel subject) async {
-      await HomeServices.createSubject(subject.name);
-    });
+    try {
+      subjects.forEach((SubjectChipModel subject) async {
+        await HomeServices.createSubject(subject.name);
+      });
+
+      toasterSuccessMsg('Subjects Created Successfully');
+    } catch (_) {
+      return;
+    }
   }
 
   void onClassDropdownValueChange(String? newVal) {

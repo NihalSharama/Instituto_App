@@ -2,15 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instituto/controller/batch_controller.dart';
-import 'package:instituto/controller/home_controller.dart';
 import 'package:instituto/features/batch/screens/batch_screen.dart';
 import 'package:instituto/features/home/widgets/batch.dart';
+import 'package:instituto/features/landing.dart';
+import 'package:instituto/features/notifications/screens/notification_screen.dart';
 
-class BatchesSlide extends StatelessWidget {
+class BatchesSlide extends StatefulWidget {
+  final String userRole;
   const BatchesSlide({
     Key? key,
+    required this.userRole,
   }) : super(key: key);
 
+  @override
+  State<BatchesSlide> createState() => _BatchesSlideState();
+}
+
+class _BatchesSlideState extends State<BatchesSlide> {
   @override
   Widget build(BuildContext context) {
     final batchController = Get.put((BatchController()));
@@ -29,20 +37,81 @@ class BatchesSlide extends StatelessWidget {
                           children:
                               // if userrole == owner
                               batchController.batches.value
-                                  .map((dynamic request) {
+                                  .map((dynamic batch) {
                           return GestureDetector(
                               onTap: () {
                                 Navigator.pushReplacementNamed(context,
-                                    BatchScreen.routeName + request['id']);
+                                    BatchScreen.routeName + batch['id']);
                               },
                               child: BatchComponent(
-                                  batch_name: request['batch_name'],
-                                  teacher_name: request['teacher_name'],
-                                  timing: request['timing'],
-                                  subject: request['subject']));
+                                  batch_name: batch['batch_name'],
+                                  teacher_name: batch['teacher_name'],
+                                  timing: batch['timing'],
+                                  subject: batch['subject']));
                         }).toList())
-                      : const Center(
-                          child: Text('No Batches Found!'),
+                      : Center(
+                          child: Column(
+                            children: [
+                              const Text(
+                                'No Batches Found!',
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.w600),
+                              ),
+                              if (widget.userRole == 'Owner') ...{
+                                const Text(
+                                    "Let Your Teachers Handle Batches 😉"),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        elevation: 1,
+                                        shape: const StadiumBorder()),
+                                    onPressed: () {
+                                      Navigator.pushReplacementNamed(
+                                          context,
+                                          LandingScreen.routeName +
+                                              NotificationScreen.routeName);
+                                    },
+                                    child: const Text(
+                                      'Requests!',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    )),
+                              },
+                              if (widget.userRole == 'Teacher') ...{
+                                const Text(
+                                    "Tap The Button To Create Your Batch 😀"),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        elevation: 1,
+                                        shape: const StadiumBorder()),
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'Create Batch',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    )),
+                              },
+                              if (widget.userRole == 'Student') ...{
+                                const Text(
+                                    "Tap The Button To Join Your Batch 😀"),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        elevation: 1,
+                                        shape: const StadiumBorder()),
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'Join Batch',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    )),
+                              }
+                            ],
+                          ),
                         )));
 
             default:

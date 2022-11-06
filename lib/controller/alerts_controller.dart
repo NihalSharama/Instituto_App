@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/features/notifications/services/alerts_services.dart';
 import 'package:instituto/models/alerts_models.dart';
+import 'package:instituto/models/batch_models.dart';
 
 class AlertsController extends GetxController {
   final assingClassSubPopupKey = GlobalKey<FormState>();
@@ -57,7 +58,7 @@ class AlertsController extends GetxController {
     selectedSubjectList.value = selectedItems;
   }
 
-  onAssignSubjects(teacherId) async {
+  onAssignSubjects(teacherId, requestId) async {
     final isValid = assingClassSubPopupKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -70,8 +71,14 @@ class AlertsController extends GetxController {
       grades.add((index + 1).toString());
     }
 
-    await AlertsServices.assignSubjectsClassesService(
+    var isNoError = await AlertsServices.assignSubjectsClassesService(
         teacherId, selectedSubjectList.value, grades);
+
+    if (isNoError) {
+      requestToJoin.value
+          .removeWhere((request) => request['id'].toString() == requestId);
+      print(requestToJoin.value);
+    }
   }
 
   @override

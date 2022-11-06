@@ -12,9 +12,6 @@ class HomeServices {
     try {
       var res = await RequestMethods.post_method(
           'subject/', {"subject": subject}, true);
-
-      print('res: ');
-      print(res);
     } catch (e) {
       toasterUnknownFailure();
     }

@@ -11,6 +11,7 @@ import 'package:instituto/features/dashboard/screens/dashboard.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/notifications/screens/notification_screen.dart';
 import 'package:instituto/features/profile/screens/profile_screen.dart';
+import 'package:instituto/models/user.dart';
 
 class LandingScreen extends StatefulWidget {
   final String subRoute;
@@ -27,18 +28,20 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   void initState() {
     // removeToken();
+    // UserStorage().deleteuser();
 
     Future.delayed(Duration.zero, () async {
       final token = await getToken();
-      final user = await UserStorage().getUser();
+      final UserModel? user = await UserStorage().getUser();
 
-      // await AuthServices.featch_token();
-
-      if (token == null) {
+      if (token == null || user == null) {
         Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-      } else if ((user.institutes!.isEmpty) & (user.role != 'Owner')) {
-        Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
+      } else {
+        if ((user.institutes!.isEmpty) & (user.role != 'Owner')) {
+          Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
+        }
       }
+      // await AuthServices.featch_token();
     });
 
     super.initState();
@@ -77,7 +80,7 @@ class _LandingScreenState extends State<LandingScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 200, 200, 200),
+        color: Color.fromARGB(255, 221, 221, 221),
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisSize: MainAxisSize.max,

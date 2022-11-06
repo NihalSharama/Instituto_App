@@ -32,7 +32,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           PreferredSize(

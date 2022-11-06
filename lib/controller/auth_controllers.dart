@@ -59,6 +59,7 @@ class AuthController extends GetxController {
         int.parse(mobileController.text), int.parse(enteredOtp.value));
 
     if (featchedUser != null) {
+      print(featchedUser);
       UserStorage().saveUser({
         'id': featchedUser['id'].toString(),
         'firstname': featchedUser['first_name'],

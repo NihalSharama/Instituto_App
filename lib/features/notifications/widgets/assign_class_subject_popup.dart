@@ -16,11 +16,13 @@ class AssignClassSubPopup extends StatefulWidget {
   final String name;
   final String mobile;
   final String teacherId;
+  final String requestId;
   const AssignClassSubPopup(
       {super.key,
       required this.name,
       required this.mobile,
-      required this.teacherId});
+      required this.teacherId,
+      required this.requestId});
 
   @override
   State<AssignClassSubPopup> createState() => _AssignClassSubPopupState();
@@ -138,8 +140,8 @@ class _AssignClassSubPopupState extends State<AssignClassSubPopup> {
                                     const SizedBox(width: 10),
                                     CustomButton(
                                       onPressed: () {
-                                        alertsController
-                                            .onAssignSubjects(widget.teacherId);
+                                        alertsController.onAssignSubjects(
+                                            widget.teacherId, widget.requestId);
                                         Navigator.pop(context);
                                       },
                                       text: 'DONE',

@@ -32,18 +32,16 @@ class AlertsServices {
   static assignSubjectsClassesService(
       String teacherid, List<String> subjects, List<String> grades) async {
     try {
-      print(grades);
-
       var res = await RequestMethods.post_method(
           'subject/assign_subjects/',
           {"teacher_id": teacherid, "grades": grades, "subjects": subjects},
           true);
 
-      print(res);
-
-      bool isNoserverError = await error_handler(res);
+      var isNoError = await error_handler(res);
+      return isNoError;
     } catch (e) {
       toasterUnknownFailure();
+      return false;
     }
   }
 }

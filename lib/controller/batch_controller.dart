@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
+import 'package:instituto/features/batch/services/batch_services.dart';
 import 'package:instituto/models/batch_models.dart';
 
 class BatchController extends GetxController {
@@ -37,40 +38,39 @@ class BatchController extends GetxController {
 
   Future<String> featchBatches() async {
     // featch from api
-    // final teacherRequests = await HomeServices.getBatches();
-    // batches.value = teacherRequests;
+    final teacherRequests = await BatchServices.getBatches();
+    batches.value = teacherRequests;
 
-    // bdme api ready hone ke bd hata dena h
-    batches.value = [
-      {
-        'id': '1',
-        'batch_name': 'physics XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': '2',
-        'batch_name': 'chemistry XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': '3',
-        'batch_name': 'maths XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-      {
-        'id': '4',
-        'batch_name': 'politics XIth',
-        'teacher_name': 'Nihal Sharma',
-        'timing': '2:30PM - 4:00PM',
-        'subject': 'Physics'
-      },
-    ];
+    // batches.value = [
+    //   {
+    //     'id': '1',
+    //     'batch_name': 'physics XIth',
+    //     'teacher_name': 'Nihal Sharma',
+    //     'timing': '2:30PM - 4:00PM',
+    //     'subject': 'Physics'
+    //   },
+    //   {
+    //     'id': '2',
+    //     'batch_name': 'chemistry XIth',
+    //     'teacher_name': 'Nihal Sharma',
+    //     'timing': '2:30PM - 4:00PM',
+    //     'subject': 'Physics'
+    //   },
+    //   {
+    //     'id': '3',
+    //     'batch_name': 'maths XIth',
+    //     'teacher_name': 'Nihal Sharma',
+    //     'timing': '2:30PM - 4:00PM',
+    //     'subject': 'Physics'
+    //   },
+    //   {
+    //     'id': '4',
+    //     'batch_name': 'politics XIth',
+    //     'teacher_name': 'Nihal Sharma',
+    //     'timing': '2:30PM - 4:00PM',
+    //     'subject': 'Physics'
+    //   },
+    // ];
 
     return '';
   }

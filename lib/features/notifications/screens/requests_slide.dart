@@ -29,16 +29,18 @@ class _RequestsToJoinState extends State<RequestsToJoin> {
                       child: Column(
                           children:
                               // if userrole == owner
-                              alertsController.requestToJoin.value
+                              alertsController.requestToJoin
+                                  .value // listview builder use krna(reatime delete)
                                   .map((dynamic request) {
                         return RequestComponent(
-                            name: request['teacher']['first_name'] +
-                                ' ' +
-                                request['teacher']['last_name'],
-                            mobile: request['teacher']['mobile'].toString(),
-                            subject: 'Physics',
-                            teacherId:
-                                '16'); // request['teacher']['id'].toString()
+                          name: request['teacher']['first_name'] +
+                              ' ' +
+                              request['teacher']['last_name'],
+                          mobile: request['teacher']['mobile'].toString(),
+                          subject: 'Physics',
+                          teacherId: request['teacher']['id'].toString(),
+                          requestId: request['id'].toString(),
+                        );
                       }).toList()),
                     )
                   : const Center(

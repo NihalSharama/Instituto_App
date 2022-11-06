@@ -32,6 +32,6 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
         onGenerateRoute: (settings) =>
             genarateRoute(settings), // auto genarating routes
-        home: (UnAuthorizedScreen()));
+        home: (LandingScreen(subRoute: 'home')));
   }
 }

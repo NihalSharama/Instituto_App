@@ -5,12 +5,10 @@ import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/home_controller.dart';
-import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/home/screens/batches_slide.dart';
 import 'package:instituto/features/home/screens/teachers_slide.dart';
 import 'package:instituto/features/home/widgets/create_subject_popup.dart';
-
-import '../../../controller/auth_controllers.dart';
+import 'package:instituto/models/user.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = 'home';
@@ -25,13 +23,22 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final prevRoute = Get.previousRoute;
   int _selectedIndex = 0;
+  String userRole = '';
+  String userName = '';
 
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      final user = await UserStorage().getUser();
+      final UserModel? user = await UserStorage().getUser();
 
-      if ((user.role == 'Owner')) {
+      if (user != null) {
+        setState(() {
+          userRole = user.role;
+          userName = '${user.firstname} ${user.lastname}';
+        });
+      }
+
+      if ((userRole == 'Owner')) {
         // & (prevRoute == '/signup')
         showDialog(
             context: context,
@@ -69,6 +76,7 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,11 +97,11 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                         ],
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Text(
-                        'Hi, Nihal Sharma',
-                        style: TextStyle(
+                        'Hi, $userName',
+                        style: const TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
@@ -118,41 +126,73 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                 const SizedBox(
                   height: 40,
                 ),
-                PreferredSize(
-                  // ignore: sort_child_properties_last
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        labelColor: AppColors.mainColor,
-                        unselectedLabelColor: Colors.black,
-                        indicatorColor: AppColors.mainColor,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        labelStyle: TextStyle(fontWeight: FontWeight.w600),
-                        tabs: const [
-                          Tab(
-                            text: "TEACHES",
-                          ),
-                          Tab(
-                            text: "BATCHES",
-                          )
-                        ]),
+                if (userRole == 'Owner') ...{
+                  PreferredSize(
+                    // ignore: sort_child_properties_last
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: TabBar(
+                          controller: _tabController,
+                          isScrollable: true,
+                          labelColor: AppColors.mainColor,
+                          unselectedLabelColor: Colors.black,
+                          indicatorColor: AppColors.mainColor,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          labelStyle: TextStyle(fontWeight: FontWeight.w600),
+                          tabs: const [
+                            Tab(
+                              text: "TEACHES",
+                            ),
+                            Tab(
+                              text: "BATCHES",
+                            )
+                          ]),
+                    ),
+                    preferredSize: const Size.fromHeight(kToolbarHeight),
+                  )
+                },
+                if (userRole == 'Teacher' || userRole == 'Student') ...{
+                  const SizedBox(height: 4),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'BATCHES',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.titleColorExtraLight,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Container(
+                        width: 30,
+                        height: 2,
+                        color: AppColors.mainColor,
+                      ),
+                    ],
                   ),
-                  preferredSize: const Size.fromHeight(kToolbarHeight),
-                )
+                }
               ],
             ),
           ),
         ),
-
-        //yaha pe dena hai
-
-        Expanded(
-          child: TabBarView(
-              controller: _tabController,
-              children: const [Center(child: TeachersSlide()), BatchesSlide()]),
-        ),
+        if (userRole == 'Owner') ...{
+          Expanded(
+            child: TabBarView(controller: _tabController, children: [
+              const TeachersSlide(),
+              BatchesSlide(userRole: userRole)
+            ]),
+          ),
+        },
+        if (userRole == 'Teacher' || userRole == 'Student') ...{
+          Expanded(
+              child: Center(
+            child: BatchesSlide(
+              userRole: userRole,
+            ),
+          )),
+        }
       ],
     );
   }

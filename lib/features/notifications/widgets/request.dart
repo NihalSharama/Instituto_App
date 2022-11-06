@@ -13,6 +13,7 @@ class RequestComponent extends StatelessWidget {
   final String mobile;
   final String subject;
   final String teacherId;
+  final String requestId;
 
   final altersController = Get.put((AlertsController()));
   RequestComponent(
@@ -20,7 +21,8 @@ class RequestComponent extends StatelessWidget {
       required this.name,
       required this.mobile,
       required this.subject,
-      required this.teacherId})
+      required this.teacherId,
+      required this.requestId})
       : super(key: key);
 
   @override
@@ -108,9 +110,7 @@ class RequestComponent extends StatelessWidget {
                     children: [
                       ConstrainedBox(
                         constraints: const BoxConstraints.tightFor(
-                          height: 27,
-                          width: 75,
-                        ),
+                            height: 27, width: 70),
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
@@ -124,7 +124,7 @@ class RequestComponent extends StatelessWidget {
                       const SizedBox(width: 10),
                       ConstrainedBox(
                         constraints: const BoxConstraints.tightFor(
-                            height: 27, width: 75),
+                            height: 27, width: 70),
                         child: ElevatedButton(
                           onPressed: () {
                             showDialog(
@@ -134,6 +134,7 @@ class RequestComponent extends StatelessWidget {
                                     name: name,
                                     mobile: mobile,
                                     teacherId: teacherId,
+                                    requestId: requestId,
                                   );
                                 });
                           },
