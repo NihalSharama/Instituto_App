@@ -26,13 +26,15 @@ class BatchServices {
       var res = await RequestMethods.post_method(
           'batch/',
           {
-            "batchname": batchname,
+            "batch_name": batchname,
             "batch_subject": batch_subject,
             "institute": institute,
             "grade": grade,
-            "batchcode": batchcode
+            "batch_code": batchcode
           },
-          false);
+          true);
+
+      print(res);
 
       await error_handler(res);
     } catch (e) {

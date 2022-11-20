@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
+import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/features/batch/services/batch_services.dart';
 import 'package:instituto/models/batch_models.dart';
 
@@ -40,16 +41,20 @@ class BatchController extends GetxController {
   }
 
   onCreateBatch(institute_code) async {
-    // final isValid = createBatchPopupKey.currentState!.validate();
-    // if (!isValid) {
-    //   return;
-    // }
+    if (!createBatchPopupKey.currentState!.validate()) {
+      return;
+    }
+
+    final index = Defaults()
+            .classes
+            .indexWhere((element) => element == classDropdownValue.value) +
+        1;
 
     await BatchServices.createBatchService(
         batchNameController.text,
         subjectDropdownValue.value,
-        institute_code,
-        classDropdownValue.value,
+        institute_code.toString(),
+        index.toString(),
         batchCOdeController.text);
   }
 

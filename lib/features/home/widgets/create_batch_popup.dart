@@ -121,9 +121,9 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
                                       onPressed: () {
                                         batchController.onCreateBatch(
                                             userController.user.value!
-                                                .selectedInstitute![1]);
+                                                .selectedInstitute![0]);
 
-                                        Navigator.pop(context);
+                                        // Navigator.pop(context);
                                       },
                                       text: 'CREATE',
                                       width: 100,
