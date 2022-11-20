@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../../constants/global_variables.dart';
 
-class RequestComponent extends StatelessWidget {
+class TeacherRequestComponent extends StatelessWidget {
   final String name;
   final String mobile;
   final String subject;
@@ -16,7 +16,7 @@ class RequestComponent extends StatelessWidget {
   final String requestId;
 
   final altersController = Get.put((AlertsController()));
-  RequestComponent(
+  TeacherRequestComponent(
       {Key? key,
       required this.name,
       required this.mobile,

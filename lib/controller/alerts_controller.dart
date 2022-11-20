@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/features/notifications/services/alerts_services.dart';
 import 'package:instituto/models/alerts_models.dart';
-import 'package:instituto/models/batch_models.dart';
 
 class AlertsController extends GetxController {
   final assingClassSubPopupKey = GlobalKey<FormState>();
@@ -16,6 +15,15 @@ class AlertsController extends GetxController {
   Future<String> featchTacherRequest() async {
     final teacherRequests = await AlertsServices.getTeacheresRequest();
     requestToJoin.value = teacherRequests;
+
+    print(requestToJoin.value);
+
+    return '';
+  }
+
+  Future<String> featchStudentRequest() async {
+    final studentRequests = await AlertsServices.getTeacheresRequest();
+    requestToJoin.value = studentRequests;
 
     print(requestToJoin.value);
 

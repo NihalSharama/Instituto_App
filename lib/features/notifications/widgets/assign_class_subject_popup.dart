@@ -10,6 +10,7 @@ import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/alerts_controller.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/controller/home_controller.dart';
+import 'package:instituto/controller/user_controller.dart';
 import 'package:instituto/features/auth/services/auth_service.dart';
 
 class AssignClassSubPopup extends StatefulWidget {
@@ -30,12 +31,13 @@ class AssignClassSubPopup extends StatefulWidget {
 
 class _AssignClassSubPopupState extends State<AssignClassSubPopup> {
   final alertsController = Get.put((AlertsController()));
+  final userController = Get.put((UserController()));
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: AuthServices.fetch_subjects_list(
-            '1234'), // owner ka v institute id lena h
+        future: AuthServices.fetch_subjects_list(userController.user.value!
+            .selectedInstitute![1]), // owner ka v institute id lena h
         builder: (BuildContext builder, AsyncSnapshot<List<String>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

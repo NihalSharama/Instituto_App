@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/common/widgets/custom_textfield.dart';
 import 'package:instituto/common/widgets/triple_selection_buttons.dart';
-import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 
 class SignupStep1 extends StatefulWidget {

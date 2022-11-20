@@ -10,9 +10,6 @@ class SubjectChipModel {
 }
 
 class HomeController extends GetxController {
-  Rx<String> classDropdownValue = 'Class 6th'.obs;
-  Rx<String> subjectDropdownValue = 'English'.obs;
-
   onCreateSubjects(List<SubjectChipModel> subjects) async {
     try {
       subjects.forEach((SubjectChipModel subject) async {
@@ -23,14 +20,6 @@ class HomeController extends GetxController {
     } catch (_) {
       return;
     }
-  }
-
-  void onClassDropdownValueChange(String? newVal) {
-    classDropdownValue.value = newVal!;
-  }
-
-  void onSubjectDropdownValueChange(String? newVal) {
-    classDropdownValue.value = newVal!;
   }
 
   @override

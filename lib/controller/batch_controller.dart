@@ -13,6 +13,18 @@ class BatchController extends GetxController {
 
   final createBatchPopupKey = GlobalKey<FormState>();
   var batchNameController = TextEditingController();
+  var batchCOdeController = TextEditingController();
+
+  Rx<String> classDropdownValue = 'Class 6th'.obs;
+  Rx<String> subjectDropdownValue = 'PHYSICS'.obs;
+
+  void onClassDropdownValueChange(String? newVal) {
+    classDropdownValue.value = newVal!;
+  }
+
+  void onSubjectDropdownValueChange(String? newVal) {
+    subjectDropdownValue.value = newVal!;
+  }
 
   featchBatchDetails(String id) {
     batchDetails.value = BatchDetailsModel(id, 'Physics XITH', 'Nihal Sharma',
@@ -27,50 +39,55 @@ class BatchController extends GetxController {
     ], [], []);
   }
 
-  onCreateBatch() async {
-    final isValid = createBatchPopupKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
+  onCreateBatch(institute_code) async {
+    // final isValid = createBatchPopupKey.currentState!.validate();
+    // if (!isValid) {
+    //   return;
+    // }
 
-    final token = await getToken();
+    await BatchServices.createBatchService(
+        batchNameController.text,
+        subjectDropdownValue.value,
+        institute_code,
+        classDropdownValue.value,
+        batchCOdeController.text);
   }
 
   Future<String> featchBatches() async {
     // featch from api
-    final teacherRequests = await BatchServices.getBatches();
-    batches.value = teacherRequests;
+    // final teacherRequests = await BatchServices.getBatches();
+    // batches.value = teacherRequests;
 
-    // batches.value = [
-    //   {
-    //     'id': '1',
-    //     'batch_name': 'physics XIth',
-    //     'teacher_name': 'Nihal Sharma',
-    //     'timing': '2:30PM - 4:00PM',
-    //     'subject': 'Physics'
-    //   },
-    //   {
-    //     'id': '2',
-    //     'batch_name': 'chemistry XIth',
-    //     'teacher_name': 'Nihal Sharma',
-    //     'timing': '2:30PM - 4:00PM',
-    //     'subject': 'Physics'
-    //   },
-    //   {
-    //     'id': '3',
-    //     'batch_name': 'maths XIth',
-    //     'teacher_name': 'Nihal Sharma',
-    //     'timing': '2:30PM - 4:00PM',
-    //     'subject': 'Physics'
-    //   },
-    //   {
-    //     'id': '4',
-    //     'batch_name': 'politics XIth',
-    //     'teacher_name': 'Nihal Sharma',
-    //     'timing': '2:30PM - 4:00PM',
-    //     'subject': 'Physics'
-    //   },
-    // ];
+    batches.value = [
+      {
+        'id': '1',
+        'batch_name': 'physics XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': '2',
+        'batch_name': 'chemistry XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': '3',
+        'batch_name': 'maths XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+      {
+        'id': '4',
+        'batch_name': 'politics XIth',
+        'teacher_name': 'Nihal Sharma',
+        'timing': '2:30PM - 4:00PM',
+        'subject': 'Physics'
+      },
+    ];
 
     return '';
   }

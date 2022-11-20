@@ -2,11 +2,12 @@ import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/models/user.dart';
 
-class AlertsController extends GetxController {
+class UserController extends GetxController {
   var user = Rxn<UserModel>();
 
   loadUser() async {
     final UserModel? laodedUser = await UserStorage().getUser();
+
     if (laodedUser == null) {
       return;
     }

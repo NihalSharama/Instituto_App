@@ -238,6 +238,7 @@ class AuthServices {
           true);
 
       var subjects = <String>[];
+
       response['data']['subjects'].forEach((dynamic subject) {
         subjects.add(subject['subject_name']);
       });

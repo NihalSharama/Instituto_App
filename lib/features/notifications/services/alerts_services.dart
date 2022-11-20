@@ -21,6 +21,15 @@ class AlertsServices {
     return data;
   }
 
+  static Future<List> getStudentsRequest() async {
+    Map<dynamic, dynamic> res =
+        await RequestMethods.get_method('institute/student_requests/', true);
+
+    var data = res['data']['data'] as List;
+
+    return data;
+  }
+
   static Future<List<NotificationModel>> getNotfications() async {
     Map<dynamic, dynamic> res = await RequestMethods.get_method(
         'institute/notifications/:studentId', true);
