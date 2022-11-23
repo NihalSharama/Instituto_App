@@ -28,18 +28,6 @@ class UserModel {
       );
 }
 
-class UserInstituteModel {
-  late String id;
-  late String name;
-  late List<BatchDetailsModel> batches;
-  late List<NotificationModel> notifications;
-  late List recentChats;
-  late List? teachers;
-  late List<NoticeModel>? requests;
-
-  UserInstituteModel(this.id, this.name, this.batches, this.notifications,
-      this.recentChats, this.requests, this.teachers);
-}
 
 // user_controller --> user(userModel) --> selectedInstitute(InstituteModel) 
 // --> all userdata specifcly of institute(batches, notification, chats...)

@@ -5,7 +5,7 @@ import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/models/batch_models.dart';
 
 class ChatSlide extends StatefulWidget {
-  final List<MessageModel> messages;
+  final List<dynamic> messages;
   const ChatSlide({super.key, required this.messages});
 
   @override
@@ -24,7 +24,7 @@ class _ChatSlideState extends State<ChatSlide> {
             Column(
                 children:
                     // if userrole == owner
-                    widget.messages.map((MessageModel message) {
+                    widget.messages.map((message) {
               return Align(
                 alignment: (message.from == 'nihal'
                     ? Alignment.centerRight
@@ -76,9 +76,7 @@ class _ChatSlideState extends State<ChatSlide> {
               );
             }).toList())
           else
-            const Center(
-              child: Text('No Batches Found!'),
-            )
+            const Text('No Messages Found!')
         ],
       ),
     ));

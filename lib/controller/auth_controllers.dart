@@ -87,7 +87,12 @@ class AuthController extends GetxController {
 
   featchBatches(String institute_code) async {
     List<String> featchedBatches = await AuthServices.fetch_batches_list(
-        institute_code, subjects, classDropdownValue.value);
+        institute_code,
+        subjects,
+        Defaults().getGrade(classDropdownValue.value));
+
+    print(featchedBatches);
+
     batches.value = featchedBatches;
   }
 

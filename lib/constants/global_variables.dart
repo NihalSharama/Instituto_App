@@ -45,4 +45,9 @@ class Defaults {
     'Class 11th',
     'Class 12th',
   ];
+
+  getGrade(classVal) {
+    final grade = classes.indexWhere((element) => element == classVal) + 1;
+    return grade.toString();
+  }
 }

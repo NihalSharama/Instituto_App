@@ -3,9 +3,11 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:instituto/common/utils/chache_manager.dart';
+import 'package:instituto/common/widgets/unauthorized_screen.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/home_controller.dart';
 import 'package:instituto/controller/user_controller.dart';
+import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/home/screens/batches_slide.dart';
 import 'package:instituto/features/home/screens/teachers_slide.dart';
 import 'package:instituto/features/home/widgets/create_batch_popup.dart';
@@ -28,17 +30,29 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
   @override
   void initState() {
+    // removeToken();
+    // UserStorage().deleteuser();
+
     Future.delayed(Duration.zero, () async {
+      final token = await getToken();
       final UserModel? user = await UserStorage().getUser();
 
-      if ((user!.role == 'Owner')) {
-        // & (prevRoute == '/signup')
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              // return const CreateSubjectPopup();
-              return const CreateBatchePopup();
-            });
+      if (token == null || user == null) {
+        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+      } else {
+        if ((user.institutes!.isEmpty) & (user.role != 'Owner')) {
+          Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
+        }
+
+        if ((user.role == 'Owner')) {
+          // & (prevRoute == '/signup')
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                // return const CreateSubjectPopup();
+                return const CreateBatchePopup();
+              });
+        }
       }
     });
     _tabController = TabController(length: 2, vsync: this);
@@ -157,6 +171,7 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const SizedBox(height: 2),
                             const Text(
                               'BATCHES',
                               style: TextStyle(
@@ -165,9 +180,8 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                                 color: AppColors.titleColorExtraLight,
                               ),
                             ),
-                            const SizedBox(height: 2),
                             Container(
-                              width: 30,
+                              width: 20,
                               height: 2,
                               color: AppColors.mainColor,
                             ),
@@ -189,10 +203,8 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
               if (userController.user.value?.role == 'Teacher' ||
                   userController.user.value?.role == 'Student') ...{
                 Expanded(
-                    child: Center(
-                  child: BatchesSlide(
-                    userRole: userController.user.value!.role,
-                  ),
+                    child: BatchesSlide(
+                  userRole: userController.user.value!.role,
                 )),
               }
             ],

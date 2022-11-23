@@ -25,32 +25,6 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   final authController = Get.put((AuthController()));
   final prevRoute = Get.previousRoute;
-  @override
-  void initState() {
-    // removeToken();
-    // UserStorage().deleteuser();
-
-    Future.delayed(Duration.zero, () async {
-      final token = await getToken();
-      final UserModel? user = await UserStorage().getUser();
-
-      if (token == null || user == null) {
-        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-      } else {
-        if ((user.institutes!.isEmpty) & (user.role != 'Owner')) {
-          Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
-        }
-      }
-      // await AuthServices.featch_token();
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -33,7 +33,7 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return const Center(
-                child: Text('feacthing subjects...'),
+                child: CircularProgressIndicator(),
               );
             case ConnectionState.done:
               return AlertDialog(
@@ -123,7 +123,7 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
                                             userController.user.value!
                                                 .selectedInstitute![0]);
 
-                                        // Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
                                       text: 'CREATE',
                                       width: 100,

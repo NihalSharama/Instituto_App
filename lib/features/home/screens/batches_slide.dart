@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instituto/controller/batch_controller.dart';
 import 'package:instituto/features/batch/screens/batch_screen.dart';
+import 'package:instituto/features/batch/services/batch_services.dart';
 import 'package:instituto/features/home/widgets/batch.dart';
 import 'package:instituto/features/landing.dart';
 import 'package:instituto/features/notifications/screens/notification_screen.dart';
@@ -25,29 +26,30 @@ class _BatchesSlideState extends State<BatchesSlide> {
 
     return SingleChildScrollView(
       child: FutureBuilder(
-        future: batchController.featchBatches(),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        future: BatchServices.getBatches(),
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return const Center(child: Text('Featching Batches...'));
+              return const Center(child: CircularProgressIndicator());
             case ConnectionState.done:
               return Center(
-                  child: (batchController.batches.value.isNotEmpty
+                  child: (snapshot.data!.isNotEmpty
                       ? Column(
                           children:
                               // if userrole == owner
-                              batchController.batches.value
-                                  .map((dynamic batch) {
+                              snapshot.data!.map((dynamic batch) {
                           return GestureDetector(
                               onTap: () {
-                                Navigator.pushReplacementNamed(context,
-                                    BatchScreen.routeName + batch['id']);
+                                Navigator.pushReplacementNamed(
+                                    context,
+                                    BatchScreen.routeName +
+                                        batch['id'].toString());
                               },
                               child: BatchComponent(
                                   batch_name: batch['batch_name'],
                                   teacher_name: batch['teacher_name'],
-                                  timing: batch['timing'],
-                                  subject: batch['subject']));
+                                  timing: '2:30PM - 4:00PM',
+                                  subject: batch['subject_name']));
                         }).toList())
                       : Center(
                           child: Column(
