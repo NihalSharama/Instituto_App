@@ -33,12 +33,12 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
 
       if ((user!.role == 'Owner')) {
         // & (prevRoute == '/signup')
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              // return const CreateSubjectPopup();
-              return const CreateBatchePopup();
-            });
+        // showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       // return const CreateSubjectPopup();
+        //       return const CreateBatchePopup();
+        //     });
       }
     });
     _tabController = TabController(length: 2, vsync: this);
@@ -62,140 +62,145 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
     return FutureBuilder(
         future: userController.loadUser(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return Column(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(StaticImages.appBarCurve),
-                        fit: BoxFit.contain,
-                        alignment: Alignment.topCenter)),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Insituto',
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
-                                ),
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: SvgPicture.asset(
-                                        'assets/icons/NavToogle.svg'))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              'Hi, ${userController.user.value?.firstname} ${userController.user.value?.lastname}',
-                              style: const TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 3,
-                          ),
-                          Text(
-                            '${userController.user.value?.role.toUpperCase()}',
-                            style: const TextStyle(
-                                fontSize: 12, color: Colors.white),
-                          ),
-                          const SizedBox(
-                            height: 3,
-                          ),
-                          const Text(
-                            "@success_point",
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      if (userController.user.value?.role == 'Owner') ...{
-                        PreferredSize(
-                          // ignore: sort_child_properties_last
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: TabBar(
-                                controller: _tabController,
-                                isScrollable: true,
-                                labelColor: AppColors.mainColor,
-                                unselectedLabelColor: Colors.black,
-                                indicatorColor: AppColors.mainColor,
-                                indicatorSize: TabBarIndicatorSize.label,
-                                labelStyle:
-                                    TextStyle(fontWeight: FontWeight.w600),
-                                tabs: const [
-                                  Tab(
-                                    text: "TEACHES",
-                                  ),
-                                  Tab(
-                                    text: "BATCHES",
-                                  )
-                                ]),
-                          ),
-                          preferredSize: const Size.fromHeight(kToolbarHeight),
-                        )
-                      },
-                      if (userController.user.value?.role == 'Teacher' ||
-                          userController.user.value?.role == 'Student') ...{
-                        const SizedBox(height: 4),
+          return Scaffold(
+            body: Column(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(StaticImages.appBarCurve),
+                          fit: BoxFit.contain,
+                          alignment: Alignment.topCenter)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'BATCHES',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.titleColorExtraLight,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Insituto',
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: SvgPicture.asset(
+                                          'assets/icons/NavToogle.svg'))
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 2),
-                            Container(
-                              width: 30,
-                              height: 2,
-                              color: AppColors.mainColor,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                'Hi, ${userController.user.value?.firstname} ${userController.user.value?.lastname}',
+                                style: const TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              ),
                             ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            Text(
+                              '${userController.user.value?.role.toUpperCase()}',
+                              style: const TextStyle(
+                                  fontSize: 12, color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            const Text(
+                              "@success_point",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.white),
+                            )
                           ],
                         ),
-                      }
-                    ],
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        if (userController.user.value?.role == 'Owner') ...{
+                          PreferredSize(
+                            // ignore: sort_child_properties_last
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: TabBar(
+                                  controller: _tabController,
+                                  isScrollable: true,
+                                  labelColor: AppColors.mainColor,
+                                  unselectedLabelColor: Colors.black,
+                                  indicatorColor: AppColors.mainColor,
+                                  indicatorSize: TabBarIndicatorSize.label,
+                                  labelStyle:
+                                      TextStyle(fontWeight: FontWeight.w600),
+                                  tabs: const [
+                                    Tab(
+                                      text: "TEACHES",
+                                    ),
+                                    Tab(
+                                      text: "BATCHES",
+                                    )
+                                  ]),
+                            ),
+                            preferredSize:
+                                const Size.fromHeight(kToolbarHeight),
+                          )
+                        },
+                        if (userController.user.value?.role == 'Teacher' ||
+                            userController.user.value?.role == 'Student') ...{
+                          const SizedBox(height: 4),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'BATCHES',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.titleColorExtraLight,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Container(
+                                width: 30,
+                                height: 2,
+                                color: AppColors.mainColor,
+                              ),
+                            ],
+                          ),
+                        }
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              if (userController.user.value?.role == 'Owner') ...{
-                Expanded(
-                  child: TabBarView(controller: _tabController, children: [
-                    const TeachersSlide(),
-                    BatchesSlide(userRole: userController.user.value!.role)
-                  ]),
-                ),
-              },
-              if (userController.user.value?.role == 'Teacher' ||
-                  userController.user.value?.role == 'Student') ...{
-                Expanded(
-                    child: Center(
-                  child: BatchesSlide(
-                    userRole: userController.user.value!.role,
+                if (userController.user.value?.role == 'Owner') ...{
+                  Expanded(
+                    child: TabBarView(controller: _tabController, children: [
+                      const TeachersSlide(),
+                      BatchesSlide(userRole: userController.user.value!.role)
+                    ]),
                   ),
-                )),
-              }
-            ],
+                },
+                if (userController.user.value?.role == 'Teacher' ||
+                    userController.user.value?.role == 'Student') ...{
+                  Expanded(
+                      child: Center(
+                    child: BatchesSlide(
+                      userRole: userController.user.value!.role,
+                    ),
+                  )),
+                }
+              ],
+            ),
           );
         });
   }

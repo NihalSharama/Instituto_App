@@ -43,9 +43,9 @@ class BatchServices {
   }
 
   static Future<List> getBatches() async {
-    Map<dynamic, dynamic> res = await RequestMethods.get_method(
-        'common/get_institute_batches', true); // route to fetch batches
-    var data = res['data']['data'] as List;
+    Map<dynamic, dynamic> res =
+        await RequestMethods.get_method('batch/list_batches', true);
+    var data = res['data'] as List;
 
     return data;
   }

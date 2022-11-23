@@ -49,69 +49,66 @@ class _BatchesSlideState extends State<BatchesSlide> {
                                   timing: batch['timing'],
                                   subject: batch['subject']));
                         }).toList())
-                      : Center(
-                          child: Column(
-                            children: [
+                      : Column(
+                          children: [
+                            const Text(
+                              'No Batches Found!',
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.w600),
+                            ),
+                            if (widget.userRole == 'Owner') ...{
+                              const Text("Let Your Teachers Handle Batches 😉"),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 1,
+                                      shape: const StadiumBorder()),
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                        context,
+                                        LandingScreen.routeName +
+                                            NotificationScreen.routeName);
+                                  },
+                                  child: const Text(
+                                    'Requests!',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  )),
+                            },
+                            if (widget.userRole == 'Teacher') ...{
                               const Text(
-                                'No Batches Found!',
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.w600),
-                              ),
-                              if (widget.userRole == 'Owner') ...{
-                                const Text(
-                                    "Let Your Teachers Handle Batches 😉"),
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 1,
-                                        shape: const StadiumBorder()),
-                                    onPressed: () {
-                                      Navigator.pushReplacementNamed(
-                                          context,
-                                          LandingScreen.routeName +
-                                              NotificationScreen.routeName);
-                                    },
-                                    child: const Text(
-                                      'Requests!',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                      ),
-                                    )),
-                              },
-                              if (widget.userRole == 'Teacher') ...{
-                                const Text(
-                                    "Tap The Button To Create Your Batch 😀"),
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 1,
-                                        shape: const StadiumBorder()),
-                                    onPressed: () {},
-                                    child: const Text(
-                                      'Create Batch',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                      ),
-                                    )),
-                              },
-                              if (widget.userRole == 'Student') ...{
-                                const Text(
-                                    "Tap The Button To Join Your Batch 😀"),
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 1,
-                                        shape: const StadiumBorder()),
-                                    onPressed: () {},
-                                    child: const Text(
-                                      'Join Batch',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                      ),
-                                    )),
-                              }
-                            ],
-                          ),
+                                  "Tap The Button To Create Your Batch 😀"),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 1,
+                                      shape: const StadiumBorder()),
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Create Batch',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  )),
+                            },
+                            if (widget.userRole == 'Student') ...{
+                              const Text(
+                                  "Tap The Button To Join Your Batch 😀"),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 1,
+                                      shape: const StadiumBorder()),
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Join Batch',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  )),
+                            }
+                          ],
                         )));
 
             default:

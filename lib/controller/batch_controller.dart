@@ -27,7 +27,7 @@ class BatchController extends GetxController {
     subjectDropdownValue.value = newVal!;
   }
 
-  featchBatchDetails(String id) {
+  featchBatchDetails(String id) async {
     batchDetails.value = BatchDetailsModel(id, 'Physics XITH', 'Nihal Sharma',
         '2:30PM - 4:00PM', 'Physics', '  XITH', [
       MessageModel('1', 'Hlo maam 👋', 'nihal'),
@@ -60,7 +60,9 @@ class BatchController extends GetxController {
 
   Future<String> featchBatches() async {
     // featch from api
-    // final teacherRequests = await BatchServices.getBatches();
+    var featchedBatches = await BatchServices.getBatches();
+    print(featchedBatches);
+
     // batches.value = teacherRequests;
 
     batches.value = [

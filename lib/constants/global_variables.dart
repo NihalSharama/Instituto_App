@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class AppColors {
   // COLORS
   static const mainColor = Color.fromRGBO(35, 127, 213, 1);
+  static const mainColorlite = Color.fromARGB(175, 35, 127, 213);
+
   static const backgroundColor = Colors.white;
   static const titleColor = Color.fromRGBO(54, 54, 54, 1);
   static const titleColorLight = Color.fromRGBO(71, 71, 71, 1);

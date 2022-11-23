@@ -123,7 +123,7 @@ class CreateBatchePopupState extends State<CreateBatchePopup> {
                                             userController.user.value!
                                                 .selectedInstitute![0]);
 
-                                        // Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
                                       text: 'CREATE',
                                       width: 100,

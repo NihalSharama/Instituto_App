@@ -8,6 +8,8 @@ import 'package:instituto/features/auth/screens/login_screen.dart';
 import 'package:instituto/features/auth/screens/signup_screens/signup_screen.dart';
 import 'package:instituto/features/landing.dart';
 
+import 'features/profile/screens/profile_edit._screen.dart';
+
 Route<dynamic> genarateRoute(RouteSettings routeSettings) {
   //  NOTE : auth routes, home flow ke routes ko alg alg file me bnakr idhr combine krna ha
   final List<String> path = routeSettings.name!.split('/');
@@ -51,6 +53,12 @@ Route<dynamic> genarateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const UnAuthorizedScreen(),
+      );
+
+    case ProfileEditScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => ProfileEditScreen(),
       );
 
     default:
