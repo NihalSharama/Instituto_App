@@ -65,8 +65,4 @@ class BatchServices {
 
     return data;
   }
-
-  sendMsg() async {}
-
-  featchRealtimeMsg() async {}
 }

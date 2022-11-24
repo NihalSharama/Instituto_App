@@ -48,6 +48,7 @@ dependencies:
   flutter_speed_dial: ^6.0.0
   flutter_chips_input: ^2.0.0
   localstore: ^1.2.3
+  web_socket_channel: ^2.2.0
 
 dev_dependencies:
   flutter_test:

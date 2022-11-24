@@ -14,7 +14,7 @@ class SelectedBatchDetailsModel {
   late String teacherName;
   late String subject;
   late String grade;
-  late List messages;
+  late List<MessageModel> messages;
   late List documents;
   late List notices;
   late List students;

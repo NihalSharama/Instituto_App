@@ -46,6 +46,13 @@ class BatchController extends GetxController {
 
   receiveRealtimeChat(batchId) async {}
 
+  messageListener(message) {
+    final messageParsed =
+        MessageModel(message['id'], message['text'], message['from']);
+
+    batchDetails.value!.messages.add(messageParsed);
+  }
+
   @override
   void onInit() {
     super.onInit();
