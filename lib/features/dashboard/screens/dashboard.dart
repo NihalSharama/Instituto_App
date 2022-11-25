@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instituto/common/widgets/recent_chat_widget.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/data.dart';
 
@@ -52,65 +54,96 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   height: 2.8,
                   color: AppColors.mainColor,
                 ),
+                const SizedBox(height: 10),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Icon(Icons.add, color: Colors.white),
-                          style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(20),
-                            backgroundColor: Colors.blue, // <-- Button color
-                            foregroundColor: Colors.red, // <-- Splash color
-                          ),
+                        SvgPicture.asset(
+                          "assets/icons/add.svg",
+                          height: 21,
+                          width: 21,
+                          fit: BoxFit.scaleDown,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child:
-                              Icon(Icons.document_scanner, color: Colors.white),
-                          style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(20),
-                            backgroundColor: Colors.blue, // <-- Button color
-                            foregroundColor: Colors.red, // <-- Splash color
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Icon(Icons.note, color: Colors.white),
-                          style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(20),
-                            backgroundColor: Colors.blue, // <-- Button color
-                            foregroundColor: Colors.red, // <-- Splash color
-                          ),
+                        Text(
+                          "STORY",
+                          style: TextStyle(fontSize: 6.5),
                         )
                       ],
                     ),
-                    Stack(
-                      children: <Widget>[
-                        CardScrollWidget(currentPage),
-                        Positioned.fill(
-                            child: PageView.builder(
-                                itemCount: images.length,
-                                reverse: true,
-                                controller: controller,
-                                itemBuilder: (context, index) {
-                                  return Container();
-                                }))
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/document.svg",
+                          height: 21,
+                          width: 21,
+                          fit: BoxFit.scaleDown,
+                        ),
+                        Text(
+                          "DOCUMENT",
+                          style: TextStyle(fontSize: 6.5),
+                        )
                       ],
-                    )
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/note.svg",
+                          height: 21,
+                          width: 21,
+                          fit: BoxFit.scaleDown,
+                        ),
+                        Text(
+                          "NOTE",
+                          style: TextStyle(fontSize: 6.5),
+                        )
+                      ],
+                    ),
                   ],
-                )
+                ),
+                Stack(
+                  children: <Widget>[
+                    CardScrollWidget(currentPage),
+                    Positioned.fill(
+                        child: PageView.builder(
+                            itemCount: images.length,
+                            reverse: true,
+                            controller: controller,
+                            itemBuilder: (context, index) {
+                              return Container();
+                            }))
+                  ],
+                ),
+                const Text(
+                  'RECENT CHATS',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.titleColorExtraLight,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Container(
+                  width: 30,
+                  height: 2.8,
+                  color: AppColors.mainColor,
+                ),
+                RecentChatWidget(
+                    name: "ADITYA PASWAN",
+                    image: "",
+                    batch: "MAA KA BSDK",
+                    topic: "MAA KE LODE",
+                    description: "GAAND MARA")
               ],
             ),
           ),
@@ -129,7 +162,7 @@ class CardScrollWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 280,
+      width: 400,
       height: 300,
       child: AspectRatio(
         aspectRatio: WidgetAspectRatio,

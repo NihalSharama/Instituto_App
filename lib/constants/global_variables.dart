@@ -24,6 +24,10 @@ class AppColors {
   static const backgroundGrayDark = Color.fromRGBO(171, 171, 171, 1);
   static const textColor = Color.fromRGBO(119, 119, 119, 1);
   static const maintextColor = Color.fromRGBO(78, 78, 78, 1);
+  static const textfieldNameColor = Color.fromRGBO(89, 89, 89, 1);
+  static const textfieldBorderColor = Color.fromRGBO(192, 192, 192, 1);
+  static const textfieldFillColor = Color.fromRGBO(243, 243, 243, 1);
+  static const textfieldLabelColor = Color.fromRGBO(84, 84, 84, 1);
 }
 
 class StaticImages {

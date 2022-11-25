@@ -5,6 +5,8 @@ import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/dashboard/screens/dashboard.dart';
 import 'package:instituto/features/home/screens/home_screen.dart';
 import 'package:instituto/features/landing.dart';
+import 'package:instituto/features/profile/screens/profile_screen.dart';
+import 'package:instituto/features/profile/screens/teacher_profile_page.dart';
 import 'package:instituto/router.dart';
 
 void main() async {
@@ -31,6 +33,6 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
         onGenerateRoute: (settings) =>
             genarateRoute(settings), // auto genarating routes
-        home: (const HomePage())); //
+        home: (HomePage())); //
   }
 }

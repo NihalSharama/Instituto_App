@@ -58,3 +58,64 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
+
+class CustomTextField2 extends StatelessWidget {
+  final FormFieldValidator validator;
+  final TextEditingController controller;
+  final String hintText;
+  final int maxLines;
+  final Color fillColor;
+  final Color textColor;
+  final double paddingTop;
+  final TextInputType keyboardType;
+  final Function(String)? onChanged;
+
+  CustomTextField2({
+    Key? key,
+    required this.controller,
+    required this.validator,
+    required this.hintText,
+    this.maxLines = 1,
+    this.fillColor = AppColors.textfieldFillColor,
+    this.textColor = AppColors.textfieldNameColor,
+    this.paddingTop = 8,
+    required this.keyboardType,
+    this.onChanged,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
+      child: TextFormField(
+        onChanged: onChanged,
+        keyboardType: keyboardType,
+        controller: controller,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: fillColor,
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.w500,
+          ),
+          border: OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: AppColors.textfieldBorderColor),
+              borderRadius: BorderRadius.all(Radius.circular(5))),
+          contentPadding:
+              EdgeInsets.only(left: 20.0, bottom: 8.0, top: paddingTop),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.textfieldBorderColor),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.textfieldBorderColor),
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        validator: validator,
+      ),
+    );
+  }
+}

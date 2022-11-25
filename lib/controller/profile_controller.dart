@@ -11,6 +11,19 @@ class ProfileController extends GetxController {
         Institute: 'Success Point',
         id: '1',
         name: 'Aditya Paswan',
-        subject: 'Physics Chemistry Maths');
+        subject: ["Maths", "Physics", "Chemistry"]);
+  }
+}
+
+class TeacherProfileController extends GetxController {
+  var teacherprofileDetails = Rxn<TeacherProfileModel>();
+
+  featchTeacherProfileDetails(String id) {
+    teacherprofileDetails.value = TeacherProfileModel(
+        Class: ["CLASS11TH", "CLASS 12TH"],
+        Institute: 'RKM CLASSES',
+        id: '1',
+        name: 'ADITYA PASWAN',
+        subject: ["Maths", "Physics", "Chemistry"]);
   }
 }

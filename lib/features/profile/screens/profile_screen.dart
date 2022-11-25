@@ -105,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Text(
                                   profileController
-                                      .profileDetails.value!.subject,
+                                      .profileDetails.value!.subject[0],
                                   style: const TextStyle(
                                       fontSize: 8,
                                       fontWeight: FontWeight.bold,
@@ -114,23 +114,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const SizedBox(
                                   width: 5,
                                 ),
-                                // Text(
-                                //   "Chemistry",
-                                //   style: TextStyle(
-                                //       fontSize: 8,
-                                //       fontWeight: FontWeight.bold,
-                                //       color: AppColors.mainColor),
-                                // ),
-                                // SizedBox(
-                                //   width: 5,
-                                // ),
-                                // Text(
-                                //   "Maths",
-                                //   style: TextStyle(
-                                //       fontSize: 8,
-                                //       fontWeight: FontWeight.bold,
-                                //       color: AppColors.mainColor),
-                                // )
+                                Container(
+                                  width: 2,
+                                  height: 2,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.mainColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(25))),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  profileController
+                                      .profileDetails.value!.subject[1],
+                                  style: TextStyle(
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.mainColor),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  width: 2,
+                                  height: 2,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.mainColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(25))),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  profileController
+                                      .profileDetails.value!.subject[2],
+                                  style: TextStyle(
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.mainColor),
+                                )
                               ],
                             ),
                             Row(

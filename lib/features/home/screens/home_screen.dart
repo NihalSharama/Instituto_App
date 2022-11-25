@@ -12,6 +12,8 @@ import 'package:instituto/features/home/widgets/create_batch_popup.dart';
 import 'package:instituto/features/home/widgets/create_subject_popup.dart';
 import 'package:instituto/models/user.dart';
 
+import '../../../Settings/pages/setting_page.dart';
+
 class HomePage extends StatefulWidget {
   static const String routeName = 'home';
   const HomePage({Key? key}) : super(key: key);
@@ -57,6 +59,28 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+        top: Radius.circular(30),
+      )),
+      builder: (context) => DraggableScrollableSheet(
+          initialChildSize: 0.4,
+          maxChildSize: 0.9,
+          minChildSize: 0.32,
+          expand: false,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: const SettingPage(),
+            );
+          }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -91,7 +115,9 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                                         fontSize: 20, color: Colors.white),
                                   ),
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        _showModalBottomSheet(context);
+                                      },
                                       icon: SvgPicture.asset(
                                           'assets/icons/NavToogle.svg'))
                                 ],
