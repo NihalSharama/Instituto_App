@@ -27,8 +27,6 @@ class BatchServices {
           res['data']['students'],
           res['data']['blacklist_students']);
 
-      print(parsedDetails);
-
       return parsedDetails;
     } catch (e) {
       toasterUnknownFailure();

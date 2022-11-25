@@ -172,7 +172,7 @@ class _BatchScreenState extends State<BatchScreen>
                   ),
                   Expanded(
                     child: TabBarView(controller: _tabController, children: [
-                      ChatSlide(),
+                      const ChatSlide(),
                       DocBoxSlide(
                           documents:
                               batchController.batchDetails.value!.documents),

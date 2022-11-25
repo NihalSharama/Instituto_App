@@ -19,7 +19,6 @@ class RequestMethods {
         Map<String, dynamic> refreshDecoded = JwtDecoder.decode(refresh);
         bool isRefreshExp = JwtDecoder.isExpired(refresh);
 
-        print(refreshDecoded);
         if (isRefreshExp) {
           // logout
         }
@@ -35,32 +34,35 @@ class RequestMethods {
   static Future<Map> get_method(String path, bool isAuth) async {
     try {
       var token = await getToken();
-      var response = await client.get(Uri.parse('${dotenv.env['SERVER']}$path'),
-          headers: (isAuth
-              ? <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                  'Authorization': 'Bearer $token',
-                }
-              : <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                }));
+      var response =
+          await client.get(Uri.parse('${dotenv.env['SERVER_URI']}$path'),
+              headers: (isAuth
+                  ? <String, String>{
+                      'Content-Type': 'application/json; charset=UTF-8',
+                      'Authorization': 'Bearer $token',
+                    }
+                  : <String, String>{
+                      'Content-Type': 'application/json; charset=UTF-8',
+                    }));
 
       Map mapRes = json.decode(response.body);
       bool wasExpired = await featchTokenIfExpired(mapRes);
 
       if (wasExpired) {
         final newToken = await AuthServices.featch_token();
+        print(newToken);
         saveToken(newToken);
 
-        response = await client.get(Uri.parse('${dotenv.env['SERVER']}$path'),
-            headers: (isAuth
-                ? <String, String>{
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Authorization': 'Bearer $newToken',
-                  }
-                : <String, String>{
-                    'Content-Type': 'application/json; charset=UTF-8',
-                  }));
+        response =
+            await client.get(Uri.parse('${dotenv.env['SERVER_URI']}$path'),
+                headers: (isAuth
+                    ? <String, String>{
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Authorization': 'Bearer $newToken',
+                      }
+                    : <String, String>{
+                        'Content-Type': 'application/json; charset=UTF-8',
+                      }));
       }
       mapRes = json.decode(response.body);
 
@@ -75,7 +77,7 @@ class RequestMethods {
     final token = await getToken();
 
     var response = await client.post(
-      Uri.parse('${dotenv.env['SERVER']}$path'),
+      Uri.parse('${dotenv.env['SERVER_URI']}$path'),
       headers: (isAuth
           ? <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
@@ -93,16 +95,17 @@ class RequestMethods {
       final newToken = await AuthServices.featch_token();
       saveToken(newToken);
 
-      response = await client.post(Uri.parse('${dotenv.env['SERVER']}$path'),
-          headers: (isAuth
-              ? <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                  'Authorization': 'Bearer $newToken',
-                }
-              : <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                }),
-          body: jsonEncode(data));
+      response =
+          await client.post(Uri.parse('${dotenv.env['SERVER_URI']}$path'),
+              headers: (isAuth
+                  ? <String, String>{
+                      'Content-Type': 'application/json; charset=UTF-8',
+                      'Authorization': 'Bearer $newToken',
+                    }
+                  : <String, String>{
+                      'Content-Type': 'application/json; charset=UTF-8',
+                    }),
+              body: jsonEncode(data));
     }
     mapRes = json.decode(response.body);
     return mapRes;

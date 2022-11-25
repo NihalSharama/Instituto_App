@@ -287,7 +287,6 @@ class AuthServices {
       Map res = await RequestMethods.post_method(
           'auth/token/refresh/', {'refresh': refresh}, false);
 
-      print(res['access']);
       return res['access'];
     } catch (e) {
       toasterUnknownFailure();

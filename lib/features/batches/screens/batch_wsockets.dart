@@ -1,10 +1,12 @@
-import 'dart:async';
+// ignore_for_file: avoid_print
 
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:instituto/controller/user_controller.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class BatchWebSockets {
   static final BatchWebSockets _singleton = BatchWebSockets._internal();
@@ -28,20 +30,20 @@ class BatchWebSockets {
     String userID = userController.user.value!.id;
 
     print("conecting...");
+    channel = IOWebSocketChannel.connect(
+      Uri.parse('ws://10.0.2.2:8000/ws/usertouser/'),
+      // headers: {'Connection': 'upgrade', 'Upgrade': 'websocket'}
+      // pingInterval: const Duration(seconds: 10),
+    );
 
-    try {
-      channel = IOWebSocketChannel.connect(
-        Uri.parse('ws://10.0.2.2:8001/chat/$userID/'),
-        pingInterval: const Duration(seconds: 10),
-      );
-    } on Exception catch (e) {
-      print('exeption accured');
-      print(e);
-      return await initWebSocketConnection();
-    }
+    channel?.sink.add('test');
+
+    channel?.stream.listen((event) {
+      print(event);
+    });
 
     print("socket connection initializied");
-    channel?.sink.done.then((dynamic _) => _onDisconnected());
+    // channel?.sink.done.then((dynamic _) => _onDisconnected());
   }
 
   void sendMessage(messageObject, Function messageListener) {

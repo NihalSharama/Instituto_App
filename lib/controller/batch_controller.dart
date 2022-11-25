@@ -25,7 +25,6 @@ class BatchController extends GetxController {
   featchBatchDetails(String id) async {
     var featchedDetails = await BatchServices.getBatchDetails(id);
 
-    print(featchedDetails);
     batchDetails.value = featchedDetails;
   }
 

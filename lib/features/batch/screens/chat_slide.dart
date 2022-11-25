@@ -37,6 +37,8 @@ class _ChatSlideState extends State<ChatSlide> {
                   final message =
                       batchController.batchDetails.value!.messages[index];
 
+                  print(message);
+
                   return Align(
                     alignment: (message.from == 'nihal'
                         ? Alignment.centerRight

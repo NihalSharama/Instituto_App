@@ -8,10 +8,9 @@ import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/home_controller.dart';
 import 'package:instituto/controller/user_controller.dart';
 import 'package:instituto/features/auth/screens/login_screen.dart';
+import 'package:instituto/features/batches/screens/batch_wsockets.dart';
 import 'package:instituto/features/home/screens/batches_slide.dart';
 import 'package:instituto/features/home/screens/teachers_slide.dart';
-import 'package:instituto/features/home/widgets/create_batch_popup.dart';
-import 'package:instituto/features/home/widgets/create_subject_popup.dart';
 import 'package:instituto/models/user.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,8 +24,9 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
   final homeController = Get.put((HomeController()));
   final userController = Get.put((UserController()));
+  final BatchWebSockets batchWebSockets = BatchWebSockets();
+
   late TabController _tabController;
-  final prevRoute = Get.previousRoute;
   int _selectedIndex = 0;
   @override
   void initState() {
@@ -34,6 +34,8 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
     // UserStorage().deleteuser();
 
     Future.delayed(Duration.zero, () async {
+      await batchWebSockets.initWebSocketConnection();
+
       final token = await getToken();
       final UserModel? user = await UserStorage().getUser();
 
@@ -44,15 +46,15 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
           Navigator.pushReplacementNamed(context, UnAuthorizedScreen.routeName);
         }
 
-        if ((user.role == 'Owner')) {
-          // & (prevRoute == '/signup')
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                // return const CreateSubjectPopup();
-                return const CreateBatchePopup();
-              });
-        }
+        // if ((user.role == 'Owner')) {
+        //   // & (prevRoute == '/signup')
+        //   showDialog(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         // return const CreateSubjectPopup();
+        //         return const CreateBatchePopup();
+        //       });
+        // }
       }
     });
     _tabController = TabController(length: 2, vsync: this);
