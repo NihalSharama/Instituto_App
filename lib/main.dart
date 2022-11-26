@@ -35,6 +35,6 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (settings) =>
             genarateRoute(settings), // auto genarating routes
         // ignore: prefer_const_constructors
-        home: (RecentChatsScreen())); //
+        home: (DashboardScreen())); //
   }
 }

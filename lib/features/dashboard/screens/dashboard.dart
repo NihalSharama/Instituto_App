@@ -7,12 +7,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:instituto/common/widgets/recent_chat_widget.dart';
+import 'package:instituto/common/widgets/teachers_racking.dart';
 import 'package:instituto/constants/global_variables.dart';
 import 'package:instituto/controller/chats_controllers.dart';
 import 'package:instituto/controller/dashboard_controllers.dart';
 import 'package:instituto/data.dart';
+import 'package:instituto/features/notifications/widgets/teacher_request.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../common/widgets/card_scroll_sidget.dart';
 import '../../../controller/profile_controller.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -47,6 +50,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
     final teacherRankingController = Get.put((TeacherRankingController()));
     final chatScreenShowController = Get.put((ChatScreenShowController()));
+    final storiesController = Get.put((StoriesController()));
 
     return FutureBuilder(
         future: teacherRankingController.featchTeacherRankingDetails('1'),
@@ -88,7 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 width: 21,
                                 fit: BoxFit.scaleDown,
                               ),
-                              Text(
+                              const Text(
                                 "STORY",
                                 style: TextStyle(fontSize: 6.5),
                               )
@@ -105,7 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 width: 21,
                                 fit: BoxFit.scaleDown,
                               ),
-                              Text(
+                              const Text(
                                 "DOCUMENT",
                                 style: TextStyle(fontSize: 6.5),
                               )
@@ -122,7 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 width: 21,
                                 fit: BoxFit.scaleDown,
                               ),
-                              Text(
+                              const Text(
                                 "NOTE",
                                 style: TextStyle(fontSize: 6.5),
                               )
@@ -130,18 +134,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         ],
                       ),
-                      Stack(
-                        children: <Widget>[
-                          CardScrollWidget(currentPage),
-                          Positioned.fill(
-                              child: PageView.builder(
-                                  itemCount: images.length,
-                                  reverse: true,
-                                  controller: controller,
-                                  itemBuilder: (context, index) {
-                                    return Container();
-                                  }))
-                        ],
+                      FutureBuilder(
+                        future: storiesController.featchStoriesDetails('1'),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          return Stack(
+                            children: <Widget>[
+                              CardScrollWidget(currentPage),
+                              Positioned.fill(
+                                  child: PageView.builder(
+                                      itemCount: storiesController
+                                          .storiesDetails.value!.images.length,
+                                      reverse: true,
+                                      controller: controller,
+                                      itemBuilder: (context, index) {
+                                        return Container();
+                                      }))
+                            ],
+                          );
+                        },
                       ),
                       const Text(
                         'RECENT CHATS',
@@ -194,107 +205,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         color: AppColors.mainColor,
                       ),
                       const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () => print("Stories clicked"),
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/chemistry.png")),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                  )),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  teacherRankingController
-                                      .teacherRankingDetails.value!.teacherName,
-                                  style: TextStyle(
-                                      fontSize: 8, fontWeight: FontWeight.w600),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      teacherRankingController
-                                          .teacherRankingDetails.value!.ranking
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontSize: 6,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    SvgPicture.asset("assets/icons/star.svg"),
-                                    SvgPicture.asset("assets/icons/star.svg"),
-                                    SvgPicture.asset("assets/icons/star.svg"),
-                                    SvgPicture.asset("assets/icons/star.svg"),
-                                    SvgPicture.asset(
-                                        "assets/icons/half_star.svg"),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "STUDENTS",
-                                      style: TextStyle(
-                                          fontSize: 6,
-                                          color: AppColors.mainColor,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      teacherRankingController
-                                          .teacherRankingDetails
-                                          .value!
-                                          .totalStudent
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontSize: 6,
-                                          color: AppColors.mainColorlite,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "SALARY",
-                                      style: TextStyle(
-                                          fontSize: 6,
-                                          color: AppColors.mainColor,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      teacherRankingController
-                                          .teacherRankingDetails.value!.salary
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontSize: 6,
-                                          color: AppColors.mainColorlite,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                              ]),
-                        ],
+                      TeachersRacking(
+                        name: teacherRankingController
+                            .teacherRankingDetails.value!.teacherName
+                            .toString(),
+                        mobile: teacherRankingController
+                            .teacherRankingDetails.value!.teacherName
+                            .toString(),
+                        ranking: teacherRankingController
+                            .teacherRankingDetails.value!.ranking
+                            .toString(),
+                        totalStudent: teacherRankingController
+                            .teacherRankingDetails.value!.totalStudent
+                            .toString(),
+                        slaray: teacherRankingController
+                            .teacherRankingDetails.value!.salary
+                            .toString(),
                       ),
                       const SizedBox(height: 10),
                       const Text(
@@ -316,7 +242,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Text(
                             "REVENUE MADE THIS MONTH",
                             style: TextStyle(
@@ -324,7 +250,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w600),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 10,
                           ),
                           Text(
@@ -344,7 +270,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Container(
                           width: 300,
                           height: 180,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Colors.white,
                               boxShadow: [
                                 BoxShadow(
@@ -372,7 +298,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text(
                             "FEES LEFT THIS MONTH",
                             style: TextStyle(
@@ -380,7 +306,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w600),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 10,
                           ),
                           Text(
@@ -394,7 +320,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       GestureDetector(
                         onTap: () => print("Clicked"),
-                        child: Text(
+                        child: const Text(
                           "ABUSE THOSE BITCHES ?",
                           style: TextStyle(
                               color: AppColors.mainColor,
@@ -406,142 +332,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
               ),
-            ),
-          );
-        });
-  }
-}
-
-class CardScrollWidget extends StatelessWidget {
-  var currentPage;
-  var padding = 20.0;
-  var verticalInset = 20.0;
-  CardScrollWidget(this.currentPage);
-  final storiesController = Get.put((StoriesController()));
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: storiesController.featchStoriesDetails('1'),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          return Container(
-            width: 400,
-            height: 300,
-            child: AspectRatio(
-              aspectRatio: WidgetAspectRatio,
-              child: LayoutBuilder(builder: (context, contraints) {
-                var width = contraints.maxWidth;
-                var height = contraints.maxHeight;
-                var safeWidth = width - 2 * padding;
-                var safeHeight = height - 2 * padding;
-
-                var heightOfPrimaryCard = safeHeight;
-                var widthOfPrimaryCard = heightOfPrimaryCard * cardAspectRatio;
-                var primaryCardLeft = safeWidth - widthOfPrimaryCard;
-                var horizontalInset = primaryCardLeft / 2;
-                List<Widget> cardList = [];
-
-                for (var i = 0; i < images.length; i++) {
-                  var delta = i - currentPage;
-                  bool isOnRight = delta > 0;
-
-                  var start = padding +
-                      max(
-                          primaryCardLeft -
-                              horizontalInset * -delta * (isOnRight ? 15 : 1),
-                          0.0);
-                  var CardItem = Positioned.directional(
-                    top: padding + verticalInset * max(-delta, 0.0),
-                    bottom: padding + verticalInset * max(-delta, 0.0),
-                    start: start,
-                    textDirection: TextDirection.rtl,
-                    child: Container(
-                        child: AspectRatio(
-                      aspectRatio: cardAspectRatio,
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          // Image.asset(
-                          //   images[i],
-                          //   fit: BoxFit.cover,
-                          // ),
-                          GestureDetector(
-                            onTap: () => print("Stories Clicked"),
-                            child: Container(
-                              width: 300,
-                              height: 300,
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  image: DecorationImage(
-                                      colorFilter: ColorFilter.mode(
-                                          Colors.black.withOpacity(0.5),
-                                          BlendMode.srcOver),
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(
-                                        storiesController
-                                            .storiesDetails.value!.images[i]
-                                            .toString(),
-                                      ))),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  storiesController
-                                      .storiesDetails.value!.title[i]
-                                      .toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Text(
-                                  storiesController
-                                      .storiesDetails.value!.name[i]
-                                      .toString(),
-                                  style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  height: 15,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.storyViewButtonColor,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(20))),
-                                  child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "VIEW",
-                                        style: TextStyle(
-                                            color: Colors.white60,
-                                            fontSize: 6,
-                                            fontWeight: FontWeight.w600),
-                                      )),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )),
-                  );
-                  cardList.add(CardItem);
-                }
-                return Stack(
-                  children: cardList,
-                );
-              }),
             ),
           );
         });
