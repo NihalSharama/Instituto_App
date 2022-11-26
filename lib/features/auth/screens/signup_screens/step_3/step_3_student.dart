@@ -54,7 +54,7 @@ class SignupStep3StudentState extends State<SignupStep3Student> {
             CustomSelectionDropdown(
               width: 150,
               hintText: 'Subjects',
-              selectionOptions: authController.subjects,
+              selectionOptions: authController.subjects.value,
               selectedValues: authController.selectedSubjectList,
               onChanged: authController.onSubjectSelectionItemChange,
             ),
@@ -64,7 +64,7 @@ class SignupStep3StudentState extends State<SignupStep3Student> {
           padding: const EdgeInsets.only(top: 20, bottom: 50),
           child: CustomSelectionDropdown(
             hintText: 'Select Batches',
-            selectionOptions: authController.batches,
+            selectionOptions: authController.batches.value,
             selectedValues: authController.selectedBatchesList,
             onChanged: authController.onBatchesSelectionItemChange,
           ),

@@ -221,6 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SettingFormField(
                       svg: "assets/icons/chat_media.svg",
                       text: "CHATS AND MEDIA",
+                      onTap: () => print("clicked"),
                     ),
                     const SizedBox(
                       height: 10,
@@ -235,6 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     SettingFormField(
                       svg: "assets/icons/fees_reciepts.svg",
+                      onTap: () => print("clicked"),
                       text: "FEES AND RECIEPTS",
                     ),
                     const SizedBox(

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:instituto/constants/global_variables.dart';
 
 class DocBoxSlide extends StatefulWidget {
-  const DocBoxSlide({super.key});
+  final List documents;
+  const DocBoxSlide({super.key, required this.documents});
 
   @override
   State<DocBoxSlide> createState() => _DocBoxSlideState();

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../common/widgets/recent_chat_widget.dart';
+import '../../controller/chats_controllers.dart';
 
 class RecentChatsScreen extends StatefulWidget {
   static const String routeName = 'chats';
@@ -10,6 +15,8 @@ class RecentChatsScreen extends StatefulWidget {
 }
 
 class _RecentChatsScreenState extends State<RecentChatsScreen> {
+  final chatScreenShowController = Get.put((ChatScreenShowController()));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,68 +43,23 @@ class _RecentChatsScreenState extends State<RecentChatsScreen> {
               ]),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: double.infinity,
-              height: 70,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 10, spreadRadius: 1, color: Colors.grey)
-                  ]),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundImage: AssetImage("assets/images/sample.jpg"),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Aditya Paswan",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600)),
-                        Row(
-                          children: [
-                            Text("ASTHETIC KA 14",
-                                style: TextStyle(
-                                    fontSize: 8, fontWeight: FontWeight.w600)),
-                            Text("FUCK BITCHES",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                softWrap: false,
-                                style: TextStyle(
-                                    fontSize: 8, fontWeight: FontWeight.w600))
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SvgPicture.asset("assetName"),
-                            Text("You",
-                                style: TextStyle(
-                                    fontSize: 8, fontWeight: FontWeight.w600)),
-                            Text(
-                                "Sir log bolte ha guru dost sman hota.. 🙃 ek bitch idhr bhi phek do 😭  ",
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: false,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    fontSize: 8, fontWeight: FontWeight.w600)),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
+            child: FutureBuilder(
+                future:
+                    chatScreenShowController.featchChatScreenShowDetails('1'),
+                builder:
+                    (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  return RecentChatWidget(
+                      name: chatScreenShowController
+                          .chatScreenShowDetails.value!.name,
+                      image: chatScreenShowController
+                          .chatScreenShowDetails.value!.image,
+                      batch: chatScreenShowController
+                          .chatScreenShowDetails.value!.batch,
+                      topic: chatScreenShowController
+                          .chatScreenShowDetails.value!.topic,
+                      description: chatScreenShowController
+                          .chatScreenShowDetails.value!.description);
+                }),
           )
         ]),
       ),

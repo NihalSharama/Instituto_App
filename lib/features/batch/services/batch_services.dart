@@ -1,20 +1,33 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:instituto/common/utils/chache_manager.dart';
 import 'package:instituto/common/utils/error_handler_toaster.dart';
 import 'package:instituto/common/utils/request_methods.dart';
 import 'package:instituto/common/utils/toaster_message.dart';
+import 'package:instituto/models/batch_models.dart';
 
 class BatchServices {
   static var client = http.Client();
 
   static getBatchDetails(String id) async {
     try {
-      var res = await RequestMethods.get_method('batch/$id', true);
+      final res = await RequestMethods.get_method('batch/$id/', true);
 
-      bool isNoserverError = await error_handler(res);
-      return res['data']['data'];
+      // await error_handler(res);
+
+      final parsedDetails = SelectedBatchDetailsModel(
+          res['data']['institute'].toString(),
+          res['data']['id'].toString(),
+          res['data']['batch_code'],
+          res['data']['batch_name'],
+          '${res['data']['teacher']['first_name']} ${res['data']['teacher']['last_name']}',
+          res['data']['batch_subject']['subject_name'],
+          res['data']['grade'],
+          res['data']['messages_list'],
+          res['data']['documents_list'],
+          [],
+          res['data']['students'],
+          res['data']['blacklist_students']);
+
+      return parsedDetails;
     } catch (e) {
       toasterUnknownFailure();
     }
@@ -44,7 +57,8 @@ class BatchServices {
 
   static Future<List> getBatches() async {
     Map<dynamic, dynamic> res =
-        await RequestMethods.get_method('batch/list_batches', true);
+        await RequestMethods.get_method('batch/list_batches/', true);
+
     var data = res['data'] as List;
 
     return data;

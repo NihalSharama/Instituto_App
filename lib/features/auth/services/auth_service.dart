@@ -17,18 +17,15 @@ class AuthServices {
   // Login
   static Future<bool> request_login_otp(int mobile) async {
     try {
-      var response = await client.post(
-        Uri.parse('${dotenv.env['SERVER']}auth/get_login_otp/'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, int>{
-          'mobile': mobile,
-        }),
-      );
-      Map mapRes = json.decode(response.body);
-      print('otp: ${mapRes['data']['otp']}');
-      bool isNoServerError = await error_handler(mapRes);
+      var response = await RequestMethods.post_method(
+          'auth/get_login_otp',
+          {
+            'mobile': mobile,
+          },
+          false);
+
+      print('otp: ${response['data']['otp']}');
+      bool isNoServerError = await error_handler(response);
       return isNoServerError;
     } catch (_) {
       Fluttertoast.showToast(
@@ -126,15 +123,16 @@ class AuthServices {
 
   static Future<bool> student_step3_4_endpoint(String instituteCode,
       List batches, String fatherName, String motherName, String gender) async {
+    final token = await getToken();
     try {
       var response = await client.post(
         Uri.parse('${dotenv.env['SERVER']}initial/'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $getToken()',
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode(<String, dynamic>{
-          'institute_code': instituteCode,
+          'insitute_code': instituteCode.toString(),
           'batches': batches,
           'father_name': fatherName,
           'mother_name': motherName,
@@ -262,16 +260,20 @@ class AuthServices {
         },
         body: jsonEncode(<String, dynamic>{
           'institute_code': instituteCode,
-          'subjects': subjects,
+          'subjects': ['MATHS', 'PHYSICS'],
           'grade': grade
         }),
       );
-      print(response.body);
       Map mapRes = json.decode(response.body);
 
-      return mapRes['data']['batches'];
+      var batches_name = <String>[];
+
+      mapRes['data']['batches'].forEach((batch) {
+        batches_name.add(batch['batch_name']);
+      });
+      return batches_name;
     } catch (e) {
-      print('something went wrong');
+      print('something went wrong f');
       return [];
     }
   }
@@ -282,7 +284,6 @@ class AuthServices {
       Map res = await RequestMethods.post_method(
           'auth/token/refresh/', {'refresh': refresh}, false);
 
-      print(res['access']);
       return res['access'];
     } catch (e) {
       toasterUnknownFailure();

@@ -28,6 +28,7 @@ class AppColors {
   static const textfieldBorderColor = Color.fromRGBO(192, 192, 192, 1);
   static const textfieldFillColor = Color.fromRGBO(243, 243, 243, 1);
   static const textfieldLabelColor = Color.fromRGBO(84, 84, 84, 1);
+  static const storyViewButtonColor = Color.fromRGBO(116, 116, 116, 68);
 }
 
 class StaticImages {
@@ -51,4 +52,9 @@ class Defaults {
     'Class 11th',
     'Class 12th',
   ];
+
+  getGrade(classVal) {
+    final grade = classes.indexWhere((element) => element == classVal) + 1;
+    return grade.toString();
+  }
 }

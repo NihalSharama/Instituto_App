@@ -6,19 +6,33 @@ class MessageModel {
   MessageModel(this.id, this.text, this.from);
 }
 
-class BatchDetailsModel {
+class SelectedBatchDetailsModel {
+  late String instituteCode;
   late String id;
+  late String batchCode;
   late String batchName;
   late String teacherName;
-  late String timing;
   late String subject;
   late String grade;
-  late List<MessageModel> messages;
+  late List messages;
   late List documents;
   late List notices;
+  late List students;
+  late List blacklistStudents;
 
-  BatchDetailsModel(this.id, this.batchName, this.teacherName, this.timing,
-      this.subject, this.grade, this.messages, this.documents, this.notices);
+  SelectedBatchDetailsModel(
+      this.instituteCode,
+      this.id,
+      this.batchCode,
+      this.batchName,
+      this.teacherName,
+      this.subject,
+      this.grade,
+      this.messages,
+      this.documents,
+      this.notices,
+      this.students,
+      this.blacklistStudents);
 }
 
 class NoticeModel {

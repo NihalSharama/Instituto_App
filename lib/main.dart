@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:instituto/controller/auth_controllers.dart';
+import 'package:instituto/features/batch/screens/chat_slide.dart';
 import 'package:instituto/features/dashboard/screens/dashboard.dart';
-import 'package:instituto/features/home/screens/home_screen.dart';
-import 'package:instituto/features/landing.dart';
-import 'package:instituto/features/profile/screens/profile_screen.dart';
+
 import 'package:instituto/features/profile/screens/teacher_profile_page.dart';
 import 'package:instituto/router.dart';
+
+import 'features/chats/chats_screen.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
         onGenerateRoute: (settings) =>
             genarateRoute(settings), // auto genarating routes
-        home: (HomePage())); //
+        // ignore: prefer_const_constructors
+        home: (RecentChatsScreen())); //
   }
 }

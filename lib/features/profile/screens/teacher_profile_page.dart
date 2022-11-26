@@ -5,6 +5,7 @@ import 'package:instituto/common/widgets/custom_button.dart';
 import 'package:instituto/features/profile/screens/profile_edit._screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../Settings/pages/setting_page.dart';
 import '../../../constants/global_variables.dart';
 import '../../../controller/profile_controller.dart';
 
@@ -18,6 +19,28 @@ class TeacherProfilePage extends StatelessWidget {
     SalesData(DateTime.utc(2021), 32),
     SalesData(DateTime.utc(2022), 40)
   ];
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+        top: Radius.circular(30),
+      )),
+      builder: (context) => DraggableScrollableSheet(
+          initialChildSize: 0.4,
+          maxChildSize: 0.9,
+          minChildSize: 0.32,
+          expand: false,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: const SettingPage(),
+            );
+          }),
+    );
+  }
+
   final profileController = Get.put((ProfileController()));
 
   final teacherProfileController = Get.put((TeacherProfileController()));
@@ -183,7 +206,7 @@ class TeacherProfilePage extends StatelessWidget {
                     ),
                     CustomButton(
                         onPressed: () {
-                          print("clicked");
+                          _showModalBottomSheet(context);
                         },
                         text: "START MESSAGE"),
                     const SizedBox(

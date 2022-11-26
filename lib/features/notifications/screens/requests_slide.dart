@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instituto/controller/alerts_controller.dart';
 import 'package:instituto/controller/user_controller.dart';
-import 'package:instituto/features/notifications/widgets/student_request.dart';
 import 'package:instituto/features/notifications/widgets/teacher_request.dart';
 
 class RequestsToJoin extends StatefulWidget {
@@ -20,9 +19,7 @@ class _RequestsToJoinState extends State<RequestsToJoin> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: (userController.user.value?.role == 'Owner'
-            ? alertsController.featchTacherRequest()
-            : alertsController.featchStudentRequest()),
+        future: alertsController.featchStudentRequest(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -32,37 +29,19 @@ class _RequestsToJoinState extends State<RequestsToJoin> {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Column(
-                          children: (userController.user.value?.role == 'Owner'
-                              ? alertsController.requestToJoin
-                                  .value // listview builder use krna(reatime delete)
-                                  .map((dynamic request) {
-                                  return TeacherRequestComponent(
-                                    name: request['teacher']['first_name'] +
-                                        ' ' +
-                                        request['teacher']['last_name'],
-                                    mobile:
-                                        request['teacher']['mobile'].toString(),
-                                    subject: 'Physics',
-                                    teacherId:
-                                        request['teacher']['id'].toString(),
-                                    requestId: request['id'].toString(),
-                                  );
-                                }).toList()
-                              : alertsController.requestToJoin
-                                  .value // listview builder use krna(reatime delete)
-                                  .map((dynamic request) {
-                                  return StudentRequestComponent(
-                                    name: request['student']['first_name'] +
-                                        ' ' +
-                                        request['student']['last_name'],
-                                    mobile:
-                                        request['student']['mobile'].toString(),
-                                    subject: 'Physics',
-                                    teacherId:
-                                        request['student']['id'].toString(),
-                                    requestId: request['id'].toString(),
-                                  );
-                                }).toList())),
+                          children: alertsController.requestToJoin
+                              .value // listview builder use krna(reatime delete)
+                              .map((dynamic request) {
+                        return TeacherRequestComponent(
+                          name: request['teacher']['first_name'] +
+                              ' ' +
+                              request['teacher']['last_name'],
+                          mobile: request['teacher']['mobile'].toString(),
+                          subject: 'Physics',
+                          teacherId: request['teacher']['id'].toString(),
+                          requestId: request['id'].toString(),
+                        );
+                      }).toList()),
                     )
                   : const Center(
                       child: Text('No Requests Found!'),

@@ -23,7 +23,7 @@ class AlertsServices {
 
   static Future<List> getStudentsRequest() async {
     Map<dynamic, dynamic> res =
-        await RequestMethods.get_method('institute/student_requests/', true);
+        await RequestMethods.get_method('batch/list_student_reqs/', true);
 
     var data = res['data']['data'] as List;
 

@@ -22,7 +22,7 @@ class AlertsController extends GetxController {
   }
 
   Future<String> featchStudentRequest() async {
-    final studentRequests = await AlertsServices.getTeacheresRequest();
+    final studentRequests = await AlertsServices.getStudentsRequest();
     requestToJoin.value = studentRequests;
 
     print(requestToJoin.value);
