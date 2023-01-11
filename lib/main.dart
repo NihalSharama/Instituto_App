@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:instituto/controller/auth_controllers.dart';
 import 'package:instituto/features/batch/screens/chat_slide.dart';
 import 'package:instituto/features/dashboard/screens/dashboard.dart';
+import 'package:instituto/features/home/screens/home_screen.dart';
 
 import 'package:instituto/features/profile/screens/teacher_profile_page.dart';
 import 'package:instituto/router.dart';
 
 import 'features/chats/chats_screen.dart';
+import 'institute statistics._screen.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -31,10 +33,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Instituto',
-        theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
-        onGenerateRoute: (settings) =>
-            genarateRoute(settings), // auto genarating routes
-        // ignore: prefer_const_constructors
-        home: (DashboardScreen())); //
+        // theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
+        // onGenerateRoute: (settings) =>
+        //     genarateRoute(settings), // auto genarating routes
+        // // ignore: prefer_const_constructors
+        home: (TeacherProfilePage())); //
   }
 }
